@@ -1,5 +1,5 @@
 #Mobile Development Environment
-
+#Get started
 ```javascript
 DEV = new MobileDevEnvironment;
 DEV.ready(() => {

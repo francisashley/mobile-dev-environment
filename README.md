@@ -1,9 +1,11 @@
 # mobile-development-environment
 MDE serves to speed up development on mobile devices by inserting a hard refresh button and an inline log display for production build websites.
 
+# License
+
 MIT License
 
-Copyright (c) [2016] [Francis Ashley]
+Copyright (c) 2016 Francis Ashley
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -1,4 +1,3 @@
-# mobile-development-environment
 ```javascript
 DEV = new MobileDevEnvironment;
 DEV.ready(() => {

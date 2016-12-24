@@ -2,18 +2,17 @@
 ![g_20161224_1136193](https://cloud.githubusercontent.com/assets/12685308/21466968/70e23916-c9d3-11e6-96b4-1f82b9291f35.gif)
 #Get started
 ```javascript
-new MobileDevEnvironment({
-       reload:     boolean, // default true | include on page
-       HardReload: boolean, // default true | refresh cache
-       logbox:     boolean, // default true | include on page
-       logErrors:  boolean  // default true | catch javascript errors
- });
+new MobileDevEnvironment(options);
 ```
-#Features
-- Hard reload
-- View console.log() output 
-- View trace info
-- Catch errors
+#options
+```javascript
+{
+    reload:     boolean, // default true | include on page
+    HardReload: boolean, // default true | refresh cache
+    logbox:     boolean, // default true | include on page
+    logErrors:  boolean  // default true | catch javascript errors
+ }
+```
 
 # License
 

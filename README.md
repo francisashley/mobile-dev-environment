@@ -8,7 +8,6 @@ new MobileDevEnvironment(true, {
        logbox:     boolean, // default true | include on page
        logErrors:  boolean  // default true | catch javascript errors
  });
-new MobileDevEnvironment(true);
 ```
 #Features
 - Hard reload

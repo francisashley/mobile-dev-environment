@@ -8,6 +8,7 @@ const options = {
     logbox:     boolean, // default true | include on page
     logErrors:  boolean  // default true | catch javascript errors
  }
+ 
  new MobileDevEnvironment(options);
  ```
 

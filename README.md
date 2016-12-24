@@ -3,10 +3,10 @@
 #Get started
 ```javascript
 new MobileDevEnvironment(true, {
-       reload:     boolean, // default true
-       HardReload: boolean, // default true
-       logbox:     boolean, // default true
-       logErrors:  boolean  // default true
+       reload:     boolean, // default true | include on page
+       HardReload: boolean, // default true | refresh cache
+       logbox:     boolean, // default true | include on page
+       logErrors:  boolean  // default true | catch javascript errors
  });
 new MobileDevEnvironment(true);
 ```

@@ -3,11 +3,11 @@
 #Get started
 ```javascript
 new MobileDevEnvironment(true, {
-       reload: true,
-       HardReload: true,
-       logbox: true,
-       logErrors: true
-   });
+       reload:     boolean, // default true
+       HardReload: boolean, // default true
+       logbox:     boolean, // default true
+       logErrors:  boolean  // default true
+ });
 new MobileDevEnvironment(true);
 ```
 #Features

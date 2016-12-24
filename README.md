@@ -4,17 +4,8 @@
 Enable and init
 ```javascript
 new MobileDevEnvironment(true);
-// default = false
 ```
-Enable and catch errors
-```javascript
-DEV = new MobileDevEnvironment;
-DEV.ready(() => {
-    // production code
-    const canvas = document.getElementById('game');
-    const game = new Game(canvas, 600, 400);
-});
-```
+
 MDE serves to speed up development on mobile devices by inserting a hard refresh button and an inline log display for production build websites.
 
 # License

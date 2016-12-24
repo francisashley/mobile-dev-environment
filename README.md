@@ -6,7 +6,7 @@ new MobileDevEnvironment(options);
 ```
 #options
 ```javascript
-{
+const options = {
     reload:     boolean, // default true | include on page
     HardReload: boolean, // default true | refresh cache
     logbox:     boolean, // default true | include on page

@@ -6,10 +6,9 @@ new MobileDevEnvironment(true);
 ```
 #Features
 - Hard reload
-- console.log() output + view trace info
-- catch errors
-
-MDE serves to speed up development on mobile devices by inserting a hard refresh button and an inline log display for production build websites.
+- View console.log() output 
+- View trace info
+- Catch errors
 
 # License
 

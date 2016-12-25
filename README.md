@@ -5,7 +5,8 @@ In-browser toolset for devices lacking basic dev features.
 #Usage
 ```html
 <link href="mde/styles.css" rel="stylesheet">
-<script src="mde/MobileDevEnvironment.js"></script>```
+<script src="mde/MobileDevEnvironment.js"></script>
+```
 ```javascript
 const options = {
     reload:     boolean, // default true | include on page

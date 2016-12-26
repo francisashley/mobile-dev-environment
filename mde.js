@@ -221,7 +221,6 @@ class MDELogbox extends MDEHelpers
         setDB('logboxOpen', false);
         fetch('open-logbox').classList = false;
         fetch('logbox').classList = false;
-        console.log(fetch('open-logbox').classList)
     }
     
     resize(e) {

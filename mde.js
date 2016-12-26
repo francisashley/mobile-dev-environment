@@ -83,7 +83,7 @@ class MDEHelpers
             bottom:     scrollTop + clientHeight,
             height:     clientHeight,
             atTop:      scrollTop === 0,
-            atBottom:   scrollHeight - scrollTop <= clientHeight,
+            atBottom:   scrollHeight - scrollTop <= clientHeight + 1, 
             fullHeight: scrollHeight
         }
     }

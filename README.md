@@ -1,7 +1,8 @@
 #Mobile Development Environment
 In-browser toolset for devices lacking basic dev features.
 
-![g_20161224_1136193](https://cloud.githubusercontent.com/assets/12685308/21483890/ca1af1bc-cb81-11e6-8c65-041c260c79fc.gif)
+![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
+
 #Usage
 ```html
 <!-- link   mde/styles.css -->

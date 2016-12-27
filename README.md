@@ -5,8 +5,9 @@ In-browser toolset for devices lacking basic dev features.
 
 Inserts the following features into the browser:
 - Reload button that resets cache
-- Sends console.log messages to on screen tray + trace info
-- Along with catching errors + trace info
+- Onscreen log tray displays
+- - console.log() messages
+- - and catches errors
 
 #Usage
 ```html

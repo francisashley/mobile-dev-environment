@@ -8,6 +8,7 @@ Inserts the following features into the browser:
 - On screen log tray that displays
 - 1) console.log() messages + trace info
 - 2) error messages + trace info
+
 #Usage
 ```html
 <!-- link   mde/styles.css -->

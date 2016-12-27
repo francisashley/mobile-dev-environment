@@ -3,6 +3,11 @@ In-browser toolset for devices lacking basic dev features.
 
 ![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
 
+Inserts the following features into the browser:
+- Reload button that resets cache
+- Console.log messages displayed on screen + trace info
+- Catch errors + trace info
+
 #Usage
 ```html
 <!-- link   mde/styles.css -->

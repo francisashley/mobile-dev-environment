@@ -1,6 +1,6 @@
 class MobileDevEnvironment
 {
-    constructor({reload=true, hardReload=true, logbox=true, logErrors=true}) {
+    constructor({reload=true, hardReload=true, logbox=true, logErrors=true}={}) {
         if (reload === true) {
             this.reload = new MDEReload({hardReload});
         }

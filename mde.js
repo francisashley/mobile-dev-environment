@@ -174,6 +174,7 @@ class MDELogbox extends MDEHelpers
         resizeButton.addEventListener('touchstart', (e) => {
             resizeButton.classList.add('pressed');
             this.resize(e);
+            e.preventDefault();
         }, false);
         resizeButton.addEventListener('touchend', (e) => {
             resizeButton.classList.remove('pressed');

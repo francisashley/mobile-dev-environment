@@ -140,7 +140,8 @@ button#mde-open-logbox.false {
 #mde-logbox.true #mde-logs .log .preview .trace:visited {
     color:         rgb(45,45,45);
     float:         right;
-    padding-left:  5px; }
+    padding-left:  5px; 
+    text-decoration: underline; }
 
 #mde-logbox.true #mde-logs .log.error { color: red; }
 #mde-logbox.true #mde-logs .log.null,

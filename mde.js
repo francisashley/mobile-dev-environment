@@ -92,12 +92,19 @@ class MDEHelpers
     }
     
     returnTraceFromError(error) {
-        const stack = error.stack.split("\n")[2];
-        const split = /\(([^)]+)\)/.exec(stack)[1].split(":");
+        // get relevant trace parts
+        const bits = error.stack.split(":").slice(4,9)
+        // clear redundant chars at start and end
+        let first = bits[0];
+        bits[0] = first.substring(first.indexOf('(')+1,first.length);
+        let last = bits[bits.length-1];
+        bits[bits.length-1] = last.substring(0, last.indexOf(')'));
+        // compile
+        const fileName = bits[2].replace(/^.*[\\\/]/, '');
         return {
-            fileName: split[2].replace(/^.*[\\\/]/, ''), 
-            filePath: split[0]+':'+split[1]+':'+split[2],   
-            lineNumber: split[3]
+            fileName: fileName.length > 0 ? fileName : 'N/A', 
+            filePath: bits[0]+':'+bits[1]+':'+bits[2],   
+            lineNumber: bits[3]
         };
     }
 }

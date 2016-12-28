@@ -5,7 +5,7 @@ class MobileDevEnvironment
             this.reload = new MDEReload({hardReload});
         }
         if (logbox === true) {
-            this.logbox = new MDELogbox({logErrors});
+            this.logbox = new MDELogbox({reload, logErrors});
         }
     }
 }
@@ -119,6 +119,8 @@ class MDELogbox extends MDEHelpers
     constructor(options) {
         super();
         
+        this.options = options;
+        
         const { setupDB, getDB } = this;
         const { logErrors } = options;
         
@@ -196,7 +198,8 @@ class MDELogbox extends MDEHelpers
     }
     
     get maxHeight() {
-        return window.innerHeight - this.fetch('reload').offsetHeight - 20;
+        const { fetch, options } = this;
+        return window.innerHeight - (options.reload ? fetch('reload').offsetHeight + 20 : 10);
     }
     
     // modify global

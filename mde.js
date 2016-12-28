@@ -1,28 +1,31 @@
 class MobileDevEnvironment
 {
-    constructor({reload=true, hardReload=true, logbox=true, logErrors=true}={}) {
+    constructor({reload=true, hardReload=true, logbox=true, logErrors=true, group='global'}={}) {
         if (reload === true) {
             this.reload = new MDEReload({hardReload});
         }
         if (logbox === true) {
-            this.logbox = new MDELogbox({reload, logErrors});
+            this.logbox = new MDELogbox({reload, logErrors, group});
         }
     }
 }
 
 class MDEHelpers
 {
-    getDB(key) {
-        return localStorage[key] ? JSON.parse(localStorage[key]) : null;
+    getDB(key, group) {
+        const DBkey = `mde-${group}-${key}`;
+        return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
     }
     
-    setDB(key, val) {
-        return localStorage[key] = JSON.stringify(val);
+    setDB(key, val, group) {
+        const DBkey = `mde-${group}-${key}`;
+        return localStorage[DBkey] = JSON.stringify(val);
     }
     
-    setupDB(keyVals) {
+    setupDB(keyVals, group) {
         for (let key in keyVals) {
-            localStorage[key] = JSON.stringify(keyVals[key]);
+            const DBkey = `mde-${group}-${key}`;
+            localStorage[DBkey] = JSON.stringify(keyVals[key]);
         }
     }
     
@@ -122,12 +125,11 @@ class MDELogbox extends MDEHelpers
         this.options = options;
         
         const { setupDB, getDB } = this;
-        const { logErrors } = options;
         
         setupDB({
-            logboxOpen: getDB('logboxOpen') || false,
-            logboxHeight: getDB('logboxHeight') || 40
-        });
+            logboxOpen: getDB('logboxOpen', options.group ) || false,
+            logboxHeight: getDB('logboxHeight', options.group) || 40
+        }, options.group);
         
         this.buildLogboxButton();
         this.buildLogbox();
@@ -137,7 +139,7 @@ class MDELogbox extends MDEHelpers
             this.log(message, trace);
         };
         
-        if (logErrors === true) {
+        if (options.logErrors === true) {
             window.onerror = (message, filePath, lineNumber) => {
                 const fileName = filePath.replace(/^.*[\\\/]/, '');
                 this.log(message, {fileName, filePath, lineNumber, isError: true});
@@ -186,11 +188,13 @@ class MDELogbox extends MDEHelpers
     // constants
     
     get state() {
-        return this.getDB('logboxOpen');
+        const { options } = this;
+        return this.getDB('logboxOpen', options.group);
     }
     
     get height() {
-        return this.getDB('logboxHeight');
+        const { options } = this;
+        return this.getDB('logboxHeight', options.group);
     }
     
     get minHeight() {
@@ -205,24 +209,24 @@ class MDELogbox extends MDEHelpers
     // modify global
     
     setHeight(height) {
-        const { setDB, fetch, minHeight, maxHeight, returnInRange } = this;
+        const { setDB, fetch, minHeight, maxHeight, returnInRange, options } = this;
         height = returnInRange(height, minHeight, maxHeight);
-        setDB('logboxHeight', height);
+        setDB('logboxHeight', height, options.group);
         fetch('logbox').style.height = height+'px';
     }
     
     // actions
     
     open() {
-        const { fetch, setDB } = this;
-        setDB('logboxOpen', true);
+        const { fetch, setDB, options } = this;
+        setDB('logboxOpen', true, options.group);
         fetch('open-logbox').classList = true;
         fetch('logbox').classList = true;
     }
     
     close() {
-        const { fetch, setDB } = this;
-        setDB('logboxOpen', false);
+        const { fetch, setDB, options } = this;
+        setDB('logboxOpen', false, options.group);
         fetch('open-logbox').classList = false;
         fetch('logbox').classList = false;
     }

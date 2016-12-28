@@ -105,13 +105,14 @@ button#mde-open-logbox.false {
 
 #mde-logbox.true #mde-logs .log {
     border-bottom: thin solid rgba(0,0,0,0.2);
+    box-sizing:    border-box;
     clear:         both;
-    width:         100%;
     overflow:      hidden;
     padding:       5px;
     position:      relative;
     text-overflow: ellipsis;
     white-space:   nowrap;
+    width:         100%;
     word-break:    break-all; }
 
   #mde-logbox.true #mde-logs .log .preview .stack:not(:empty) {

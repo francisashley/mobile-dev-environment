@@ -22,7 +22,7 @@ button#mde-reload {
     background-size: 13px;
     box-shadow:    0px 0px 1px 1px rgba(0,0,0,0.1);
     height:        19px;
-    position:      absolute;
+    position:      fixed;
     top:           10px;
     right:         10px;
     width:         24px;
@@ -44,7 +44,7 @@ button#mde-open-logbox.false {
     bottom:        10px;
     box-shadow:    0px 0px 1px 1px rgba(0,0,0,0.1);
     height:        19px;
-    position:      absolute;
+    position:      fixed;
     right:         10px;
     width:         24px; }
 

@@ -33,7 +33,7 @@ At present MDE is only available on GitHub.
 
 #### reload
 
-Type: ```boolean```
+Type: `boolean`
 Default: true
 
 
@@ -42,14 +42,14 @@ Whether to display reload button in the browser
 
 #### hardReload
 
-Type: ```boolean```
+Type: `boolean`
 Default: true
 
 Enable to clear the cache 
 
 #### logbox
 
-Type: ```boolean```
+Type: `boolean`
 Default: true
 
 
@@ -58,7 +58,7 @@ Whether to display logbox (log tray) in the browser
 
 #### logErrors
 
-Type: ```boolean```
+Type: `boolean`
 Default: true
 
 
@@ -67,7 +67,7 @@ Enable to catch javascript errors. Great for debugging
 
 #### group
 
-type ```string```
+type `string`
 Default: 'global'
 
 Share state information with all other instances of MDE in the group. Information like logbox toggle and height will be shared.

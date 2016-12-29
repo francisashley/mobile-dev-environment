@@ -74,10 +74,10 @@ Retrieving trace info only works when the caller is in a file that is directly a
 
 For example:
 
-http://localhost:8080/project/index.html
+`http://localhost:8080/project/index.html`
 will work
 
-http://localhost:8080/project will not
+`http://localhost:8080/project` won't
 
 ## License
 

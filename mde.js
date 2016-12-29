@@ -103,7 +103,7 @@ class MDEHelpers
         const fileName = bits[2].replace(/^.*[\\\/]/, '');
         return {
             fileName: fileName.length > 0 ? fileName : 'N/A', 
-            filePath: bits[0]+':'+bits[1]+':'+bits[2],   
+            filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',   
             lineNumber: bits[3]
         };
     }

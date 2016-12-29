@@ -66,10 +66,10 @@ Default: `'global'`
 
 Share state information with other instances of MDE in the group. Information like logbox toggle and height will be shared.
 
-This is useful if you have to initiliase MDE in multiple files across the same project.
+This is useful if you want to use MDE in multiple files across the same project.
 
 
-## Take note
+## Heads up
 Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 
 
 For example:

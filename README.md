@@ -8,7 +8,7 @@ A refresh button that will clear the cache.
 
 A tray that displays console.log() messages.
 
-And that is resizable, toggleable, colour coded, catches errors and displays trace info. Great!
+That is also resizable, toggleable, colour coded, catches errors and displays trace info. Great!
 
 ## Install
 

@@ -1,29 +1,91 @@
-#Mobile Development Environment
-In-browser toolset for devices lacking basic dev features.
+MobileDevEnvironment inserts a simple toolset into browsers lacking basic developer features.
+
+These are:
+
+A refresh button that will clear the cache.
+
+A tray that displays console.log() messages.
+
+And is resizable, toggleable, colour coded, catches errors and displays trace info. Great!
 
 ![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
 
-Inserts the following features into the browser:
-- Reload button that resets cache
-- On screen log tray that displays:
-- 1) console.log() messages + trace info
-- 2) error messages + trace info
+# Install
 
-#Usage
+At present MDE is only available on GitHub.
+
+
+# Usage
 ```html
-<!-- link   mde/styles.css -->
-<!-- script mde/mde.js -->
+<link href="mde/styles.css" rel="stylesheet">
+<script src="mde/mde.js"></script>
+
+<script>
+    new MobileDevEnvironment(); 
+</script>
 ```
-```javascript
-const options = {
-    reload:     boolean, // default true | include on page
-    HardReload: boolean, // default true | refresh cache
-    logbox:     boolean, // default true | include on page
-    logErrors:  boolean  // default true | catch javascript errors
- };
- 
- new MobileDevEnvironment(options);
- ```
+
+# API
+
+## new MobileDevEnvironment([options])
+
+### options
+
+#### reload
+
+Type: ```boolean```
+
+Default: true
+
+
+Whether to display reload button in the browser
+
+
+#### hardReload
+
+Type: ```boolean```
+
+Default: true
+
+Enable to clear the cache 
+
+#### logbox
+
+Type: ```boolean```
+
+Default: true
+
+
+Whether to display logbox (log tray) in the browser
+
+
+#### logErrors
+
+Type: ```boolean```
+
+Default: true
+
+
+Enable to catch javascript errors. Great for debugging
+
+
+#### group
+
+type ```string```
+
+Default: 'global'
+
+Share state information with all other instances of MDE in the group. Information like logbox toggle and height will be shared.
+
+# Take note
+Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 
+
+For example:
+
+http://localhost:8080/project/index.html
+will work
+
+http://localhost:8080/project will not
 
 # License
 

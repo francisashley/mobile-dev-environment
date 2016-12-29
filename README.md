@@ -1,14 +1,14 @@
-MobileDevEnvironment inserts a simple toolset into browsers lacking basic developer features.
+MobileDevEnvironment inserts a simple toolset into browsers lacking basic dev features.
 
-These are:
+![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
+
+# Features
 
 A refresh button that will clear the cache.
 
 A tray that displays console.log() messages.
 
-And is resizable, toggleable, colour coded, catches errors and displays trace info. Great!
-
-![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
+And that is resizable, toggleable, colour coded, catches errors and displays trace info. Great!
 
 # Install
 
@@ -34,7 +34,6 @@ At present MDE is only available on GitHub.
 #### reload
 
 Type: ```boolean```
-
 Default: true
 
 
@@ -44,7 +43,6 @@ Whether to display reload button in the browser
 #### hardReload
 
 Type: ```boolean```
-
 Default: true
 
 Enable to clear the cache 
@@ -52,7 +50,6 @@ Enable to clear the cache
 #### logbox
 
 Type: ```boolean```
-
 Default: true
 
 
@@ -62,7 +59,6 @@ Whether to display logbox (log tray) in the browser
 #### logErrors
 
 Type: ```boolean```
-
 Default: true
 
 
@@ -72,7 +68,6 @@ Enable to catch javascript errors. Great for debugging
 #### group
 
 type ```string```
-
 Default: 'global'
 
 Share state information with all other instances of MDE in the group. Information like logbox toggle and height will be shared.

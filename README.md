@@ -2,7 +2,7 @@ MobileDevEnvironment inserts a simple toolset into browsers lacking basic dev fe
 
 ![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
 
-# Features
+## Features
 
 A refresh button that will clear the cache.
 
@@ -10,12 +10,12 @@ A tray that displays console.log() messages.
 
 And that is resizable, toggleable, colour coded, catches errors and displays trace info. Great!
 
-# Install
+## Install
 
 At present MDE is only available on GitHub.
 
 
-# Usage
+## Usage
 ```html
 <link href="mde/styles.css" rel="stylesheet">
 <script src="mde/mde.js"></script>
@@ -25,54 +25,48 @@ At present MDE is only available on GitHub.
 </script>
 ```
 
-# API
+## API
 
-## new MobileDevEnvironment([options])
+### new MobileDevEnvironment([options])
 
-### options
+#### options
 
-#### reload
-
-Type: `boolean`
-Default: true
-
-
-Whether to display reload button in the browser
-
-
-#### hardReload
+##### reload
 
 Type: `boolean`
-Default: true
+Default: `true`
 
-Enable to clear the cache 
+Whether to display reload button in the browser.
 
-#### logbox
-
-Type: `boolean`
-Default: true
-
-
-Whether to display logbox (log tray) in the browser
-
-
-#### logErrors
+##### hardReload
 
 Type: `boolean`
-Default: true
+Default: `true`
 
+Enable to clear the cache. 
 
-Enable to catch javascript errors. Great for debugging
+##### logbox
 
+Type: `boolean`
+Default: `true`
 
-#### group
+Whether to display logbox (log tray) in the browser.
 
-type `string`
-Default: 'global'
+##### logErrors
+
+Type: `boolean`
+Default: `true`
+
+Enable to catch javascript errors. Great for debugging.
+
+##### group
+
+Type `string`
+Default: `'global'`
 
 Share state information with all other instances of MDE in the group. Information like logbox toggle and height will be shared.
 
-# Take note
+## Take note
 Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 
 
 For example:
@@ -82,7 +76,7 @@ will work
 
 http://localhost:8080/project will not
 
-# License
+## License
 
 MIT License
 

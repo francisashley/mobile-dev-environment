@@ -34,6 +34,7 @@ At present MDE is only available on GitHub.
 ##### reload
 
 Type: `boolean`
+
 Default: `true`
 
 Whether to display reload button in the browser.
@@ -41,6 +42,7 @@ Whether to display reload button in the browser.
 ##### hardReload
 
 Type: `boolean`
+
 Default: `true`
 
 Enable to clear the cache. 
@@ -48,6 +50,7 @@ Enable to clear the cache.
 ##### logbox
 
 Type: `boolean`
+
 Default: `true`
 
 Whether to display logbox (log tray) in the browser.
@@ -55,16 +58,18 @@ Whether to display logbox (log tray) in the browser.
 ##### logErrors
 
 Type: `boolean`
+
 Default: `true`
 
 Enable to catch javascript errors. Great for debugging.
 
 ##### group
 
-Type `string`
+Type: `string`
+
 Default: `'global'`
 
-Share state information with all other instances of MDE in the group. Information like logbox toggle and height will be shared.
+Share state information with other instances of MDE in the group. Information like logbox toggle and height will be shared.
 
 ## Take note
 Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 

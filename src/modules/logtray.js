@@ -1,12 +1,3 @@
-  function toString(obj, type)  {
-    switch (type) {
-      case 'string':    return obj;
-      case 'undefined': return 'undefined';
-      case 'NaN':       return 'NaN';
-      default:          return JSON.stringify(obj);
-    }
-  }
-
   function touches(e) {
     return e.changedTouches;
   }
@@ -229,7 +220,17 @@ function logtray(options, DB) {
       type = 'undefined';
     }
 
-    message = toString(message, type);
+    // manually set 'undefined' and 'null' messages which when left alone will display nothing at all
+    if (type === 'null' || type === 'undefined') {
+      message = type;
+    // convert objects and arrays to string
+    } else if (type === 'object' || type === 'array') {
+      message = JSON.stringify(message, undefined, 2);
+      // convert number and boolean values to string
+    } else if (type === 'number' || type === 'boolean') {
+      message = message.toString();
+    }
+
     let submitted ;
 
     if (message !== lastMessage) {

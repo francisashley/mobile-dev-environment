@@ -319,19 +319,6 @@ module.exports = function(module) {
 "use strict";
 
 
-function toString(obj, type) {
-  switch (type) {
-    case 'string':
-      return obj;
-    case 'undefined':
-      return 'undefined';
-    case 'NaN':
-      return 'NaN';
-    default:
-      return JSON.stringify(obj);
-  }
-}
-
 function touches(e) {
   return e.changedTouches;
 }
@@ -403,24 +390,6 @@ module.exports = reload;
 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function getType(obj) {
-  var type = {}.toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-  return Number.isNaN(obj) ? 'NaN' : type;
-}
-
-function toString(obj, type) {
-  switch (type) {
-    case 'string':
-      return obj;
-    case 'undefined':
-      return 'undefined';
-    case 'NaN':
-      return 'NaN';
-    default:
-      return JSON.stringify(obj);
-  }
-}
 
 function touches(e) {
   return e.changedTouches;
@@ -622,9 +591,9 @@ function logtray(options, DB) {
     var lastMessage = (typeof lastLog === 'undefined' ? 'undefined' : _typeof(lastLog)) === 'object' ? lastLog.querySelector('.message').innerHTML : null;
 
     var id = 'log-' + logs.children.length;
+    var type = void 0;
 
     // Get and handle var types
-    var type = void 0;
     if (type === 'error') {
       type = 'error';
     } else if (typeof message === "string") {
@@ -643,7 +612,17 @@ function logtray(options, DB) {
       type = 'undefined';
     }
 
-    message = toString(message, type);
+    // manually set 'undefined' and 'null' messages which when left alone will display nothing at all
+    if (type === 'null' || type === 'undefined') {
+      message = type;
+      // convert objects and arrays to string
+    } else if (type === 'object' || type === 'array') {
+      message = JSON.stringify(message, undefined, 2);
+      // convert number and boolean values to string
+    } else if (type === 'number' || type === 'boolean') {
+      message = message.toString();
+    }
+
     var submitted = void 0;
 
     if (message !== lastMessage) {

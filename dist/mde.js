@@ -319,10 +319,6 @@ module.exports = function(module) {
 "use strict";
 
 
-function query(elem, query) {
-  return elem.querySelector(query);
-}
-
 function containsClass(elem, cls) {
   return elem.classList.contains(cls);
 }
@@ -419,10 +415,7 @@ module.exports = reload;
 "use strict";
 
 
-//
-function query(elem, query) {
-  return elem.querySelector(query);
-}
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function containsClass(elem, cls) {
   return elem.classList.contains(cls);
@@ -647,7 +640,7 @@ function logtray(options, DB) {
 
     var logs = self.elements.logs;
     var lastLog = logs.lastChild || false;
-    var lastMessage = lastLog ? query(lastLog, '.message').innerText : false;
+    var lastMessage = (typeof lastLog === 'undefined' ? 'undefined' : _typeof(lastLog)) === 'object' ? lastLog.querySelector('.message').innerHTML : null;
 
     var id = 'log-' + logs.children.length;
     var type = isError ? 'error' : getType(message);
@@ -657,18 +650,18 @@ function logtray(options, DB) {
     if (message !== lastMessage) {
       crel(logs, submitted = crel('div', { 'id': 'mde-' + id, 'class': 'log ' + type }, crel('div', { 'class': 'preview' }, crel('div', { 'class': 'stack' }), crel('a', { 'class': 'trace', 'href': filePath, 'target': '_blank' }, fileName + ':' + lineNumber), crel('div', { 'class': 'message' })), crel('div', { 'class': 'full' })));
 
-      query(submitted, '.preview .message').innerText = message;
-      query(submitted, '.full').innerText = message;
+      submitted.querySelector('.preview .message').innerText = message;
+      submitted.querySelector('.full').innerText = message;
 
-      query(submitted, '.preview').addEventListener('click', function (e) {
+      submitted.querySelector('.preview').addEventListener('click', function (e) {
         if (!containsClass(e.target, 'trace')) {
           var clickedLog = e.target.closest('.log');
           toggleClass(clickedLog, 'expand');
         }
       });
     } else {
-      var stackSize = parseInt(query(lastLog, '.stack').innerText) || 1;
-      query(lastLog, '.stack').innerText = stackSize + 1;
+      var stackSize = parseInt(lastLog.querySelector('.stack').innerText) || 1;
+      lastLog.querySelector('.stack').innerText = stackSize + 1;
     }
 
     if (initialScroll.atBottom) {

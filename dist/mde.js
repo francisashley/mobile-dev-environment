@@ -83,7 +83,7 @@ module.exports = __webpack_require__(4);
     'use strict';
 
     var reloadButton = __webpack_require__(2);
-    var logbox = __webpack_require__(3);
+    var logtray = __webpack_require__(3);
 
     function MobileDevEnvironment(options) {
         // Default options
@@ -91,7 +91,7 @@ module.exports = __webpack_require__(4);
             group: typeof options.group !== 'undefined' ? options.group : 'global',
             reload: typeof options.reload !== 'undefined' ? options.reload : true,
             hardReload: typeof options.hardReload !== 'undefined' ? options.hardReload : true,
-            logbox: typeof options.logbox !== 'undefined' ? options.logbox : true,
+            logtray: typeof options.logtray !== 'undefined' ? options.logtray : true,
             logErrors: typeof options.logErrors !== 'undefined' ? options.logErrors : true
         };
 
@@ -99,8 +99,8 @@ module.exports = __webpack_require__(4);
             this.reload = new reloadButton({ hardReload: options.hardReload });
         }
 
-        if (options.logbox === true) {
-            this.logbox = new logbox({ reload: options.reload, logErrors: options.logErrors, group: options.group });
+        if (options.logtray === true) {
+            this.logtray = new logtray({ reload: options.reload, logErrors: options.logErrors, group: options.group });
         }
     }
 
@@ -422,13 +422,13 @@ var helpers = function () {
     return helpers;
 }();
 
-var logbox = function (_helpers) {
-    _inherits(logbox, _helpers);
+var logtray = function (_helpers) {
+    _inherits(logtray, _helpers);
 
-    function logbox(options) {
-        _classCallCheck(this, logbox);
+    function logtray(options) {
+        _classCallCheck(this, logtray);
 
-        var _this = _possibleConstructorReturn(this, (logbox.__proto__ || Object.getPrototypeOf(logbox)).call(this));
+        var _this = _possibleConstructorReturn(this, (logtray.__proto__ || Object.getPrototypeOf(logtray)).call(this));
 
         _this.options = options;
 
@@ -437,12 +437,12 @@ var logbox = function (_helpers) {
 
 
         setupDB({
-            logboxOpen: getDB('logboxOpen', options.group) || false,
-            logboxHeight: getDB('logboxHeight', options.group) || 40
+            logtrayOpen: getDB('logtrayOpen', options.group) || false,
+            logtrayHeight: getDB('logtrayHeight', options.group) || 40
         }, options.group);
 
-        _this.buildLogboxButton();
-        _this.buildLogbox();
+        _this.buildlogtrayButton();
+        _this.buildlogtray();
 
         window.console.log = function (message) {
             var trace = _this.returnTraceFromError(new Error());
@@ -458,23 +458,23 @@ var logbox = function (_helpers) {
         return _this;
     }
 
-    _createClass(logbox, [{
-        key: 'buildLogboxButton',
-        value: function buildLogboxButton() {
+    _createClass(logtray, [{
+        key: 'buildlogtrayButton',
+        value: function buildlogtrayButton() {
             var _this2 = this;
 
             var state = this.state,
                 insert = this.insert,
                 fetch = this.fetch;
 
-            insert('<button id="mde-open-logbox" class="mde ' + state + '"></button>', document.body);
-            fetch('open-logbox').addEventListener('click', function (e) {
+            insert('<button id="mde-open-logtray" class="mde ' + state + '"></button>', document.body);
+            fetch('open-logtray').addEventListener('click', function (e) {
                 _this2.open();
             }, false);
         }
     }, {
-        key: 'buildLogbox',
-        value: function buildLogbox() {
+        key: 'buildlogtray',
+        value: function buildlogtray() {
             var _this3 = this;
 
             var state = this.state,
@@ -484,12 +484,12 @@ var logbox = function (_helpers) {
                 drag = this.drag;
 
 
-            insert('<div id="mde-logbox" class="mde ' + state + '">\n                    <button id="mde-resize-logbox" class="mde">\xB7\xB7\xB7</button>\n                    <button id="mde-close-logbox" class="mde">\u2014</button>\n                    <div id="mde-logs"></div>\n                </div>', document.body);
+            insert('<div id="mde-logtray" class="mde ' + state + '">\n                    <button id="mde-resize-logtray" class="mde">\xB7\xB7\xB7</button>\n                    <button id="mde-close-logtray" class="mde">\u2014</button>\n                    <div id="mde-logs"></div>\n                </div>', document.body);
 
             this.setHeight(height);
 
-            var closeButton = fetch('close-logbox');
-            var resizeButton = fetch('resize-logbox');
+            var closeButton = fetch('close-logtray');
+            var resizeButton = fetch('resize-logtray');
 
             window.addEventListener('resize', function (e) {
                 _this3.setHeight(_this3.height);
@@ -524,8 +524,8 @@ var logbox = function (_helpers) {
                 options = this.options;
 
             height = returnInRange(height, minHeight, maxHeight);
-            setDB('logboxHeight', height, options.group);
-            fetch('logbox').style.height = height + 'px';
+            setDB('logtrayHeight', height, options.group);
+            fetch('logtray').style.height = height + 'px';
         }
 
         // actions
@@ -537,9 +537,9 @@ var logbox = function (_helpers) {
                 setDB = this.setDB,
                 options = this.options;
 
-            setDB('logboxOpen', true, options.group);
-            fetch('open-logbox').classList = true;
-            fetch('logbox').classList = true;
+            setDB('logtrayOpen', true, options.group);
+            fetch('open-logtray').classList = true;
+            fetch('logtray').classList = true;
         }
     }, {
         key: 'close',
@@ -548,9 +548,9 @@ var logbox = function (_helpers) {
                 setDB = this.setDB,
                 options = this.options;
 
-            setDB('logboxOpen', false, options.group);
-            fetch('open-logbox').classList = false;
-            fetch('logbox').classList = false;
+            setDB('logtrayOpen', false, options.group);
+            fetch('open-logtray').classList = false;
+            fetch('logtray').classList = false;
         }
     }, {
         key: 'resize',
@@ -583,7 +583,7 @@ var logbox = function (_helpers) {
                 resizeButton.removeEventListener('touchend', onEnd, false);
             };
 
-            var resizeButton = fetch('resize-logbox');
+            var resizeButton = fetch('resize-logtray');
             resizeButton.addEventListener('touchmove', onMove, false);
             resizeButton.addEventListener('touchend', onEnd, false);
         }
@@ -642,19 +642,19 @@ var logbox = function (_helpers) {
         get: function get() {
             var options = this.options;
 
-            return this.getDB('logboxOpen', options.group);
+            return this.getDB('logtrayOpen', options.group);
         }
     }, {
         key: 'height',
         get: function get() {
             var options = this.options;
 
-            return this.getDB('logboxHeight', options.group);
+            return this.getDB('logtrayHeight', options.group);
         }
     }, {
         key: 'minHeight',
         get: function get() {
-            return this.fetch('resize-logbox').offsetHeight;
+            return this.fetch('resize-logtray').offsetHeight;
         }
     }, {
         key: 'maxHeight',
@@ -666,10 +666,10 @@ var logbox = function (_helpers) {
         }
     }]);
 
-    return logbox;
+    return logtray;
 }(helpers);
 
-module.exports = logbox;
+module.exports = logtray;
 
 /***/ }),
 /* 4 */

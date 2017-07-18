@@ -3,7 +3,7 @@
     'use strict';
 
     const reloadButton = require('./modules/reloadButton.js');
-    const logbox       = require('./modules/logbox.js');
+    const logtray       = require('./modules/logtray.js');
 
     function MobileDevEnvironment(options) {
         // Default options
@@ -11,7 +11,7 @@
             group           :  typeof options.group           !== 'undefined'   ?   options.group           :   'global',
             reload          :  typeof options.reload          !== 'undefined'   ?   options.reload          :   true,
             hardReload      :  typeof options.hardReload      !== 'undefined'   ?   options.hardReload      :   true,
-            logbox          :  typeof options.logbox          !== 'undefined'   ?   options.logbox         :   true,
+            logtray          :  typeof options.logtray          !== 'undefined'   ?   options.logtray         :   true,
             logErrors       :  typeof options.logErrors       !== 'undefined'   ?   options.logErrors   :   true,
         };
 
@@ -19,8 +19,8 @@
             this.reload = new reloadButton( { hardReload: options.hardReload } );
         }
 
-        if (options.logbox === true) {
-            this.logbox = new logbox({reload: options.reload, logErrors: options.logErrors, group: options.group});
+        if (options.logtray === true) {
+            this.logtray = new logtray({reload: options.reload, logErrors: options.logErrors, group: options.group});
         }
     }
 

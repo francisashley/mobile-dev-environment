@@ -6,10 +6,6 @@ function query(elem, query) {
     return elem.querySelector(query);
   }
 
-function insert(html, elem, position = 'beforeend') {
-    return elem.insertAdjacentHTML(position, html);
-  }
-
 function containsClass(elem, cls) {
     return elem.classList.contains(cls);
   }
@@ -78,9 +74,15 @@ function returnTraceFromError(error) {
   }
 
 function reload(options) {
+  // Libraries
+  const crel = require('crel');
+
   const { hardReload } = options;
 
-  insert('<button id="mde-reload" class="mde"></button>', document.body);
+  crel(document.body,
+    crel('button', { 'id': 'mde-reload', 'class': 'mde' } )
+  );
+
   fetch('reload').addEventListener('click', (e) => {
     location.reload(hardReload)
   }, false);

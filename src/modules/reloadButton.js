@@ -1,7 +1,3 @@
-function toggleClass(elem, cls, assert) {
-    return elem.classList.toggle(cls, assert);
-  }
-
 function getType(obj) {
     const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
     return Number.isNaN(obj) ? 'NaN': type;

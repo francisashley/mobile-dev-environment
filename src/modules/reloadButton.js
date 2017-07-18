@@ -26,22 +26,6 @@ function scrollInfo(elem) {
     };
   }
 
-function returnTraceFromError(error) {
-    // get relevant trace parts
-    const bits = error.stack.split(":").slice(4,9);
-    // clear redundant chars at start and end
-    let first = bits[0];
-    bits[0] = first.substring(first.indexOf('(')+1,first.length);
-    let last = bits[bits.length-1];
-    bits[bits.length-1] = last.substring(0, last.indexOf(')'));
-    // compile
-    const fileName = bits[2].replace(/^.*[\\\/]/, '');
-    return {
-      fileName: fileName.length > 0 ? fileName : 'N/A',
-      filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',
-      lineNumber: bits[3]
-    };
-  }
 
 function reload(options) {
   // Libraries

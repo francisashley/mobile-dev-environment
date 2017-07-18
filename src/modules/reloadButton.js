@@ -1,7 +1,3 @@
-function fetch(query) {
-    return document.querySelector('#mde-'+query);
-  }
-
 function query(elem, query) {
     return elem.querySelector(query);
   }
@@ -36,7 +32,7 @@ function getDragDistance(dragStart, dragEnd) {
     return {
       x: dragStart.pageX-dragEnd.pageX,
       y: dragStart.pageY-dragEnd.pageY
-    }
+    };
   }
 
 function returnInRange(num, min, max) {
@@ -53,12 +49,12 @@ function scrollInfo(elem) {
       atTop:      scrollTop === 0,
       atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
       fullHeight: scrollHeight
-    }
+    };
   }
 
 function returnTraceFromError(error) {
     // get relevant trace parts
-    const bits = error.stack.split(":").slice(4,9)
+    const bits = error.stack.split(":").slice(4,9);
     // clear redundant chars at start and end
     let first = bits[0];
     bits[0] = first.substring(first.indexOf('(')+1,first.length);
@@ -76,15 +72,15 @@ function returnTraceFromError(error) {
 function reload(options) {
   // Libraries
   const crel = require('crel');
-
-  const { hardReload } = options;
+  // Elements
+  self.elements = { reload: {} };
 
   crel(document.body,
-    crel('button', { 'id': 'mde-reload', 'class': 'mde' } )
+    self.elements.reload = crel('button', { 'id': 'mde-reload', 'class': 'mde' } )
   );
 
-  fetch('reload').addEventListener('click', (e) => {
-    location.reload(hardReload)
+  self.elements.reload.addEventListener('click', (e) => {
+    location.reload(options.hardReload);
   }, false);
 }
 

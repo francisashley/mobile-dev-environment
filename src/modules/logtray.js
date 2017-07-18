@@ -1,8 +1,4 @@
 //
-  function fetch(query) {
-    return document.querySelector('#mde-'+query);
-  }
-
   function query(elem, query) {
     return elem.querySelector(query);
   }
@@ -79,8 +75,21 @@ function logtray(options, DB) {
 
   'use strict';
 
+  // initiate
+  let self = this;
+
   // Libraries
   const crel = require('crel');
+
+  // Global variables
+  self.elements = {
+    reload: document.querySelector('#mde-reload'),
+    openTray: {},
+    closeTray: {},
+    tray: {},
+    resizeTray: {},
+    logs: {}
+  };
 
   // Setup variables if not setup already
   DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
@@ -89,6 +98,7 @@ function logtray(options, DB) {
 
   buildlogtrayButton();
   buildlogtray();
+
   window.console.log = (message) => {
     const trace = returnTraceFromError(new Error);
     log(message, trace);
@@ -103,42 +113,39 @@ function logtray(options, DB) {
 
   function buildlogtrayButton() {
     crel(document.body,
-      crel('button', { 'id': 'mde-open-logtray', 'class': 'mde ' + status } )
+      self.elements.openTray = crel('button', { 'id': 'mde-open-logtray', 'class': 'mde ' + status } )
     );
 
-    fetch('open-logtray').addEventListener('click', (e) => {
+    self.elements.openTray.addEventListener('click', (e) => {
       open();
     }, false);
   }
 
   function buildlogtray() {
     crel(document.body,
-      crel('div',
-        { 'id': 'mde-logtray', 'class': `mde ${state()}`},
-        crel('button', {'id': 'mde-resize-logtray', 'class': 'mde'}),
-        crel('button', {'id': 'mde-close-logtray', 'class': 'mde'}),
-        crel('div', {'id': 'mde-logs'})
+      self.elements.tray = crel('div',
+         { 'id': 'mde-logtray', 'class': `mde ${state()}`},
+        self.elements.resizeTray = crel('button', {'id': 'mde-resize-logtray', 'class': 'mde'}),
+        self.elements.closeTray = crel('button', {'id': 'mde-close-logtray', 'class': 'mde'}),
+        self.elements.logs = crel('div', {'id': 'mde-logs'})
       )
     );
 
     setHeight(height());
 
-    const closeButton  = fetch('close-logtray');
-    const resizeButton = fetch('resize-logtray');
-
     window.addEventListener('resize', (e) => {
       setHeight(height());
     }, false);
-    closeButton.addEventListener('click', (e) => {
+    self.elements.closeTray.addEventListener('click', (e) => {
       close();
     }, false);
-    resizeButton.addEventListener('touchstart', (e) => {
-      resizeButton.classList.add('pressed');
+    self.elements.resizeTray.addEventListener('touchstart', (e) => {
+      self.elements.resizeTray.classList.add('pressed');
       resize(e);
       e.preventDefault();
     }, false);
-    resizeButton.addEventListener('touchend', (e) => {
-      resizeButton.classList.remove('pressed');
+    self.elements.resizeTray.addEventListener('touchend', (e) => {
+      self.resizeTray.classList.remove('pressed');
     }, false);
   }
 
@@ -153,11 +160,11 @@ function logtray(options, DB) {
   }
 
   function minHeight() {
-    return fetch('resize-logtray').offsetHeight;
+    return self.elements.resizeTray.offsetHeight;
   }
 
   function maxHeight() {
-    return window.innerHeight - (options.reload ? fetch('reload').offsetHeight + 20 : 10);
+    return window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
   }
 
   // modify global
@@ -167,27 +174,28 @@ function logtray(options, DB) {
     const max = maxHeight()
     height = returnInRange(height, min, max);
     DB.set('logtrayHeight', height);
-    fetch('logtray').style.height = height+'px';
+    console.log(self.elements)
+    self.elements.tray.style.height = height+'px';
   }
 
   // actions
 
   function open() {
     DB.set('logtrayOpen', true);
-    fetch('open-logtray').classList = true;
-    fetch('logtray').classList = true;
+    self.elements.openTray.classList = true;
+    self.elements.tray.classList = true;
   }
 
   function close() {
     DB.set('logtrayOpen', false);
-    fetch('open-logtray').classList = false;
-    fetch('logtray').classList = false;
+    self.elements.openTray.classList = false;
+    self.elements.tray.classList = false;
   }
 
   function resize(e) {
     const startHeight = height;
     const startTouch  = touches(e)[0];
-    const startScroll = scrollInfo(fetch('logs'));
+    const startScroll = scrollInfo(self.elements.logs);
 
     const onMove = (e) => {
       const distance = getDragDistance(startTouch, touches(e)[0]);
@@ -195,36 +203,36 @@ function logtray(options, DB) {
       this.setHeight(newHeight);
 
       if (startScroll.atBottom && distance.y < startScroll.top) {
-        fetch('logs').scrollTop = fetch('logs').scrollHeight;
+        self.elements.logs.scrollTop = self.elements.logs.scrollHeight;
       }
-    }
+    };
 
     const onEnd = (e) => {
-      resizeButton.removeEventListener('touchmove', onMove, false);
-      resizeButton.removeEventListener('touchend', onEnd, false);
-    }
+      self.elements.resizeTray.removeEventListener('touchmove', onMove, false);
+      self.elements.resizeTray.removeEventListener('touchend', onEnd, false);
+    };
 
-    const resizeButton = fetch('resize-logtray');
-    resizeButton.addEventListener('touchmove', onMove, false);
-    resizeButton.addEventListener('touchend', onEnd, false);
+    self.elements.resizeTray.addEventListener('touchmove', onMove, false);
+    self.elements.resizeTray.addEventListener('touchend', onEnd, false);
   }
 
   function log(message, trace) {
     const { filePath, fileName, lineNumber, isError } = trace;
 
-    const initialScroll = scrollInfo(fetch('logs'));
+    const initialScroll = scrollInfo(self.elements.logs);
 
-    const logs = fetch('logs');
+    const logs = self.elements.logs;
     const lastLog = logs.lastChild || false;
     const lastMessage = (lastLog) ? query(lastLog, '.message').innerText : false;
 
     const id = 'log-'+logs.children.length;
     const type = isError ? 'error' : getType(message);
     message = toString(message, type);
+    let submitted ;
 
     if (message !== lastMessage) {
       crel(logs,
-        crel('div',
+      submitted =  crel('div',
           { 'id': 'mde-' + id, 'class': 'log ' + type },
           crel('div',
             {'class': 'preview'},
@@ -235,8 +243,6 @@ function logtray(options, DB) {
           crel('div', {'class': 'full'})
         )
       );
-
-      const submitted = fetch(id);
 
       query(submitted, '.preview .message').innerText = message;
       query(submitted, '.full').innerText = message;

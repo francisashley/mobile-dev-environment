@@ -24,4 +24,9 @@
 
   // Attach MDE to window
   window.MobileDevEnvironment = MobileDevEnvironment;
+
+  // Export mde to node
+  if (typeof module === "object" && typeof module.exports === "object") {
+      module.exports = mde;
+  }
 })();

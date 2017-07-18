@@ -1,8 +1,3 @@
-//
-  function query(elem, query) {
-    return elem.querySelector(query);
-  }
-
   function containsClass(elem, cls) {
     return elem.classList.contains(cls);
   }
@@ -223,7 +218,7 @@ function logtray(options, DB) {
 
     const logs = self.elements.logs;
     const lastLog = logs.lastChild || false;
-    const lastMessage = (lastLog) ? query(lastLog, '.message').innerText : false;
+    const lastMessage = typeof lastLog === 'object' ? lastLog.querySelector('.message').innerHTML : null;
 
     const id = 'log-'+logs.children.length;
     const type = isError ? 'error' : getType(message);
@@ -244,18 +239,18 @@ function logtray(options, DB) {
         )
       );
 
-      query(submitted, '.preview .message').innerText = message;
-      query(submitted, '.full').innerText = message;
+      submitted.querySelector('.preview .message').innerText = message;
+      submitted.querySelector('.full').innerText = message;
 
-      query(submitted, '.preview').addEventListener('click', (e) => {
+      submitted.querySelector('.preview').addEventListener('click', (e) => {
         if (!containsClass(e.target, 'trace')) {
           const clickedLog = e.target.closest('.log');
           toggleClass(clickedLog, 'expand');
         }
       });
     } else {
-      const stackSize = parseInt(query(lastLog, '.stack').innerText) || 1;
-      query(lastLog, '.stack').innerText = stackSize+1;
+      const stackSize = parseInt(lastLog.querySelector('.stack').innerText) || 1;
+      lastLog.querySelector('.stack').innerText = stackSize+1;
     }
 
     if (initialScroll.atBottom) {

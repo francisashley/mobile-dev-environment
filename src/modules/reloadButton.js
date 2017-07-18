@@ -1,7 +1,3 @@
-function query(elem, query) {
-    return elem.querySelector(query);
-  }
-
 function containsClass(elem, cls) {
     return elem.classList.contains(cls);
   }

@@ -1,12 +1,3 @@
-function toString(obj, type)  {
-    switch (type) {
-      case 'string':    return obj;
-      case 'undefined': return 'undefined';
-      case 'NaN':       return 'NaN';
-      default:          return JSON.stringify(obj);
-    }
-  }
-
 function touches(e) {
     return e.changedTouches;
   }

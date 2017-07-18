@@ -77,62 +77,54 @@ function returnTraceFromError(error) {
   };
 }
 
-class logtray
-{
-  constructor(options, DB) {
-    this.options = options;
-    this.DB = DB;
+function logtray(options, DB) {
+  // Setup variables if not setup already
+  DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
+  DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
 
-    // Setup variables if not setup already
-    DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
-    DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
 
-    this.buildlogtrayButton();
-    this.buildlogtray();
+  buildlogtrayButton();
+  buildlogtray();
+  window.console.log = (message) => {
+    const trace = returnTraceFromError(new Error);
+    log(message, trace);
+  };
 
-    window.console.log = (message) => {
-      const trace = returnTraceFromError(new Error);
-      this.log(message, trace);
-    };
-
-    if (options.logErrors === true) {
-      window.onerror = (message, filePath, lineNumber) => {
-        const fileName = filePath.replace(/^.*[\\\/]/, '');
-        this.log(message, {fileName, filePath, lineNumber, isError: true});
-      }
+  if (options.logErrors === true) {
+    window.onerror = (message, filePath, lineNumber) => {
+      const fileName = filePath.replace(/^.*[\\\/]/, '');
+      log(message, {fileName, filePath, lineNumber, isError: true});
     }
   }
 
-  buildlogtrayButton() {
-    const { state } = this;
-    insert(`<button id="mde-open-logtray" class="mde ${state}"></button>`, document.body);
+  function buildlogtrayButton() {
+    insert(`<button id="mde-open-logtray" class="mde ${state()}"></button>`, document.body);
     fetch('open-logtray').addEventListener('click', (e) => {
-      this.open();
+      open();
     }, false);
   }
 
-  buildlogtray() {
-    const { state, height } = this;
-    insert(`<div id="mde-logtray" class="mde ${state}">
+  function buildlogtray() {
+    insert(`<div id="mde-logtray" class="mde ${state()}">
           <button id="mde-resize-logtray" class="mde">···</button>
           <button id="mde-close-logtray" class="mde">—</button>
           <div id="mde-logs"></div>
         </div>`, document.body)
 
-    this.setHeight(height);
+    setHeight(height());
 
     const closeButton  = fetch('close-logtray');
     const resizeButton = fetch('resize-logtray');
 
     window.addEventListener('resize', (e) => {
-      this.setHeight(this.height);
+      setHeight(height());
     }, false);
     closeButton.addEventListener('click', (e) => {
-      this.close();
+      close();
     }, false);
     resizeButton.addEventListener('touchstart', (e) => {
       resizeButton.classList.add('pressed');
-      this.resize(e);
+      resize(e);
       e.preventDefault();
     }, false);
     resizeButton.addEventListener('touchend', (e) => {
@@ -142,46 +134,47 @@ class logtray
 
   // constants
 
-  get state() {
-    return this.DB.get('logtrayOpen');
+  function state() {
+    return DB.get('logtrayOpen');
   }
 
-  get height() {
-    return this.DB.get('logtrayHeight');
+  function height() {
+    return DB.get('logtrayHeight');
   }
 
-  get minHeight() {
+  function minHeight() {
     return fetch('resize-logtray').offsetHeight;
   }
 
-  get maxHeight() {
-    return window.innerHeight - (this.options.reload ? fetch('reload').offsetHeight + 20 : 10);
+  function maxHeight() {
+    return window.innerHeight - (options.reload ? fetch('reload').offsetHeight + 20 : 10);
   }
 
   // modify global
 
-  setHeight(height) {
-    const { minHeight, maxHeight } = this;
+  function setHeight(height) {
+    minHeight = minHeight()
+    maxHeight = maxHeight()
     height = returnInRange(height, minHeight, maxHeight);
-    this.DB.set('logtrayHeight', height);
+    DB.set('logtrayHeight', height);
     fetch('logtray').style.height = height+'px';
   }
 
   // actions
 
-  open() {
-    this.DB.set('logtrayOpen', true);
+  function open() {
+    DB.set('logtrayOpen', true);
     fetch('open-logtray').classList = true;
     fetch('logtray').classList = true;
   }
 
-  close() {
-    this.DB.set('logtrayOpen', false);
+  function close() {
+    DB.set('logtrayOpen', false);
     fetch('open-logtray').classList = false;
     fetch('logtray').classList = false;
   }
 
-  resize(e) {
+  function resize(e) {
     const startHeight = height;
     const startTouch  = touches(e)[0];
     const startScroll = scrollInfo(fetch('logs'));
@@ -206,7 +199,7 @@ class logtray
     resizeButton.addEventListener('touchend', onEnd, false);
   }
 
-  log(message, trace) {
+  function log(message, trace) {
     const { filePath, fileName, lineNumber, isError } = trace;
 
     const initialScroll = scrollInfo(fetch('logs'));

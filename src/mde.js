@@ -13,13 +13,15 @@
       logErrors     :  typeof options.logErrors     !== 'undefined'   ?   options.logErrors     :   true,
     };
 
-    // Import modules
+    // Import modules and tools
     const reloadButton = require('./modules/reloadButton.js');
     const logtray      = require('./modules/logtray.js');
+    let DB             = require('./tools/db.js');
+        DB             = new DB(options.group);
 
     // Run modules
     if (options.reload === true)  new reloadButton(options);
-    if (options.logtray === true) new logtray(options);
+    if (options.logtray === true) new logtray(options, DB);
   }
 
   // Attach MDE to window

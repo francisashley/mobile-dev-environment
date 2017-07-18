@@ -21,7 +21,7 @@ At present MDE is only available on GitHub.
 <script src="mde/mde.js"></script>
 
 <script>
-    new MobileDevEnvironment(); 
+    new MobileDevEnvironment();
 </script>
 ```
 
@@ -33,35 +33,35 @@ At present MDE is only available on GitHub.
 
 ##### reload
 
-Type: `boolean`  
+Type: `boolean`
 Default: `true`
 
 Choose to display reload button in the browser.
 
 ##### hardReload
 
-Type: `boolean`  
+Type: `boolean`
 Default: `true`
 
-Enable to clear the cache. 
+Enable to clear the cache.
 
 ##### logbox
 
-Type: `boolean`  
+Type: `boolean`
 Default: `true`
 
 Choose to display logbox (log tray) in the browser.
 
 ##### logErrors
 
-Type: `boolean`  
+Type: `boolean`
 Default: `true`
 
 Enable to catch javascript errors. Great for debugging.
 
 ##### group
 
-Type: `string`  
+Type: `string`
 Default: `'global'`
 
 Share state information with other instances of MDE in the group. Information like logbox toggle and height will be shared.
@@ -70,7 +70,7 @@ This is useful if you want to use MDE in multiple files across the same project.
 
 
 ## Heads up
-Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 
+Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this.
 
 For example:
 

@@ -32,7 +32,7 @@ button#mde-reload {
 
 button#mde-open-logbox.true {
     display:       none; }
-    
+
 button#mde-open-logbox.false {
     background-color:  white;
     border:        thin solid rgb(45,45,45);
@@ -52,7 +52,7 @@ button#mde-open-logbox.false {
 
 #mde-logbox {
     display:       none; }
-    
+
 #mde-logbox.true {
     background:    rgb(255,227,159);
     bottom:        0;
@@ -64,7 +64,7 @@ button#mde-open-logbox.false {
     right:         0; }
 
 /* resize logbox button */
-    
+
 #mde-logbox.true #mde-resize-logbox {
     border-left:   none;
     border-radius: 0;
@@ -75,9 +75,9 @@ button#mde-open-logbox.false {
     position:      absolute;
     top:           0;
     width:         100%; }
-    
+
 /* close logbox button */
-    
+
 #mde-logbox.true #mde-close-logbox {
     border-radius: 0 0 0 2px;
     border-right:  none;
@@ -140,7 +140,7 @@ button#mde-open-logbox.false {
 #mde-logbox.true #mde-logs .log .preview .trace:visited {
     color:         rgb(45,45,45);
     float:         right;
-    padding-left:  5px; 
+    padding-left:  5px;
     text-decoration: underline; }
 
 #mde-logbox.true #mde-logs .log.error { color: red; }
@@ -163,4 +163,3 @@ button#mde-open-logbox.false {
     margin:        5px -5px -5px -5px;
     padding:       5px;
     white-space:   normal; }
-    

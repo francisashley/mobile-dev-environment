@@ -1,312 +1,522 @@
-class MobileDevEnvironment
-{
-    constructor({reload=true, hardReload=true, logbox=true, logErrors=true, group='global'}={}) {
-        if (reload === true) {
-            this.reload = new MDEReload({hardReload});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(1);
+module.exports = __webpack_require__(2);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var MobileDevEnvironment = function MobileDevEnvironment() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$reload = _ref.reload,
+        reload = _ref$reload === undefined ? true : _ref$reload,
+        _ref$hardReload = _ref.hardReload,
+        hardReload = _ref$hardReload === undefined ? true : _ref$hardReload,
+        _ref$logbox = _ref.logbox,
+        logbox = _ref$logbox === undefined ? true : _ref$logbox,
+        _ref$logErrors = _ref.logErrors,
+        logErrors = _ref$logErrors === undefined ? true : _ref$logErrors,
+        _ref$group = _ref.group,
+        group = _ref$group === undefined ? 'global' : _ref$group;
+
+    _classCallCheck(this, MobileDevEnvironment);
+
+    if (reload === true) {
+        this.reload = new MDEReload({ hardReload: hardReload });
+    }
+    if (logbox === true) {
+        this.logbox = new MDELogbox({ reload: reload, logErrors: logErrors, group: group });
+    }
+};
+
+var MDEHelpers = function () {
+    function MDEHelpers() {
+        _classCallCheck(this, MDEHelpers);
+    }
+
+    _createClass(MDEHelpers, [{
+        key: 'getDB',
+        value: function getDB(key, group) {
+            var DBkey = 'mde-' + group + '-' + key;
+            return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
         }
-        if (logbox === true) {
-            this.logbox = new MDELogbox({reload, logErrors, group});
+    }, {
+        key: 'setDB',
+        value: function setDB(key, val, group) {
+            var DBkey = 'mde-' + group + '-' + key;
+            return localStorage[DBkey] = JSON.stringify(val);
         }
-    }
-}
-
-class MDEHelpers
-{
-    getDB(key, group) {
-        const DBkey = `mde-${group}-${key}`;
-        return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
-    }
-
-    setDB(key, val, group) {
-        const DBkey = `mde-${group}-${key}`;
-        return localStorage[DBkey] = JSON.stringify(val);
-    }
-
-    setupDB(keyVals, group) {
-        for (let key in keyVals) {
-            const DBkey = `mde-${group}-${key}`;
-            localStorage[DBkey] = JSON.stringify(keyVals[key]);
+    }, {
+        key: 'setupDB',
+        value: function setupDB(keyVals, group) {
+            for (var key in keyVals) {
+                var DBkey = 'mde-' + group + '-' + key;
+                localStorage[DBkey] = JSON.stringify(keyVals[key]);
+            }
         }
-    }
-
-    fetch(query) {
-        return document.querySelector('#mde-'+query);
-    }
-
-    query(elem, query) {
-        return elem.querySelector(query);
-    }
-
-    insert(html, elem, position = 'beforeend') {
-        return elem.insertAdjacentHTML(position, html);
-    }
-
-    containsClass(elem, cls) {
-        return elem.classList.contains(cls);
-    }
-
-    toggleClass(elem, cls, assert) {
-        return elem.classList.toggle(cls, assert);
-    }
-
-    getType(obj) {
-        const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-        return Number.isNaN(obj) ? 'NaN': type;
-    }
-
-    toString(obj, type)  {
-        switch (type) {
-            case 'string':    return obj;
-            case 'undefined': return 'undefined';
-            case 'NaN':       return 'NaN';
-            default:          return JSON.stringify(obj);
+    }, {
+        key: 'fetch',
+        value: function fetch(query) {
+            return document.querySelector('#mde-' + query);
         }
-    }
-
-    touches(e) {
-        return e.changedTouches;
-    }
-
-    getDragDistance(dragStart, dragEnd) {
-        return {
-            x: dragStart.pageX-dragEnd.pageX,
-            y: dragStart.pageY-dragEnd.pageY
+    }, {
+        key: 'query',
+        value: function query(elem, _query) {
+            return elem.querySelector(_query);
         }
-    }
+    }, {
+        key: 'insert',
+        value: function insert(html, elem) {
+            var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'beforeend';
 
-    returnInRange(num, min, max) {
-        num  = num > max ? max : num;
-        return num < min ? min : num;
-    }
-
-    scrollInfo(elem) {
-        const {scrollTop, scrollHeight, clientHeight} = elem;
-        return {
-            top:        scrollTop,
-            bottom:     scrollTop + clientHeight,
-            height:     clientHeight,
-            atTop:      scrollTop === 0,
-            atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
-            fullHeight: scrollHeight
+            return elem.insertAdjacentHTML(position, html);
         }
-    }
+    }, {
+        key: 'containsClass',
+        value: function containsClass(elem, cls) {
+            return elem.classList.contains(cls);
+        }
+    }, {
+        key: 'toggleClass',
+        value: function toggleClass(elem, cls, assert) {
+            return elem.classList.toggle(cls, assert);
+        }
+    }, {
+        key: 'getType',
+        value: function getType(obj) {
+            var type = {}.toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+            return Number.isNaN(obj) ? 'NaN' : type;
+        }
+    }, {
+        key: 'toString',
+        value: function toString(obj, type) {
+            switch (type) {
+                case 'string':
+                    return obj;
+                case 'undefined':
+                    return 'undefined';
+                case 'NaN':
+                    return 'NaN';
+                default:
+                    return JSON.stringify(obj);
+            }
+        }
+    }, {
+        key: 'touches',
+        value: function touches(e) {
+            return e.changedTouches;
+        }
+    }, {
+        key: 'getDragDistance',
+        value: function getDragDistance(dragStart, dragEnd) {
+            return {
+                x: dragStart.pageX - dragEnd.pageX,
+                y: dragStart.pageY - dragEnd.pageY
+            };
+        }
+    }, {
+        key: 'returnInRange',
+        value: function returnInRange(num, min, max) {
+            num = num > max ? max : num;
+            return num < min ? min : num;
+        }
+    }, {
+        key: 'scrollInfo',
+        value: function scrollInfo(elem) {
+            var scrollTop = elem.scrollTop,
+                scrollHeight = elem.scrollHeight,
+                clientHeight = elem.clientHeight;
 
-    returnTraceFromError(error) {
-        // get relevant trace parts
-        const bits = error.stack.split(":").slice(4,9)
-        // clear redundant chars at start and end
-        let first = bits[0];
-        bits[0] = first.substring(first.indexOf('(')+1,first.length);
-        let last = bits[bits.length-1];
-        bits[bits.length-1] = last.substring(0, last.indexOf(')'));
-        // compile
-        const fileName = bits[2].replace(/^.*[\\\/]/, '');
-        return {
-            fileName: fileName.length > 0 ? fileName : 'N/A',
-            filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',
-            lineNumber: bits[3]
-        };
-    }
-}
+            return {
+                top: scrollTop,
+                bottom: scrollTop + clientHeight,
+                height: clientHeight,
+                atTop: scrollTop === 0,
+                atBottom: scrollHeight - scrollTop <= clientHeight + 1,
+                fullHeight: scrollHeight
+            };
+        }
+    }, {
+        key: 'returnTraceFromError',
+        value: function returnTraceFromError(error) {
+            // get relevant trace parts
+            var bits = error.stack.split(":").slice(4, 9);
+            // clear redundant chars at start and end
+            var first = bits[0];
+            bits[0] = first.substring(first.indexOf('(') + 1, first.length);
+            var last = bits[bits.length - 1];
+            bits[bits.length - 1] = last.substring(0, last.indexOf(')'));
+            // compile
+            var fileName = bits[2].replace(/^.*[\\\/]/, '');
+            return {
+                fileName: fileName.length > 0 ? fileName : 'N/A',
+                filePath: fileName.length > 0 ? bits[0] + ':' + bits[1] + ':' + bits[2] : '',
+                lineNumber: bits[3]
+            };
+        }
+    }]);
 
-class MDEReload extends MDEHelpers
-{
-    constructor(options) {
-        super();
+    return MDEHelpers;
+}();
 
-        const { insert, fetch } = this;
-        const { hardReload } = options;
+var MDEReload = function (_MDEHelpers) {
+    _inherits(MDEReload, _MDEHelpers);
+
+    function MDEReload(options) {
+        _classCallCheck(this, MDEReload);
+
+        var _this = _possibleConstructorReturn(this, (MDEReload.__proto__ || Object.getPrototypeOf(MDEReload)).call(this));
+
+        var insert = _this.insert,
+            fetch = _this.fetch;
+        var hardReload = options.hardReload;
+
 
         insert('<button id="mde-reload" class="mde"></button>', document.body);
-        fetch('reload').addEventListener('click', (e) => {
-            location.reload(hardReload)
+        fetch('reload').addEventListener('click', function (e) {
+            location.reload(hardReload);
         }, false);
+        return _this;
     }
-}
 
-class MDELogbox extends MDEHelpers
-{
-    constructor(options) {
-        super();
+    return MDEReload;
+}(MDEHelpers);
 
-        this.options = options;
+var MDELogbox = function (_MDEHelpers2) {
+    _inherits(MDELogbox, _MDEHelpers2);
 
-        const { setupDB, getDB } = this;
+    function MDELogbox(options) {
+        _classCallCheck(this, MDELogbox);
+
+        var _this2 = _possibleConstructorReturn(this, (MDELogbox.__proto__ || Object.getPrototypeOf(MDELogbox)).call(this));
+
+        _this2.options = options;
+
+        var setupDB = _this2.setupDB,
+            getDB = _this2.getDB;
+
 
         setupDB({
-            logboxOpen: getDB('logboxOpen', options.group ) || false,
+            logboxOpen: getDB('logboxOpen', options.group) || false,
             logboxHeight: getDB('logboxHeight', options.group) || 40
         }, options.group);
 
-        this.buildLogboxButton();
-        this.buildLogbox();
+        _this2.buildLogboxButton();
+        _this2.buildLogbox();
 
-        window.console.log = (message) => {
-            const trace = this.returnTraceFromError(new Error);
-            this.log(message, trace);
+        window.console.log = function (message) {
+            var trace = _this2.returnTraceFromError(new Error());
+            _this2.log(message, trace);
         };
 
         if (options.logErrors === true) {
-            window.onerror = (message, filePath, lineNumber) => {
-                const fileName = filePath.replace(/^.*[\\\/]/, '');
-                this.log(message, {fileName, filePath, lineNumber, isError: true});
-            }
+            window.onerror = function (message, filePath, lineNumber) {
+                var fileName = filePath.replace(/^.*[\\\/]/, '');
+                _this2.log(message, { fileName: fileName, filePath: filePath, lineNumber: lineNumber, isError: true });
+            };
         }
+        return _this2;
     }
 
-    buildLogboxButton() {
-        const { state, insert, fetch } = this;
-        insert(`<button id="mde-open-logbox" class="mde ${state}"></button>`, document.body);
-        fetch('open-logbox').addEventListener('click', (e) => {
-            this.open();
-        }, false);
-    }
+    _createClass(MDELogbox, [{
+        key: 'buildLogboxButton',
+        value: function buildLogboxButton() {
+            var _this3 = this;
 
-    buildLogbox() {
-        const { state, height, insert, fetch, drag } = this;
+            var state = this.state,
+                insert = this.insert,
+                fetch = this.fetch;
 
-        insert(`<div id="mde-logbox" class="mde ${state}">
-                    <button id="mde-resize-logbox" class="mde">···</button>
-                    <button id="mde-close-logbox" class="mde">—</button>
-                    <div id="mde-logs"></div>
-                </div>`, document.body)
+            insert('<button id="mde-open-logbox" class="mde ' + state + '"></button>', document.body);
+            fetch('open-logbox').addEventListener('click', function (e) {
+                _this3.open();
+            }, false);
+        }
+    }, {
+        key: 'buildLogbox',
+        value: function buildLogbox() {
+            var _this4 = this;
 
-        this.setHeight(height);
+            var state = this.state,
+                height = this.height,
+                insert = this.insert,
+                fetch = this.fetch,
+                drag = this.drag;
 
-        const closeButton  = fetch('close-logbox');
-        const resizeButton = fetch('resize-logbox');
 
-        window.addEventListener('resize', (e) => {
-            this.setHeight(this.height);
-        }, false);
-        closeButton.addEventListener('click', (e) => {
-            this.close();
-        }, false);
-        resizeButton.addEventListener('touchstart', (e) => {
-            resizeButton.classList.add('pressed');
-            this.resize(e);
-            e.preventDefault();
-        }, false);
-        resizeButton.addEventListener('touchend', (e) => {
-            resizeButton.classList.remove('pressed');
-        }, false);
-    }
+            insert('<div id="mde-logbox" class="mde ' + state + '">\n                    <button id="mde-resize-logbox" class="mde">\xB7\xB7\xB7</button>\n                    <button id="mde-close-logbox" class="mde">\u2014</button>\n                    <div id="mde-logs"></div>\n                </div>', document.body);
 
-    // constants
+            this.setHeight(height);
 
-    get state() {
-        const { options } = this;
-        return this.getDB('logboxOpen', options.group);
-    }
+            var closeButton = fetch('close-logbox');
+            var resizeButton = fetch('resize-logbox');
 
-    get height() {
-        const { options } = this;
-        return this.getDB('logboxHeight', options.group);
-    }
-
-    get minHeight() {
-        return this.fetch('resize-logbox').offsetHeight;
-    }
-
-    get maxHeight() {
-        const { fetch, options } = this;
-        return window.innerHeight - (options.reload ? fetch('reload').offsetHeight + 20 : 10);
-    }
-
-    // modify global
-
-    setHeight(height) {
-        const { setDB, fetch, minHeight, maxHeight, returnInRange, options } = this;
-        height = returnInRange(height, minHeight, maxHeight);
-        setDB('logboxHeight', height, options.group);
-        fetch('logbox').style.height = height+'px';
-    }
-
-    // actions
-
-    open() {
-        const { fetch, setDB, options } = this;
-        setDB('logboxOpen', true, options.group);
-        fetch('open-logbox').classList = true;
-        fetch('logbox').classList = true;
-    }
-
-    close() {
-        const { fetch, setDB, options } = this;
-        setDB('logboxOpen', false, options.group);
-        fetch('open-logbox').classList = false;
-        fetch('logbox').classList = false;
-    }
-
-    resize(e) {
-        const { height, fetch, touches, scrollInfo, getDragDistance } = this;
-
-        const startHeight = height;
-        const startTouch  = touches(e)[0];
-        const startScroll = scrollInfo(fetch('logs'));
-
-        const onMove = (e) => {
-            const distance = getDragDistance(startTouch, touches(e)[0]);
-            const newHeight = startHeight+distance.y;
-            this.setHeight(newHeight);
-
-            if (startScroll.atBottom && distance.y < startScroll.top) {
-                fetch('logs').scrollTop = fetch('logs').scrollHeight;
-            }
+            window.addEventListener('resize', function (e) {
+                _this4.setHeight(_this4.height);
+            }, false);
+            closeButton.addEventListener('click', function (e) {
+                _this4.close();
+            }, false);
+            resizeButton.addEventListener('touchstart', function (e) {
+                resizeButton.classList.add('pressed');
+                _this4.resize(e);
+                e.preventDefault();
+            }, false);
+            resizeButton.addEventListener('touchend', function (e) {
+                resizeButton.classList.remove('pressed');
+            }, false);
         }
 
-        const onEnd = (e) => {
-            resizeButton.removeEventListener('touchmove', onMove, false);
-            resizeButton.removeEventListener('touchend', onEnd, false);
+        // constants
+
+    }, {
+        key: 'setHeight',
+
+
+        // modify global
+
+        value: function setHeight(height) {
+            var setDB = this.setDB,
+                fetch = this.fetch,
+                minHeight = this.minHeight,
+                maxHeight = this.maxHeight,
+                returnInRange = this.returnInRange,
+                options = this.options;
+
+            height = returnInRange(height, minHeight, maxHeight);
+            setDB('logboxHeight', height, options.group);
+            fetch('logbox').style.height = height + 'px';
         }
 
-        const resizeButton = fetch('resize-logbox');
-        resizeButton.addEventListener('touchmove', onMove, false);
-        resizeButton.addEventListener('touchend', onEnd, false);
-    }
+        // actions
 
-    log(message, trace) {
-        const { filePath, fileName, lineNumber, isError } = trace;
-        const { scrollInfo, fetch, insert, getType, toString, query, containsClass, toggleClass } = this;
+    }, {
+        key: 'open',
+        value: function open() {
+            var fetch = this.fetch,
+                setDB = this.setDB,
+                options = this.options;
 
-        const initialScroll = scrollInfo(fetch('logs'));
+            setDB('logboxOpen', true, options.group);
+            fetch('open-logbox').classList = true;
+            fetch('logbox').classList = true;
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            var fetch = this.fetch,
+                setDB = this.setDB,
+                options = this.options;
 
-        const logs = fetch('logs');
-        const lastLog = logs.lastChild || false;
-        const lastMessage = (lastLog) ? query(lastLog, '.message').innerText : false;
+            setDB('logboxOpen', false, options.group);
+            fetch('open-logbox').classList = false;
+            fetch('logbox').classList = false;
+        }
+    }, {
+        key: 'resize',
+        value: function resize(e) {
+            var _this5 = this;
 
-        const id = 'log-'+logs.children.length;
-        const type = isError ? 'error' : getType(message);
-        message = toString(message, type);
+            var height = this.height,
+                fetch = this.fetch,
+                touches = this.touches,
+                scrollInfo = this.scrollInfo,
+                getDragDistance = this.getDragDistance;
 
-        if (message !== lastMessage) {
-            insert('<div id="mde-'+id+'" class="log '+type+'">'
-                  +    '<div class="preview">'
-                  +        '<div class="stack"></div>'
-                  +        '<a class="trace" href="'+filePath+'" target="_blank">'+fileName+':'+lineNumber+'</a>'
-                  +        '<div class="message"></div>'
-                  +    '</div>'
-                  +    '<div class="full"></div>'
-                  +'</div>', logs);
 
-            const submitted = this.fetch(id);
+            var startHeight = height;
+            var startTouch = touches(e)[0];
+            var startScroll = scrollInfo(fetch('logs'));
 
-            query(submitted, '.preview .message').innerText = message;
-            query(submitted, '.full').innerText = message;
+            var onMove = function onMove(e) {
+                var distance = getDragDistance(startTouch, touches(e)[0]);
+                var newHeight = startHeight + distance.y;
+                _this5.setHeight(newHeight);
 
-            query(submitted, '.preview').addEventListener('click', (e) => {
-                if (!containsClass(e.target, 'trace')) {
-                    const clickedLog = e.target.closest('.log');
-                    toggleClass(clickedLog, 'expand');
+                if (startScroll.atBottom && distance.y < startScroll.top) {
+                    fetch('logs').scrollTop = fetch('logs').scrollHeight;
                 }
-            });
-        } else {
-            const stackSize = parseInt(query(lastLog, '.stack').innerText) || 1;
-            query(lastLog, '.stack').innerText = stackSize+1;
-        }
+            };
 
-        if (initialScroll.atBottom) {
-            logs.scrollTop = logs.scrollHeight;
+            var onEnd = function onEnd(e) {
+                resizeButton.removeEventListener('touchmove', onMove, false);
+                resizeButton.removeEventListener('touchend', onEnd, false);
+            };
+
+            var resizeButton = fetch('resize-logbox');
+            resizeButton.addEventListener('touchmove', onMove, false);
+            resizeButton.addEventListener('touchend', onEnd, false);
         }
-    }
-}
+    }, {
+        key: 'log',
+        value: function log(message, trace) {
+            var filePath = trace.filePath,
+                fileName = trace.fileName,
+                lineNumber = trace.lineNumber,
+                isError = trace.isError;
+            var scrollInfo = this.scrollInfo,
+                fetch = this.fetch,
+                insert = this.insert,
+                getType = this.getType,
+                toString = this.toString,
+                query = this.query,
+                containsClass = this.containsClass,
+                toggleClass = this.toggleClass;
+
+
+            var initialScroll = scrollInfo(fetch('logs'));
+
+            var logs = fetch('logs');
+            var lastLog = logs.lastChild || false;
+            var lastMessage = lastLog ? query(lastLog, '.message').innerText : false;
+
+            var id = 'log-' + logs.children.length;
+            var type = isError ? 'error' : getType(message);
+            message = toString(message, type);
+
+            if (message !== lastMessage) {
+                insert('<div id="mde-' + id + '" class="log ' + type + '">' + '<div class="preview">' + '<div class="stack"></div>' + '<a class="trace" href="' + filePath + '" target="_blank">' + fileName + ':' + lineNumber + '</a>' + '<div class="message"></div>' + '</div>' + '<div class="full"></div>' + '</div>', logs);
+
+                var submitted = this.fetch(id);
+
+                query(submitted, '.preview .message').innerText = message;
+                query(submitted, '.full').innerText = message;
+
+                query(submitted, '.preview').addEventListener('click', function (e) {
+                    if (!containsClass(e.target, 'trace')) {
+                        var clickedLog = e.target.closest('.log');
+                        toggleClass(clickedLog, 'expand');
+                    }
+                });
+            } else {
+                var stackSize = parseInt(query(lastLog, '.stack').innerText) || 1;
+                query(lastLog, '.stack').innerText = stackSize + 1;
+            }
+
+            if (initialScroll.atBottom) {
+                logs.scrollTop = logs.scrollHeight;
+            }
+        }
+    }, {
+        key: 'state',
+        get: function get() {
+            var options = this.options;
+
+            return this.getDB('logboxOpen', options.group);
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            var options = this.options;
+
+            return this.getDB('logboxHeight', options.group);
+        }
+    }, {
+        key: 'minHeight',
+        get: function get() {
+            return this.fetch('resize-logbox').offsetHeight;
+        }
+    }, {
+        key: 'maxHeight',
+        get: function get() {
+            var fetch = this.fetch,
+                options = this.options;
+
+            return window.innerHeight - (options.reload ? fetch('reload').offsetHeight + 20 : 10);
+        }
+    }]);
+
+    return MDELogbox;
+}(MDEHelpers);
+
+window.MobileDevEnvironment = MobileDevEnvironment;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ })
+/******/ ]);
+//# sourceMappingURL=mde.js.map

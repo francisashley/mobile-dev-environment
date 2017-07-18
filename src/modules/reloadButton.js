@@ -1,22 +1,5 @@
 class helpers
 {
-  getDB(key, group) {
-    const DBkey = `mde-${group}-${key}`;
-    return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
-  }
-
-  setDB(key, val, group) {
-    const DBkey = `mde-${group}-${key}`;
-    return localStorage[DBkey] = JSON.stringify(val);
-  }
-
-  setupDB(keyVals, group) {
-    for (let key in keyVals) {
-      const DBkey = `mde-${group}-${key}`;
-      localStorage[DBkey] = JSON.stringify(keyVals[key]);
-    }
-  }
-
   fetch(query) {
     return document.querySelector('#mde-'+query);
   }

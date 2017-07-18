@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(5);
+module.exports = __webpack_require__(6);
 
 
 /***/ }),
@@ -97,13 +97,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       logErrors: typeof options.logErrors !== 'undefined' ? options.logErrors : true
     };
 
-    // Import modules
+    // Import modules and tools
     var reloadButton = __webpack_require__(3);
     var logtray = __webpack_require__(4);
+    var DB = __webpack_require__(5);
+    DB = new DB(options.group);
 
     // Run modules
     if (options.reload === true) new reloadButton(options);
-    if (options.logtray === true) new logtray(options);
+    if (options.logtray === true) new logtray(options, DB);
   }
 
   // Attach MDE to window
@@ -165,26 +167,6 @@ var helpers = function () {
   }
 
   _createClass(helpers, [{
-    key: 'getDB',
-    value: function getDB(key, group) {
-      var DBkey = 'mde-' + group + '-' + key;
-      return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
-    }
-  }, {
-    key: 'setDB',
-    value: function setDB(key, val, group) {
-      var DBkey = 'mde-' + group + '-' + key;
-      return localStorage[DBkey] = JSON.stringify(val);
-    }
-  }, {
-    key: 'setupDB',
-    value: function setupDB(keyVals, group) {
-      for (var key in keyVals) {
-        var DBkey = 'mde-' + group + '-' + key;
-        localStorage[DBkey] = JSON.stringify(keyVals[key]);
-      }
-    }
-  }, {
     key: 'fetch',
     value: function fetch(query) {
       return document.querySelector('#mde-' + query);
@@ -335,26 +317,6 @@ var helpers = function () {
   }
 
   _createClass(helpers, [{
-    key: 'getDB',
-    value: function getDB(key, group) {
-      var DBkey = 'mde-' + group + '-' + key;
-      return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
-    }
-  }, {
-    key: 'setDB',
-    value: function setDB(key, val, group) {
-      var DBkey = 'mde-' + group + '-' + key;
-      return localStorage[DBkey] = JSON.stringify(val);
-    }
-  }, {
-    key: 'setupDB',
-    value: function setupDB(keyVals, group) {
-      for (var key in keyVals) {
-        var DBkey = 'mde-' + group + '-' + key;
-        localStorage[DBkey] = JSON.stringify(keyVals[key]);
-      }
-    }
-  }, {
     key: 'fetch',
     value: function fetch(query) {
       return document.querySelector('#mde-' + query);
@@ -462,21 +424,17 @@ var helpers = function () {
 var logtray = function (_helpers) {
   _inherits(logtray, _helpers);
 
-  function logtray(options) {
+  function logtray(options, DB) {
     _classCallCheck(this, logtray);
 
     var _this = _possibleConstructorReturn(this, (logtray.__proto__ || Object.getPrototypeOf(logtray)).call(this));
 
     _this.options = options;
+    _this.DB = DB;
 
-    var setupDB = _this.setupDB,
-        getDB = _this.getDB;
-
-
-    setupDB({
-      logtrayOpen: getDB('logtrayOpen', options.group) || false,
-      logtrayHeight: getDB('logtrayHeight', options.group) || 40
-    }, options.group);
+    // Setup variables if not setup already
+    DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
+    DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
 
     _this.buildlogtrayButton();
     _this.buildlogtray();
@@ -553,15 +511,14 @@ var logtray = function (_helpers) {
     // modify global
 
     value: function setHeight(height) {
-      var setDB = this.setDB,
-          fetch = this.fetch,
+      var fetch = this.fetch,
           minHeight = this.minHeight,
           maxHeight = this.maxHeight,
           returnInRange = this.returnInRange,
           options = this.options;
 
       height = returnInRange(height, minHeight, maxHeight);
-      setDB('logtrayHeight', height, options.group);
+      this.DB.set('logtrayHeight', height);
       fetch('logtray').style.height = height + 'px';
     }
 
@@ -571,10 +528,9 @@ var logtray = function (_helpers) {
     key: 'open',
     value: function open() {
       var fetch = this.fetch,
-          setDB = this.setDB,
           options = this.options;
 
-      setDB('logtrayOpen', true, options.group);
+      this.DB.set('logtrayOpen', true);
       fetch('open-logtray').classList = true;
       fetch('logtray').classList = true;
     }
@@ -582,10 +538,9 @@ var logtray = function (_helpers) {
     key: 'close',
     value: function close() {
       var fetch = this.fetch,
-          setDB = this.setDB,
           options = this.options;
 
-      setDB('logtrayOpen', false, options.group);
+      this.DB.set('logtrayOpen', false);
       fetch('open-logtray').classList = false;
       fetch('logtray').classList = false;
     }
@@ -679,14 +634,14 @@ var logtray = function (_helpers) {
     get: function get() {
       var options = this.options;
 
-      return this.getDB('logtrayOpen', options.group);
+      return this.DB.get('logtrayOpen');
     }
   }, {
     key: 'height',
     get: function get() {
       var options = this.options;
 
-      return this.getDB('logtrayHeight', options.group);
+      return this.DB.get('logtrayHeight');
     }
   }, {
     key: 'minHeight',
@@ -710,6 +665,39 @@ module.exports = logtray;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function DB() {
+    var _this = this;
+
+    var group = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'global';
+
+    // share state information with other instances of mde
+    // for seamless use across multiple client pages
+    this._group = group;
+
+    // prepare key: {mde-group-key}
+    this._getKey = function (key) {
+        return 'mde-' + _this._group + '-' + key;
+    };
+
+    // retrieve data
+    this.get = function (key) {
+        var result = localStorage[this._getKey(key)];
+        return typeof result !== 'undefined' ? JSON.parse(result) : null;
+    };
+
+    // set data
+    this.set = function (key, value) {
+        return localStorage[this._getKey(key)] = JSON.stringify(value);
+    };
+};
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

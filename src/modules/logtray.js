@@ -1,22 +1,5 @@
 class helpers
 {
-  getDB(key, group) {
-    const DBkey = `mde-${group}-${key}`;
-    return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
-  }
-
-  setDB(key, val, group) {
-    const DBkey = `mde-${group}-${key}`;
-    return localStorage[DBkey] = JSON.stringify(val);
-  }
-
-  setupDB(keyVals, group) {
-    for (let key in keyVals) {
-      const DBkey = `mde-${group}-${key}`;
-      localStorage[DBkey] = JSON.stringify(keyVals[key]);
-    }
-  }
-
   fetch(query) {
     return document.querySelector('#mde-'+query);
   }
@@ -99,17 +82,15 @@ class helpers
 
 class logtray extends helpers
 {
-  constructor(options) {
+  constructor(options, DB) {
     super();
 
     this.options = options;
+    this.DB = DB;
 
-    const { setupDB, getDB } = this;
-
-    setupDB({
-      logtrayOpen: getDB('logtrayOpen', options.group ) || false,
-      logtrayHeight: getDB('logtrayHeight', options.group) || 40
-    }, options.group);
+    // Setup variables if not setup already
+    DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
+    DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
 
     this.buildlogtrayButton();
     this.buildlogtray();
@@ -169,12 +150,12 @@ class logtray extends helpers
 
   get state() {
     const { options } = this;
-    return this.getDB('logtrayOpen', options.group);
+    return this.DB.get('logtrayOpen');
   }
 
   get height() {
     const { options } = this;
-    return this.getDB('logtrayHeight', options.group);
+    return this.DB.get('logtrayHeight');
   }
 
   get minHeight() {
@@ -189,24 +170,24 @@ class logtray extends helpers
   // modify global
 
   setHeight(height) {
-    const { setDB, fetch, minHeight, maxHeight, returnInRange, options } = this;
+    const { fetch, minHeight, maxHeight, returnInRange, options } = this;
     height = returnInRange(height, minHeight, maxHeight);
-    setDB('logtrayHeight', height, options.group);
+    this.DB.set('logtrayHeight', height);
     fetch('logtray').style.height = height+'px';
   }
 
   // actions
 
   open() {
-    const { fetch, setDB, options } = this;
-    setDB('logtrayOpen', true, options.group);
+    const { fetch, options } = this;
+    this.DB.set('logtrayOpen', true);
     fetch('open-logtray').classList = true;
     fetch('logtray').classList = true;
   }
 
   close() {
-    const { fetch, setDB, options } = this;
-    setDB('logtrayOpen', false, options.group);
+    const { fetch, options } = this;
+    this.DB.set('logtrayOpen', false);
     fetch('open-logtray').classList = false;
     fetch('logtray').classList = false;
   }

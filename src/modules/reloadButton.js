@@ -1,31 +1,29 @@
-class helpers
-{
-  fetch(query) {
+function fetch(query) {
     return document.querySelector('#mde-'+query);
   }
 
-  query(elem, query) {
+function query(elem, query) {
     return elem.querySelector(query);
   }
 
-  insert(html, elem, position = 'beforeend') {
+function insert(html, elem, position = 'beforeend') {
     return elem.insertAdjacentHTML(position, html);
   }
 
-  containsClass(elem, cls) {
+function containsClass(elem, cls) {
     return elem.classList.contains(cls);
   }
 
-  toggleClass(elem, cls, assert) {
+function toggleClass(elem, cls, assert) {
     return elem.classList.toggle(cls, assert);
   }
 
-  getType(obj) {
+function getType(obj) {
     const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
     return Number.isNaN(obj) ? 'NaN': type;
   }
 
-  toString(obj, type)  {
+function toString(obj, type)  {
     switch (type) {
       case 'string':    return obj;
       case 'undefined': return 'undefined';
@@ -34,23 +32,23 @@ class helpers
     }
   }
 
-  touches(e) {
+function touches(e) {
     return e.changedTouches;
   }
 
-  getDragDistance(dragStart, dragEnd) {
+function getDragDistance(dragStart, dragEnd) {
     return {
       x: dragStart.pageX-dragEnd.pageX,
       y: dragStart.pageY-dragEnd.pageY
     }
   }
 
-  returnInRange(num, min, max) {
+function returnInRange(num, min, max) {
     num  = num > max ? max : num;
     return num < min ? min : num;
   }
 
-  scrollInfo(elem) {
+function scrollInfo(elem) {
     const {scrollTop, scrollHeight, clientHeight} = elem;
     return {
       top:        scrollTop,
@@ -62,7 +60,7 @@ class helpers
     }
   }
 
-  returnTraceFromError(error) {
+function returnTraceFromError(error) {
     // get relevant trace parts
     const bits = error.stack.split(":").slice(4,9)
     // clear redundant chars at start and end
@@ -78,14 +76,10 @@ class helpers
       lineNumber: bits[3]
     };
   }
-}
 
-class reload extends helpers
+class reload
 {
   constructor(options) {
-    super();
-
-    const { insert, fetch } = this;
     const { hardReload } = options;
 
     insert('<button id="mde-reload" class="mde"></button>', document.body);

@@ -1,8 +1,3 @@
-  function returnInRange(num, min, max) {
-    num  = num > max ? max : num;
-    return num < min ? min : num;
-  }
-
   function scrollInfo(elem) {
     const {scrollTop, scrollHeight, clientHeight} = elem;
     return {
@@ -79,9 +74,9 @@ function logtray(options, DB) {
       )
     );
 
-    setTrayHeight(height());
+    setTrayHeight(DB.get('logtrayHeight'));
 
-    window.addEventListener('resize', (e) => setTrayHeight(height()), false);
+    window.addEventListener('resize', (e) => setTrayHeight(DB.get('logtrayHeight')), false);
     self.elements.closeTray.addEventListener('click', (e) => close(), false);
     self.elements.resizeTray.addEventListener('touchstart', (e) => resizeLogTray(e), false);
     self.elements.resizeTray.addEventListener('mousedown', (e) => resizeLogTray(e), false);
@@ -93,27 +88,22 @@ function logtray(options, DB) {
     return DB.get('logtrayOpen');
   }
 
-  function height() {
-    return DB.get('logtrayHeight');
-  }
-
-  function minHeight() {
-    return self.elements.resizeTray.offsetHeight;
-  }
-
-  function maxHeight() {
-    return window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
-  }
-
   // modify global
 
   function setTrayHeight(height) {
-    const min = minHeight()
-    const max = maxHeight()
-    height = returnInRange(height, min, max);
-    DB.set('logtrayHeight', height);
-    console.log(self.elements)
+    // set min height to match resize button height
+    const min = self.elements.resizeTray.offsetHeight;
+
+    // Set max height based on if reload button is displayed
+    const max = window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
+
+    // Ensure height is within range, if not get closest value
+    height = height > max ? max : height;
+    height = height < min ? min : height;
+
+    // Update logtray height and store value in DB
     self.elements.tray.style.height = height+'px';
+    DB.set('logtrayHeight', height);
   }
 
   // actions

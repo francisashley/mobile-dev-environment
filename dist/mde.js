@@ -319,26 +319,6 @@ module.exports = function(module) {
 "use strict";
 
 
-function returnInRange(num, min, max) {
-  num = num > max ? max : num;
-  return num < min ? min : num;
-}
-
-function scrollInfo(elem) {
-  var scrollTop = elem.scrollTop,
-      scrollHeight = elem.scrollHeight,
-      clientHeight = elem.clientHeight;
-
-  return {
-    top: scrollTop,
-    bottom: scrollTop + clientHeight,
-    height: clientHeight,
-    atTop: scrollTop === 0,
-    atBottom: scrollHeight - scrollTop <= clientHeight + 1,
-    fullHeight: scrollHeight
-  };
-}
-
 function reload(options) {
   // Libraries
   var crel = __webpack_require__(0);
@@ -362,11 +342,6 @@ module.exports = reload;
 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function returnInRange(num, min, max) {
-  num = num > max ? max : num;
-  return num < min ? min : num;
-}
 
 function scrollInfo(elem) {
   var scrollTop = elem.scrollTop,
@@ -437,10 +412,10 @@ function logtray(options, DB) {
   function buildlogtray() {
     crel(document.body, self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': 'mde ' + state() }, self.elements.resizeTray = crel('button', { 'id': 'mde-resize-logtray', 'class': 'mde' }), self.elements.closeTray = crel('button', { 'id': 'mde-close-logtray', 'class': 'mde' }), self.elements.logs = crel('div', { 'id': 'mde-logs' })));
 
-    setTrayHeight(height());
+    setTrayHeight(DB.get('logtrayHeight'));
 
     window.addEventListener('resize', function (e) {
-      return setTrayHeight(height());
+      return setTrayHeight(DB.get('logtrayHeight'));
     }, false);
     self.elements.closeTray.addEventListener('click', function (e) {
       return close();
@@ -459,27 +434,22 @@ function logtray(options, DB) {
     return DB.get('logtrayOpen');
   }
 
-  function height() {
-    return DB.get('logtrayHeight');
-  }
-
-  function minHeight() {
-    return self.elements.resizeTray.offsetHeight;
-  }
-
-  function maxHeight() {
-    return window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
-  }
-
   // modify global
 
   function setTrayHeight(height) {
-    var min = minHeight();
-    var max = maxHeight();
-    height = returnInRange(height, min, max);
-    DB.set('logtrayHeight', height);
-    console.log(self.elements);
+    // set min height to match resize button height
+    var min = self.elements.resizeTray.offsetHeight;
+
+    // Set max height based on if reload button is displayed
+    var max = window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
+
+    // Ensure height is within range, if not get closest value
+    height = height > max ? max : height;
+    height = height < min ? min : height;
+
+    // Update logtray height and store value in DB
     self.elements.tray.style.height = height + 'px';
+    DB.set('logtrayHeight', height);
   }
 
   // actions

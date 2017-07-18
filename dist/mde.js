@@ -68,7 +68,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
@@ -76,7 +76,9 @@ module.exports = __webpack_require__(4);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 (function () {
 
@@ -96,18 +98,54 @@ module.exports = __webpack_require__(4);
     };
 
     // Import modules
-    var reloadButton = __webpack_require__(2);
-    var logtray = __webpack_require__(3);
+    var reloadButton = __webpack_require__(3);
+    var logtray = __webpack_require__(4);
 
-    if (options.reload === true) new reloadButton({ hardReload: options.hardReload });
-    if (options.logtray === true) new logtray({ reload: options.reload, logErrors: options.logErrors, group: options.group });
+    // Run modules
+    if (options.reload === true) new reloadButton(options);
+    if (options.logtray === true) new logtray(options);
   }
 
+  // Attach MDE to window
   window.MobileDevEnvironment = MobileDevEnvironment;
+
+  // Export mde to node
+  if (( false ? 'undefined' : _typeof(module)) === "object" && _typeof(module.exports) === "object") {
+    module.exports = MobileDevEnvironment;
+  }
 })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -277,7 +315,7 @@ var reload = function (_helpers) {
 module.exports = reload;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -671,7 +709,7 @@ var logtray = function (_helpers) {
 module.exports = logtray;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

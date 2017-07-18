@@ -18,8 +18,8 @@
     const logtray      = require('./modules/logtray.js');
 
     // Run modules
-    if (options.reload === true)  new reloadButton( { hardReload: options.hardReload } );
-    if (options.logtray === true) new logtray({reload: options.reload, logErrors: options.logErrors, group: options.group});
+    if (options.reload === true)  new reloadButton(options);
+    if (options.logtray === true) new logtray(options);
   }
 
   // Attach MDE to window
@@ -27,6 +27,6 @@
 
   // Export mde to node
   if (typeof module === "object" && typeof module.exports === "object") {
-      module.exports = mde;
+      module.exports = MobileDevEnvironment;
   }
 })();

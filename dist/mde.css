@@ -1,165 +1,166 @@
 /* common */
-
 button.mde {
-    background-color:  white;
-    background-repeat: no-repeat;
-    border:        thin solid rgb(45,45,45);
-    border-radius: 2px;
-    font-family:   monospace;
-    margin:        0;
-    outline:       0;
-    user-select:   none }
+  background-color: white;
+  background-repeat: no-repeat;
+  border: thin solid #2d2d2d;
+  border-radius: 2px;
+  font-family: monospace;
+  margin: 0;
+  outline: 0;
+  user-select: none; }
 
 button.mde:active, button.mde.pressed {
-    background-color:    rgb(240,240,240) !important;
-    border:        thin solid rgb(90,90,90) !important; }
+  background-color: #f0f0f0 !important;
+  border: thin solid #5a5a5a !important; }
 
 /* reload button */
-
 button#mde-reload {
-    background-image: url(../assets/refresh.png);
-    background-position: 5px 2px;
-    background-size: 13px;
-    box-shadow:    0px 0px 1px 1px rgba(0,0,0,0.1);
-    height:        19px;
-    position:      fixed;
-    top:           10px;
-    right:         10px;
-    width:         24px;
-    z-index:       1; }
+  background-position: 5px 2px;
+  background-size: 13px;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+  height: 19px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  z-index: 1; }
 
 /* open logbox button */
-
 button#mde-open-logbox.true {
-    display:       none; }
+  display: none; }
 
 button#mde-open-logbox.false {
-    background-color:  white;
-    border:        thin solid rgb(45,45,45);
-    border-radius: 2px;
-    background-image: url(../assets/list.png);
-    background-position: 4px 1px;
-    background-repeat: no-repeat;
-    background-size: 15px;
-    bottom:        10px;
-    box-shadow:    0px 0px 1px 1px rgba(0,0,0,0.1);
-    height:        19px;
-    position:      fixed;
-    right:         10px;
-    width:         24px; }
+  background-color: white;
+  border: thin solid #2d2d2d;
+  border-radius: 2px;
+  background-position: 4px 1px;
+  background-repeat: no-repeat;
+  background-size: 15px;
+  bottom: 10px;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
+  height: 19px;
+  position: fixed;
+  right: 10px;
+  width: 24px; }
 
 /* logbox wrapper */
-
 #mde-logbox {
-    display:       none; }
+  display: none; }
 
 #mde-logbox.true {
-    background:    rgb(255,227,159);
-    bottom:        0;
-    display:       inline-block;
-    font-family:   "Lucida Grande", sans-serif;
-    font-size:     12px;
-    left:          0;
-    position:      fixed;
-    right:         0; }
+  background: #ffe39f;
+  bottom: 0;
+  display: inline-block;
+  font-family: "Lucida Grande", sans-serif;
+  font-size: 12px;
+  left: 0;
+  position: fixed;
+  right: 0; }
 
 /* resize logbox button */
-
 #mde-logbox.true #mde-resize-logbox {
-    border-left:   none;
-    border-radius: 0;
-    border-right:  none;
-    height:        10px;
-    line-height:   8px;
-    padding-top:   1px;
-    position:      absolute;
-    top:           0;
-    width:         100%; }
+  border-left: none;
+  border-radius: 0;
+  border-right: none;
+  height: 10px;
+  line-height: 8px;
+  padding-top: 1px;
+  position: absolute;
+  top: 0;
+  width: 100%; }
 
 /* close logbox button */
-
 #mde-logbox.true #mde-close-logbox {
-    border-radius: 0 0 0 2px;
-    border-right:  none;
-    height:        10px;
-    line-height:   5px;
-    padding:       2px;
-    position:      absolute;
-    top:           0;
-    right:         0;
-    width:         25px; }
+  border-radius: 0 0 0 2px;
+  border-right: none;
+  height: 10px;
+  line-height: 5px;
+  padding: 2px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px; }
 
 /* logs wrapper */
-
 #mde-logbox.true #mde-logs {
-    bottom:        0;
-    font-family:   monospace;
-    height:        calc(100%-10px);
-    left:          0;
-    overflow-y:    scroll;
-    position:      absolute;
-    right:         0;
-    top:           10px; }
+  bottom: 0;
+  font-family: monospace;
+  height: calc(100%-10px);
+  left: 0;
+  overflow-y: scroll;
+  position: absolute;
+  right: 0;
+  top: 10px; }
 
 /* logbox logs log */
-
 #mde-logbox.true #mde-logs .log {
-    border-bottom: thin solid rgba(0,0,0,0.2);
-    box-sizing:    border-box;
-    clear:         both;
-    overflow:      hidden;
-    padding:       5px;
-    position:      relative;
-    text-overflow: ellipsis;
-    white-space:   nowrap;
-    width:         100%;
-    word-break:    break-all; }
+  border-bottom: thin solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  clear: both;
+  overflow: hidden;
+  padding: 5px;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  word-break: break-all; }
 
-  #mde-logbox.true #mde-logs .log .preview .stack:not(:empty) {
-    background-color: rgba(139,69,19,0.25);
-    border:        thin solid rgba(45,45,45,0.8);
-    border-radius: 2px;
-    color:         rgb(45,45,45);
-    float:         left;
-    font-size:     80%;
-    font-weight:   bold;
-    line-height:   14px;
-    margin-right:  5px;
-    height:        14px;
-    padding:       1px 3px 0 3px;
-    border-radius: 4px;
-    text-align:    center;
-    vertical-align: middle; }
+#mde-logbox.true #mde-logs .log .preview .stack:not(:empty) {
+  background-color: rgba(139, 69, 19, 0.25);
+  border: thin solid rgba(45, 45, 45, 0.8);
+  border-radius: 2px;
+  color: #2d2d2d;
+  float: left;
+  font-size: 80%;
+  font-weight: bold;
+  line-height: 14px;
+  margin-right: 5px;
+  height: 14px;
+  padding: 1px 3px 0 3px;
+  border-radius: 4px;
+  text-align: center;
+  vertical-align: middle; }
 
 #mde-logbox.true #mde-logs .log .preview .message {
-    overflow:      hidden;
-    text-overflow: ellipsis;
-    white-space:   nowrap; }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
 
 #mde-logbox.true #mde-logs .log .preview .trace,
 #mde-logbox.true #mde-logs .log .preview .trace:visited {
-    color:         rgb(45,45,45);
-    float:         right;
-    padding-left:  5px;
-    text-decoration: underline; }
+  color: #2d2d2d;
+  float: right;
+  padding-left: 5px;
+  text-decoration: underline; }
 
-#mde-logbox.true #mde-logs .log.error { color: red; }
+#mde-logbox.true #mde-logs .log.error {
+  color: red; }
+
 #mde-logbox.true #mde-logs .log.null,
-#mde-logbox.true #mde-logs .log.undefined { color: rgb(120,120,120); }
+#mde-logbox.true #mde-logs .log.undefined {
+  color: #787878; }
+
 #mde-logbox.true #mde-logs .log.number,
 #mde-logbox.true #mde-logs .log.boolean,
-#mde-logbox.true #mde-logs .log.NaN { color: blue; }
+#mde-logbox.true #mde-logs .log.NaN {
+  color: blue; }
+
 #mde-logbox.true #mde-logs .log.htmlcollection .message,
-#mde-logbox.true #mde-logs .log.object .message { font-style: italic;}
+#mde-logbox.true #mde-logs .log.object .message {
+  font-style: italic; }
 
 #mde-logbox.true #mde-logs .log .full {
-    display:       none; }
+  display: none; }
+
 #mde-logbox.true #mde-logs .log.expand .preview .message {
-    font-weight:   bold; }
+  font-weight: bold; }
+
 #mde-logbox.true #mde-logs .log.expand .full {
-    background:    rgba(139,69,19,0.25);
-    box-shadow:    inset 1px 1px 1px rgba(0,0,0,0.2);
-    display:       block;
-    margin:        5px -5px -5px -5px;
-    padding:       5px;
-    white-space:   normal; }
+  background: rgba(139, 69, 19, 0.25);
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: 5px -5px -5px -5px;
+  padding: 5px;
+  white-space: normal; }
+
+/*# sourceMappingURL=mde.css.map*/

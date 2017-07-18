@@ -77,16 +77,13 @@ function returnTraceFromError(error) {
     };
   }
 
-class reload
-{
-  constructor(options) {
-    const { hardReload } = options;
+function reload(options) {
+  const { hardReload } = options;
 
-    insert('<button id="mde-reload" class="mde"></button>', document.body);
-    fetch('reload').addEventListener('click', (e) => {
-      location.reload(hardReload)
-    }, false);
-  }
+  insert('<button id="mde-reload" class="mde"></button>', document.body);
+  fetch('reload').addEventListener('click', (e) => {
+    location.reload(hardReload)
+  }, false);
 }
 
 module.exports = reload;

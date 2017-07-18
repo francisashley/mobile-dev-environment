@@ -7,10 +7,6 @@
     return elem.querySelector(query);
   }
 
-  function insert(html, elem, position = 'beforeend') {
-    return elem.insertAdjacentHTML(position, html);
-  }
-
   function containsClass(elem, cls) {
     return elem.classList.contains(cls);
   }
@@ -116,11 +112,14 @@ function logtray(options, DB) {
   }
 
   function buildlogtray() {
-    insert(`<div id="mde-logtray" class="mde ${state()}">
-          <button id="mde-resize-logtray" class="mde">···</button>
-          <button id="mde-close-logtray" class="mde">—</button>
-          <div id="mde-logs"></div>
-        </div>`, document.body)
+    crel(document.body,
+      crel('div',
+        { 'id': 'mde-logtray', 'class': `mde ${state()}`},
+        crel('button', {'id': 'mde-resize-logtray', 'class': 'mde'}),
+        crel('button', {'id': 'mde-close-logtray', 'class': 'mde'}),
+        crel('div', {'id': 'mde-logs'})
+      )
+    );
 
     setHeight(height());
 
@@ -224,14 +223,18 @@ function logtray(options, DB) {
     message = toString(message, type);
 
     if (message !== lastMessage) {
-      insert('<div id="mde-'+id+'" class="log '+type+'">'
-          +    '<div class="preview">'
-          +        '<div class="stack"></div>'
-          +        '<a class="trace" href="'+filePath+'" target="_blank">'+fileName+':'+lineNumber+'</a>'
-          +        '<div class="message"></div>'
-          +    '</div>'
-          +    '<div class="full"></div>'
-          +'</div>', logs);
+      crel(logs,
+        crel('div',
+          { 'id': 'mde-' + id, 'class': 'log ' + type },
+          crel('div',
+            {'class': 'preview'},
+            crel('div', { 'class': 'stack' } ),
+            crel('a', { 'class': 'trace', 'href': filePath, 'target': '_blank' }, fileName+':'+lineNumber),
+            crel('div', { 'class': 'message' } )
+          ),
+          crel('div', {'class': 'full'})
+        )
+      );
 
       const submitted = fetch(id);
 

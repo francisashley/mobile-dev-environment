@@ -1,21 +1,10 @@
-function touches(e) {
-    return e.changedTouches;
-  }
-
-function getDragDistance(dragStart, dragEnd) {
-    return {
-      x: dragStart.pageX-dragEnd.pageX,
-      y: dragStart.pageY-dragEnd.pageY
-    };
-  }
-
 function returnInRange(num, min, max) {
     num  = num > max ? max : num;
     return num < min ? min : num;
   }
 
 function scrollInfo(elem) {
-    const {scrollTop, scrollHeight, clientHeight} = elem;
+    const { scrollTop, scrollHeight, clientHeight } = elem;
     return {
       top:        scrollTop,
       bottom:     scrollTop + clientHeight,

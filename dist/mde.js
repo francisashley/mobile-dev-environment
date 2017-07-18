@@ -319,17 +319,6 @@ module.exports = function(module) {
 "use strict";
 
 
-function touches(e) {
-  return e.changedTouches;
-}
-
-function getDragDistance(dragStart, dragEnd) {
-  return {
-    x: dragStart.pageX - dragEnd.pageX,
-    y: dragStart.pageY - dragEnd.pageY
-  };
-}
-
 function returnInRange(num, min, max) {
   num = num > max ? max : num;
   return num < min ? min : num;
@@ -347,23 +336,6 @@ function scrollInfo(elem) {
     atTop: scrollTop === 0,
     atBottom: scrollHeight - scrollTop <= clientHeight + 1,
     fullHeight: scrollHeight
-  };
-}
-
-function returnTraceFromError(error) {
-  // get relevant trace parts
-  var bits = error.stack.split(":").slice(4, 9);
-  // clear redundant chars at start and end
-  var first = bits[0];
-  bits[0] = first.substring(first.indexOf('(') + 1, first.length);
-  var last = bits[bits.length - 1];
-  bits[bits.length - 1] = last.substring(0, last.indexOf(')'));
-  // compile
-  var fileName = bits[2].replace(/^.*[\\\/]/, '');
-  return {
-    fileName: fileName.length > 0 ? fileName : 'N/A',
-    filePath: fileName.length > 0 ? bits[0] + ':' + bits[1] + ':' + bits[2] : '',
-    lineNumber: bits[3]
   };
 }
 
@@ -391,17 +363,6 @@ module.exports = reload;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-function touches(e) {
-  return e.changedTouches;
-}
-
-function getDragDistance(dragStart, dragEnd) {
-  return {
-    x: dragStart.pageX - dragEnd.pageX,
-    y: dragStart.pageY - dragEnd.pageY
-  };
-}
-
 function returnInRange(num, min, max) {
   num = num > max ? max : num;
   return num < min ? min : num;
@@ -419,23 +380,6 @@ function scrollInfo(elem) {
     atTop: scrollTop === 0,
     atBottom: scrollHeight - scrollTop <= clientHeight + 1,
     fullHeight: scrollHeight
-  };
-}
-
-function returnTraceFromError(error) {
-  // get relevant trace parts
-  var bits = error.stack.split(":").slice(4, 9);
-  // clear redundant chars at start and end
-  var first = bits[0];
-  bits[0] = first.substring(first.indexOf('(') + 1, first.length);
-  var last = bits[bits.length - 1];
-  bits[bits.length - 1] = last.substring(0, last.indexOf(')'));
-  // compile
-  var fileName = bits[2].replace(/^.*[\\\/]/, '');
-  return {
-    fileName: fileName.length > 0 ? fileName : 'N/A',
-    filePath: fileName.length > 0 ? bits[0] + ':' + bits[1] + ':' + bits[2] : '',
-    lineNumber: bits[3]
   };
 }
 
@@ -493,21 +437,19 @@ function logtray(options, DB) {
   function buildlogtray() {
     crel(document.body, self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': 'mde ' + state() }, self.elements.resizeTray = crel('button', { 'id': 'mde-resize-logtray', 'class': 'mde' }), self.elements.closeTray = crel('button', { 'id': 'mde-close-logtray', 'class': 'mde' }), self.elements.logs = crel('div', { 'id': 'mde-logs' })));
 
-    setHeight(height());
+    setTrayHeight(height());
 
     window.addEventListener('resize', function (e) {
-      setHeight(height());
+      return setTrayHeight(height());
     }, false);
     self.elements.closeTray.addEventListener('click', function (e) {
-      close();
+      return close();
     }, false);
     self.elements.resizeTray.addEventListener('touchstart', function (e) {
-      self.elements.resizeTray.classList.add('pressed');
-      resize(e);
-      e.preventDefault();
+      return resizeLogTray(e);
     }, false);
-    self.elements.resizeTray.addEventListener('touchend', function (e) {
-      self.resizeTray.classList.remove('pressed');
+    self.elements.resizeTray.addEventListener('mousedown', function (e) {
+      return resizeLogTray(e);
     }, false);
   }
 
@@ -531,7 +473,7 @@ function logtray(options, DB) {
 
   // modify global
 
-  function setHeight(height) {
+  function setTrayHeight(height) {
     var min = minHeight();
     var max = maxHeight();
     height = returnInRange(height, min, max);
@@ -554,30 +496,45 @@ function logtray(options, DB) {
     self.elements.tray.classList = false;
   }
 
-  function resize(e) {
-    var _this = this;
-
-    var startHeight = height;
-    var startTouch = touches(e)[0];
-    var startScroll = scrollInfo(self.elements.logs);
+  // Resize logtray by dragging up and down on the bar
+  function resizeLogTray(e) {
+    // starting y coordinate on screen (from touch input or mouse)
+    var startY = e.type === 'touchstart' ? e.changedTouches[0].clientY : e.clientY;
+    // starting height of logtray
+    var startH = DB.get('logtrayHeight');
+    // check if log tray is scrolled to bottom,
+    var startScrolledBottom = self.elements.logs.scrollHeight - self.elements.logs.scrollTop <= self.elements.logs.clientHeight + 1;
+    // check if log tray is scrolled to top
+    var startScrolledTop = self.elements.logs.scrollTop === 0;
 
     var onMove = function onMove(e) {
-      var distance = getDragDistance(startTouch, touches(e)[0]);
-      var newHeight = startHeight + distance.y;
-      _this.setHeight(newHeight);
+      // Get current y position on screen
+      var currentY = e.type === 'touchmove' ? e.changedTouches[0].clientY : e.clientY;
+      // Calculate distance between starting and current Y
+      var dragDistance = startY - currentY;
 
-      if (startScroll.atBottom && distance.y < startScroll.top) {
+      // Update tray height
+      setTrayHeight(startH + dragDistance);
+
+      // If logtray is scrolled to the bottom, ensure it remains that way
+      if (startScrolledBottom) {
         self.elements.logs.scrollTop = self.elements.logs.scrollHeight;
       }
     };
 
-    var onEnd = function onEnd(e) {
-      self.elements.resizeTray.removeEventListener('touchmove', onMove, false);
-      self.elements.resizeTray.removeEventListener('touchend', onEnd, false);
-    };
+    function onEnd(e) {
+      // remove listeners to prevent stacking and conflictions
+      e.target.removeEventListener('touchmove', onMove, false);
+      e.target.removeEventListener('touchend', onEnd, false);
+      document.removeEventListener('mousemove', onMove, false);
+      document.removeEventListener('mouseup', onEnd, false);
+    }
 
-    self.elements.resizeTray.addEventListener('touchmove', onMove, false);
-    self.elements.resizeTray.addEventListener('touchend', onEnd, false);
+    // Handle input dragging logtray resize bar
+    e.target.addEventListener('touchmove', onMove, false);
+    e.target.addEventListener('touchend', onEnd, false);
+    document.addEventListener('mousemove', onMove, false);
+    document.addEventListener('mouseup', onEnd, false);
   }
 
   function log(message, trace) {

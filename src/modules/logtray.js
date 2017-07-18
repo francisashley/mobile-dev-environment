@@ -1,14 +1,3 @@
-  function touches(e) {
-    return e.changedTouches;
-  }
-
-  function getDragDistance(dragStart, dragEnd) {
-    return {
-      x: dragStart.pageX-dragEnd.pageX,
-      y: dragStart.pageY-dragEnd.pageY
-    }
-  }
-
   function returnInRange(num, min, max) {
     num  = num > max ? max : num;
     return num < min ? min : num;
@@ -90,22 +79,12 @@ function logtray(options, DB) {
       )
     );
 
-    setHeight(height());
+    setTrayHeight(height());
 
-    window.addEventListener('resize', (e) => {
-      setHeight(height());
-    }, false);
-    self.elements.closeTray.addEventListener('click', (e) => {
-      close();
-    }, false);
-    self.elements.resizeTray.addEventListener('touchstart', (e) => {
-      self.elements.resizeTray.classList.add('pressed');
-      resize(e);
-      e.preventDefault();
-    }, false);
-    self.elements.resizeTray.addEventListener('touchend', (e) => {
-      self.resizeTray.classList.remove('pressed');
-    }, false);
+    window.addEventListener('resize', (e) => setTrayHeight(height()), false);
+    self.elements.closeTray.addEventListener('click', (e) => close(), false);
+    self.elements.resizeTray.addEventListener('touchstart', (e) => resizeLogTray(e), false);
+    self.elements.resizeTray.addEventListener('mousedown', (e) => resizeLogTray(e), false);
   }
 
   // constants
@@ -128,7 +107,7 @@ function logtray(options, DB) {
 
   // modify global
 
-  function setHeight(height) {
+  function setTrayHeight(height) {
     const min = minHeight()
     const max = maxHeight()
     height = returnInRange(height, min, max);
@@ -151,28 +130,45 @@ function logtray(options, DB) {
     self.elements.tray.classList = false;
   }
 
-  function resize(e) {
-    const startHeight = height;
-    const startTouch  = touches(e)[0];
-    const startScroll = scrollInfo(self.elements.logs);
+  // Resize logtray by dragging up and down on the bar
+  function resizeLogTray(e) {
+    // starting y coordinate on screen (from touch input or mouse)
+    const startY = e.type === 'touchstart' ? e.changedTouches[0].clientY : e.clientY;
+    // starting height of logtray
+    const startH = DB.get('logtrayHeight');
+    // check if log tray is scrolled to bottom,
+    const startScrolledBottom = self.elements.logs.scrollHeight - self.elements.logs.scrollTop <= self.elements.logs.clientHeight + 1;
+    // check if log tray is scrolled to top
+    const startScrolledTop = self.elements.logs.scrollTop === 0;
 
     const onMove = (e) => {
-      const distance = getDragDistance(startTouch, touches(e)[0]);
-      const newHeight = startHeight+distance.y;
-      this.setHeight(newHeight);
+      // Get current y position on screen
+      const currentY = e.type === 'touchmove' ? e.changedTouches[0].clientY : e.clientY;
+      // Calculate distance between starting and current Y
+      const dragDistance = startY - currentY;
 
-      if (startScroll.atBottom && distance.y < startScroll.top) {
+      // Update tray height
+      setTrayHeight(startH + dragDistance);
+
+      // If logtray is scrolled to the bottom, ensure it remains that way
+      if (startScrolledBottom) {
         self.elements.logs.scrollTop = self.elements.logs.scrollHeight;
       }
     };
 
-    const onEnd = (e) => {
-      self.elements.resizeTray.removeEventListener('touchmove', onMove, false);
-      self.elements.resizeTray.removeEventListener('touchend', onEnd, false);
-    };
+    function onEnd(e) {
+      // remove listeners to prevent stacking and conflictions
+      e.target.removeEventListener('touchmove', onMove, false);
+      e.target.removeEventListener('touchend', onEnd, false);
+      document.removeEventListener('mousemove', onMove, false);
+      document.removeEventListener('mouseup', onEnd, false);
+    }
 
-    self.elements.resizeTray.addEventListener('touchmove', onMove, false);
-    self.elements.resizeTray.addEventListener('touchend', onEnd, false);
+    // Handle input dragging logtray resize bar
+    e.target.addEventListener('touchmove', onMove, false);
+    e.target.addEventListener('touchend', onEnd, false);
+    document.addEventListener('mousemove', onMove, false);
+    document.addEventListener('mouseup', onEnd, false);
   }
 
   function log(message, trace) {

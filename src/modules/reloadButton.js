@@ -1,7 +1,3 @@
-function containsClass(elem, cls) {
-    return elem.classList.contains(cls);
-  }
-
 function toggleClass(elem, cls, assert) {
     return elem.classList.toggle(cls, assert);
   }

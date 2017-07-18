@@ -1,90 +1,85 @@
-class helpers
-{
-  fetch(query) {
-    return document.querySelector('#mde-'+query);
-  }
+function fetch(query) {
+  return document.querySelector('#mde-'+query);
+}
 
-  query(elem, query) {
-    return elem.querySelector(query);
-  }
+function query(elem, query) {
+  return elem.querySelector(query);
+}
 
-  insert(html, elem, position = 'beforeend') {
-    return elem.insertAdjacentHTML(position, html);
-  }
+function insert(html, elem, position = 'beforeend') {
+  return elem.insertAdjacentHTML(position, html);
+}
 
-  containsClass(elem, cls) {
-    return elem.classList.contains(cls);
-  }
+function containsClass(elem, cls) {
+  return elem.classList.contains(cls);
+}
 
-  toggleClass(elem, cls, assert) {
-    return elem.classList.toggle(cls, assert);
-  }
+function toggleClass(elem, cls, assert) {
+  return elem.classList.toggle(cls, assert);
+}
 
-  getType(obj) {
-    const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-    return Number.isNaN(obj) ? 'NaN': type;
-  }
+function getType(obj) {
+  const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+  return Number.isNaN(obj) ? 'NaN': type;
+}
 
-  toString(obj, type)  {
-    switch (type) {
-      case 'string':    return obj;
-      case 'undefined': return 'undefined';
-      case 'NaN':       return 'NaN';
-      default:          return JSON.stringify(obj);
-    }
-  }
-
-  touches(e) {
-    return e.changedTouches;
-  }
-
-  getDragDistance(dragStart, dragEnd) {
-    return {
-      x: dragStart.pageX-dragEnd.pageX,
-      y: dragStart.pageY-dragEnd.pageY
-    }
-  }
-
-  returnInRange(num, min, max) {
-    num  = num > max ? max : num;
-    return num < min ? min : num;
-  }
-
-  scrollInfo(elem) {
-    const {scrollTop, scrollHeight, clientHeight} = elem;
-    return {
-      top:        scrollTop,
-      bottom:     scrollTop + clientHeight,
-      height:     clientHeight,
-      atTop:      scrollTop === 0,
-      atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
-      fullHeight: scrollHeight
-    }
-  }
-
-  returnTraceFromError(error) {
-    // get relevant trace parts
-    const bits = error.stack.split(":").slice(4,9)
-    // clear redundant chars at start and end
-    let first = bits[0];
-    bits[0] = first.substring(first.indexOf('(')+1,first.length);
-    let last = bits[bits.length-1];
-    bits[bits.length-1] = last.substring(0, last.indexOf(')'));
-    // compile
-    const fileName = bits[2].replace(/^.*[\\\/]/, '');
-    return {
-      fileName: fileName.length > 0 ? fileName : 'N/A',
-      filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',
-      lineNumber: bits[3]
-    };
+function toString(obj, type)  {
+  switch (type) {
+    case 'string':    return obj;
+    case 'undefined': return 'undefined';
+    case 'NaN':       return 'NaN';
+    default:          return JSON.stringify(obj);
   }
 }
 
-class logtray extends helpers
+function touches(e) {
+  return e.changedTouches;
+}
+
+function getDragDistance(dragStart, dragEnd) {
+  return {
+    x: dragStart.pageX-dragEnd.pageX,
+    y: dragStart.pageY-dragEnd.pageY
+  }
+}
+
+function returnInRange(num, min, max) {
+  num  = num > max ? max : num;
+  return num < min ? min : num;
+}
+
+function scrollInfo(elem) {
+  const {scrollTop, scrollHeight, clientHeight} = elem;
+  return {
+    top:        scrollTop,
+    bottom:     scrollTop + clientHeight,
+    height:     clientHeight,
+    atTop:      scrollTop === 0,
+    atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
+    fullHeight: scrollHeight
+  }
+}
+
+function returnTraceFromError(error) {
+  // get relevant trace parts
+  const bits = error.stack.split(":").slice(4,9)
+  // clear redundant chars at start and end
+  let first = bits[0];
+  bits[0] = first.substring(first.indexOf('(')+1,first.length);
+  let last = bits[bits.length-1];
+  bits[bits.length-1] = last.substring(0, last.indexOf(')'));
+  // compile
+  const fileName = bits[2].replace(/^.*[\\\/]/, '');
+  return {
+    fileName: fileName.length > 0 ? fileName : 'N/A',
+    filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',
+    lineNumber: bits[3]
+  };
+}
+
+class logtray
 {
   constructor(options, DB) {
-    super();
-
     this.options = options;
     this.DB = DB;
 
@@ -96,7 +91,7 @@ class logtray extends helpers
     this.buildlogtray();
 
     window.console.log = (message) => {
-      const trace = this.returnTraceFromError(new Error);
+      const trace = returnTraceFromError(new Error);
       this.log(message, trace);
     };
 
@@ -109,7 +104,7 @@ class logtray extends helpers
   }
 
   buildlogtrayButton() {
-    const { state, insert, fetch } = this;
+    const { state } = this;
     insert(`<button id="mde-open-logtray" class="mde ${state}"></button>`, document.body);
     fetch('open-logtray').addEventListener('click', (e) => {
       this.open();
@@ -117,8 +112,7 @@ class logtray extends helpers
   }
 
   buildlogtray() {
-    const { state, height, insert, fetch, drag } = this;
-
+    const { state, height } = this;
     insert(`<div id="mde-logtray" class="mde ${state}">
           <button id="mde-resize-logtray" class="mde">···</button>
           <button id="mde-close-logtray" class="mde">—</button>
@@ -149,28 +143,25 @@ class logtray extends helpers
   // constants
 
   get state() {
-    const { options } = this;
     return this.DB.get('logtrayOpen');
   }
 
   get height() {
-    const { options } = this;
     return this.DB.get('logtrayHeight');
   }
 
   get minHeight() {
-    return this.fetch('resize-logtray').offsetHeight;
+    return fetch('resize-logtray').offsetHeight;
   }
 
   get maxHeight() {
-    const { fetch, options } = this;
-    return window.innerHeight - (options.reload ? fetch('reload').offsetHeight + 20 : 10);
+    return window.innerHeight - (this.options.reload ? fetch('reload').offsetHeight + 20 : 10);
   }
 
   // modify global
 
   setHeight(height) {
-    const { fetch, minHeight, maxHeight, returnInRange, options } = this;
+    const { minHeight, maxHeight } = this;
     height = returnInRange(height, minHeight, maxHeight);
     this.DB.set('logtrayHeight', height);
     fetch('logtray').style.height = height+'px';
@@ -179,22 +170,18 @@ class logtray extends helpers
   // actions
 
   open() {
-    const { fetch, options } = this;
     this.DB.set('logtrayOpen', true);
     fetch('open-logtray').classList = true;
     fetch('logtray').classList = true;
   }
 
   close() {
-    const { fetch, options } = this;
     this.DB.set('logtrayOpen', false);
     fetch('open-logtray').classList = false;
     fetch('logtray').classList = false;
   }
 
   resize(e) {
-    const { height, fetch, touches, scrollInfo, getDragDistance } = this;
-
     const startHeight = height;
     const startTouch  = touches(e)[0];
     const startScroll = scrollInfo(fetch('logs'));
@@ -221,7 +208,6 @@ class logtray extends helpers
 
   log(message, trace) {
     const { filePath, fileName, lineNumber, isError } = trace;
-    const { scrollInfo, fetch, insert, getType, toString, query, containsClass, toggleClass } = this;
 
     const initialScroll = scrollInfo(fetch('logs'));
 
@@ -243,7 +229,7 @@ class logtray extends helpers
           +    '<div class="full"></div>'
           +'</div>', logs);
 
-      const submitted = this.fetch(id);
+      const submitted = fetch(id);
 
       query(submitted, '.preview .message').innerText = message;
       query(submitted, '.full').innerText = message;

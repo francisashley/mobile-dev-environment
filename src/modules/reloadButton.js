@@ -1,21 +1,3 @@
-function returnInRange(num, min, max) {
-    num  = num > max ? max : num;
-    return num < min ? min : num;
-  }
-
-function scrollInfo(elem) {
-    const { scrollTop, scrollHeight, clientHeight } = elem;
-    return {
-      top:        scrollTop,
-      bottom:     scrollTop + clientHeight,
-      height:     clientHeight,
-      atTop:      scrollTop === 0,
-      atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
-      fullHeight: scrollHeight
-    };
-  }
-
-
 function reload(options) {
   // Libraries
   const crel = require('crel');

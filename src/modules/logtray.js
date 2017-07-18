@@ -1,83 +1,91 @@
-function fetch(query) {
-  return document.querySelector('#mde-'+query);
-}
-
-function query(elem, query) {
-  return elem.querySelector(query);
-}
-
-function insert(html, elem, position = 'beforeend') {
-  return elem.insertAdjacentHTML(position, html);
-}
-
-function containsClass(elem, cls) {
-  return elem.classList.contains(cls);
-}
-
-function toggleClass(elem, cls, assert) {
-  return elem.classList.toggle(cls, assert);
-}
-
-function getType(obj) {
-  const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-  return Number.isNaN(obj) ? 'NaN': type;
-}
-
-function toString(obj, type)  {
-  switch (type) {
-    case 'string':    return obj;
-    case 'undefined': return 'undefined';
-    case 'NaN':       return 'NaN';
-    default:          return JSON.stringify(obj);
+//
+  function fetch(query) {
+    return document.querySelector('#mde-'+query);
   }
-}
 
-function touches(e) {
-  return e.changedTouches;
-}
-
-function getDragDistance(dragStart, dragEnd) {
-  return {
-    x: dragStart.pageX-dragEnd.pageX,
-    y: dragStart.pageY-dragEnd.pageY
+  function query(elem, query) {
+    return elem.querySelector(query);
   }
-}
 
-function returnInRange(num, min, max) {
-  num  = num > max ? max : num;
-  return num < min ? min : num;
-}
-
-function scrollInfo(elem) {
-  const {scrollTop, scrollHeight, clientHeight} = elem;
-  return {
-    top:        scrollTop,
-    bottom:     scrollTop + clientHeight,
-    height:     clientHeight,
-    atTop:      scrollTop === 0,
-    atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
-    fullHeight: scrollHeight
+  function insert(html, elem, position = 'beforeend') {
+    return elem.insertAdjacentHTML(position, html);
   }
-}
 
-function returnTraceFromError(error) {
-  // get relevant trace parts
-  const bits = error.stack.split(":").slice(4,9)
-  // clear redundant chars at start and end
-  let first = bits[0];
-  bits[0] = first.substring(first.indexOf('(')+1,first.length);
-  let last = bits[bits.length-1];
-  bits[bits.length-1] = last.substring(0, last.indexOf(')'));
-  // compile
-  const fileName = bits[2].replace(/^.*[\\\/]/, '');
-  return {
-    fileName: fileName.length > 0 ? fileName : 'N/A',
-    filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',
-    lineNumber: bits[3]
-  };
-}
+  function containsClass(elem, cls) {
+    return elem.classList.contains(cls);
+  }
+
+  function toggleClass(elem, cls, assert) {
+    return elem.classList.toggle(cls, assert);
+  }
+
+  function getType(obj) {
+    const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+    return Number.isNaN(obj) ? 'NaN': type;
+  }
+
+  function toString(obj, type)  {
+    switch (type) {
+      case 'string':    return obj;
+      case 'undefined': return 'undefined';
+      case 'NaN':       return 'NaN';
+      default:          return JSON.stringify(obj);
+    }
+  }
+
+  function touches(e) {
+    return e.changedTouches;
+  }
+
+  function getDragDistance(dragStart, dragEnd) {
+    return {
+      x: dragStart.pageX-dragEnd.pageX,
+      y: dragStart.pageY-dragEnd.pageY
+    }
+  }
+
+  function returnInRange(num, min, max) {
+    num  = num > max ? max : num;
+    return num < min ? min : num;
+  }
+
+  function scrollInfo(elem) {
+    const {scrollTop, scrollHeight, clientHeight} = elem;
+    return {
+      top:        scrollTop,
+      bottom:     scrollTop + clientHeight,
+      height:     clientHeight,
+      atTop:      scrollTop === 0,
+      atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
+      fullHeight: scrollHeight
+    }
+  }
+
+  function returnTraceFromError(error) {
+    // get relevant trace parts
+    const bits = error.stack.split(":").slice(4,9)
+    // clear redundant chars at start and end
+    let first = bits[0];
+    bits[0] = first.substring(first.indexOf('(')+1,first.length);
+    let last = bits[bits.length-1];
+    bits[bits.length-1] = last.substring(0, last.indexOf(')'));
+    // compile
+    const fileName = bits[2].replace(/^.*[\\\/]/, '');
+    return {
+      fileName: fileName.length > 0 ? fileName : 'N/A',
+      filePath: fileName.length > 0 ? bits[0]+':'+bits[1]+':'+bits[2] : '',
+      lineNumber: bits[3]
+    };
+  }
+
 
 function logtray(options, DB) {
+
+  'use strict';
+
+  // Libraries
+  const crel = require('crel');
+
   // Setup variables if not setup already
   DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
   DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
@@ -98,7 +106,10 @@ function logtray(options, DB) {
   }
 
   function buildlogtrayButton() {
-    insert(`<button id="mde-open-logtray" class="mde ${state()}"></button>`, document.body);
+    crel(document.body,
+      crel('button', { 'id': 'mde-open-logtray', 'class': 'mde ' + status } )
+    );
+
     fetch('open-logtray').addEventListener('click', (e) => {
       open();
     }, false);
@@ -153,9 +164,9 @@ function logtray(options, DB) {
   // modify global
 
   function setHeight(height) {
-    minHeight = minHeight()
-    maxHeight = maxHeight()
-    height = returnInRange(height, minHeight, maxHeight);
+    const min = minHeight()
+    const max = maxHeight()
+    height = returnInRange(height, min, max);
     DB.set('logtrayHeight', height);
     fetch('logtray').style.height = height+'px';
   }

@@ -1,8 +1,3 @@
-  function getType(obj) {
-    const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-    return Number.isNaN(obj) ? 'NaN': type;
-  }
-
   function toString(obj, type)  {
     switch (type) {
       case 'string':    return obj;
@@ -213,7 +208,27 @@ function logtray(options, DB) {
     const lastMessage = typeof lastLog === 'object' ? lastLog.querySelector('.message').innerHTML : null;
 
     const id = 'log-'+logs.children.length;
-    const type = isError ? 'error' : getType(message);
+    let type;
+
+    // Get and handle var types
+    if (type === 'error') {
+      type = 'error';
+    } else if (typeof message === "string") {
+      type = 'string';
+    } else if (typeof message === "number") {
+      type = 'number';
+    } else if (typeof message === "boolean") {
+      type = 'boolean';
+    } else if (typeof message === "object") {
+      type = 'object';
+    } else if (Array.isArray( message )) {
+      type = 'array';
+    } else if (message === null) {
+      type = 'null';
+    } else if (message == null) {
+      type = 'undefined';
+    }
+
     message = toString(message, type);
     let submitted ;
 

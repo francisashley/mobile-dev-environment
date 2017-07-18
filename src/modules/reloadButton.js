@@ -1,8 +1,3 @@
-function getType(obj) {
-    const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-    return Number.isNaN(obj) ? 'NaN': type;
-  }
-
 function toString(obj, type)  {
     switch (type) {
       case 'string':    return obj;

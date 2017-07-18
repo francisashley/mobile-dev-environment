@@ -25,11 +25,11 @@ button#mde-reload {
   width: 24px;
   z-index: 1; }
 
-/* open logbox button */
-button#mde-open-logbox.true {
+/* open logtray button */
+button#mde-open-logtray.true {
   display: none; }
 
-button#mde-open-logbox.false {
+button#mde-open-logtray.false {
   background-color: white;
   border: thin solid #2d2d2d;
   border-radius: 2px;
@@ -43,11 +43,11 @@ button#mde-open-logbox.false {
   right: 10px;
   width: 24px; }
 
-/* logbox wrapper */
-#mde-logbox {
+/* logtray wrapper */
+#mde-logtray {
   display: none; }
 
-#mde-logbox.true {
+#mde-logtray.true {
   background: #ffe39f;
   bottom: 0;
   display: inline-block;
@@ -57,8 +57,8 @@ button#mde-open-logbox.false {
   position: fixed;
   right: 0; }
 
-/* resize logbox button */
-#mde-logbox.true #mde-resize-logbox {
+/* resize logtray button */
+#mde-logtray.true #mde-resize-logtray {
   border-left: none;
   border-radius: 0;
   border-right: none;
@@ -69,8 +69,8 @@ button#mde-open-logbox.false {
   top: 0;
   width: 100%; }
 
-/* close logbox button */
-#mde-logbox.true #mde-close-logbox {
+/* close logtray button */
+#mde-logtray.true #mde-close-logtray {
   border-radius: 0 0 0 2px;
   border-right: none;
   height: 10px;
@@ -82,7 +82,7 @@ button#mde-open-logbox.false {
   width: 25px; }
 
 /* logs wrapper */
-#mde-logbox.true #mde-logs {
+#mde-logtray.true #mde-logs {
   bottom: 0;
   font-family: monospace;
   height: calc(100%-10px);
@@ -92,8 +92,8 @@ button#mde-open-logbox.false {
   right: 0;
   top: 10px; }
 
-/* logbox logs log */
-#mde-logbox.true #mde-logs .log {
+/* logtray logs log */
+#mde-logtray.true #mde-logs .log {
   border-bottom: thin solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   clear: both;
@@ -105,7 +105,7 @@ button#mde-open-logbox.false {
   width: 100%;
   word-break: break-all; }
 
-#mde-logbox.true #mde-logs .log .preview .stack:not(:empty) {
+#mde-logtray.true #mde-logs .log .preview .stack:not(:empty) {
   background-color: rgba(139, 69, 19, 0.25);
   border: thin solid rgba(45, 45, 45, 0.8);
   border-radius: 2px;
@@ -121,41 +121,41 @@ button#mde-open-logbox.false {
   text-align: center;
   vertical-align: middle; }
 
-#mde-logbox.true #mde-logs .log .preview .message {
+#mde-logtray.true #mde-logs .log .preview .message {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
 
-#mde-logbox.true #mde-logs .log .preview .trace,
-#mde-logbox.true #mde-logs .log .preview .trace:visited {
+#mde-logtray.true #mde-logs .log .preview .trace,
+#mde-logtray.true #mde-logs .log .preview .trace:visited {
   color: #2d2d2d;
   float: right;
   padding-left: 5px;
   text-decoration: underline; }
 
-#mde-logbox.true #mde-logs .log.error {
+#mde-logtray.true #mde-logs .log.error {
   color: red; }
 
-#mde-logbox.true #mde-logs .log.null,
-#mde-logbox.true #mde-logs .log.undefined {
+#mde-logtray.true #mde-logs .log.null,
+#mde-logtray.true #mde-logs .log.undefined {
   color: #787878; }
 
-#mde-logbox.true #mde-logs .log.number,
-#mde-logbox.true #mde-logs .log.boolean,
-#mde-logbox.true #mde-logs .log.NaN {
+#mde-logtray.true #mde-logs .log.number,
+#mde-logtray.true #mde-logs .log.boolean,
+#mde-logtray.true #mde-logs .log.NaN {
   color: blue; }
 
-#mde-logbox.true #mde-logs .log.htmlcollection .message,
-#mde-logbox.true #mde-logs .log.object .message {
+#mde-logtray.true #mde-logs .log.htmlcollection .message,
+#mde-logtray.true #mde-logs .log.object .message {
   font-style: italic; }
 
-#mde-logbox.true #mde-logs .log .full {
+#mde-logtray.true #mde-logs .log .full {
   display: none; }
 
-#mde-logbox.true #mde-logs .log.expand .preview .message {
+#mde-logtray.true #mde-logs .log.expand .preview .message {
   font-weight: bold; }
 
-#mde-logbox.true #mde-logs .log.expand .full {
+#mde-logtray.true #mde-logs .log.expand .full {
   background: rgba(139, 69, 19, 0.25);
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.2);
   display: block;

@@ -97,7 +97,7 @@ class helpers
     }
 }
 
-class logbox extends helpers
+class logtray extends helpers
 {
     constructor(options) {
         super();
@@ -107,12 +107,12 @@ class logbox extends helpers
         const { setupDB, getDB } = this;
 
         setupDB({
-            logboxOpen: getDB('logboxOpen', options.group ) || false,
-            logboxHeight: getDB('logboxHeight', options.group) || 40
+            logtrayOpen: getDB('logtrayOpen', options.group ) || false,
+            logtrayHeight: getDB('logtrayHeight', options.group) || 40
         }, options.group);
 
-        this.buildLogboxButton();
-        this.buildLogbox();
+        this.buildlogtrayButton();
+        this.buildlogtray();
 
         window.console.log = (message) => {
             const trace = this.returnTraceFromError(new Error);
@@ -127,27 +127,27 @@ class logbox extends helpers
         }
     }
 
-    buildLogboxButton() {
+    buildlogtrayButton() {
         const { state, insert, fetch } = this;
-        insert(`<button id="mde-open-logbox" class="mde ${state}"></button>`, document.body);
-        fetch('open-logbox').addEventListener('click', (e) => {
+        insert(`<button id="mde-open-logtray" class="mde ${state}"></button>`, document.body);
+        fetch('open-logtray').addEventListener('click', (e) => {
             this.open();
         }, false);
     }
 
-    buildLogbox() {
+    buildlogtray() {
         const { state, height, insert, fetch, drag } = this;
 
-        insert(`<div id="mde-logbox" class="mde ${state}">
-                    <button id="mde-resize-logbox" class="mde">···</button>
-                    <button id="mde-close-logbox" class="mde">—</button>
+        insert(`<div id="mde-logtray" class="mde ${state}">
+                    <button id="mde-resize-logtray" class="mde">···</button>
+                    <button id="mde-close-logtray" class="mde">—</button>
                     <div id="mde-logs"></div>
                 </div>`, document.body)
 
         this.setHeight(height);
 
-        const closeButton  = fetch('close-logbox');
-        const resizeButton = fetch('resize-logbox');
+        const closeButton  = fetch('close-logtray');
+        const resizeButton = fetch('resize-logtray');
 
         window.addEventListener('resize', (e) => {
             this.setHeight(this.height);
@@ -169,16 +169,16 @@ class logbox extends helpers
 
     get state() {
         const { options } = this;
-        return this.getDB('logboxOpen', options.group);
+        return this.getDB('logtrayOpen', options.group);
     }
 
     get height() {
         const { options } = this;
-        return this.getDB('logboxHeight', options.group);
+        return this.getDB('logtrayHeight', options.group);
     }
 
     get minHeight() {
-        return this.fetch('resize-logbox').offsetHeight;
+        return this.fetch('resize-logtray').offsetHeight;
     }
 
     get maxHeight() {
@@ -191,24 +191,24 @@ class logbox extends helpers
     setHeight(height) {
         const { setDB, fetch, minHeight, maxHeight, returnInRange, options } = this;
         height = returnInRange(height, minHeight, maxHeight);
-        setDB('logboxHeight', height, options.group);
-        fetch('logbox').style.height = height+'px';
+        setDB('logtrayHeight', height, options.group);
+        fetch('logtray').style.height = height+'px';
     }
 
     // actions
 
     open() {
         const { fetch, setDB, options } = this;
-        setDB('logboxOpen', true, options.group);
-        fetch('open-logbox').classList = true;
-        fetch('logbox').classList = true;
+        setDB('logtrayOpen', true, options.group);
+        fetch('open-logtray').classList = true;
+        fetch('logtray').classList = true;
     }
 
     close() {
         const { fetch, setDB, options } = this;
-        setDB('logboxOpen', false, options.group);
-        fetch('open-logbox').classList = false;
-        fetch('logbox').classList = false;
+        setDB('logtrayOpen', false, options.group);
+        fetch('open-logtray').classList = false;
+        fetch('logtray').classList = false;
     }
 
     resize(e) {
@@ -233,7 +233,7 @@ class logbox extends helpers
             resizeButton.removeEventListener('touchend', onEnd, false);
         }
 
-        const resizeButton = fetch('resize-logbox');
+        const resizeButton = fetch('resize-logtray');
         resizeButton.addEventListener('touchmove', onMove, false);
         resizeButton.addEventListener('touchend', onEnd, false);
     }
@@ -284,4 +284,4 @@ class logbox extends helpers
     }
 }
 
-module.exports = logbox;
+module.exports = logtray;

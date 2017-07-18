@@ -654,7 +654,7 @@ function logtray(options, DB) {
       submitted.querySelector('.full').innerText = message;
 
       submitted.querySelector('.preview').addEventListener('click', function (e) {
-        if (!containsClass(e.target, 'trace')) {
+        if (!e.target.classList.contains('trace')) {
           var clickedLog = e.target.closest('.log');
           toggleClass(clickedLog, 'expand');
         }

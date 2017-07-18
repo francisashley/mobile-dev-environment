@@ -1,7 +1,3 @@
-  function containsClass(elem, cls) {
-    return elem.classList.contains(cls);
-  }
-
   function toggleClass(elem, cls, assert) {
     return elem.classList.toggle(cls, assert);
   }
@@ -243,7 +239,7 @@ function logtray(options, DB) {
       submitted.querySelector('.full').innerText = message;
 
       submitted.querySelector('.preview').addEventListener('click', (e) => {
-        if (!containsClass(e.target, 'trace')) {
+        if (!e.target.classList.contains('trace')) {
           const clickedLog = e.target.closest('.log');
           toggleClass(clickedLog, 'expand');
         }

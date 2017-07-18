@@ -68,11 +68,47 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(1);
-module.exports = __webpack_require__(2);
+module.exports = __webpack_require__(4);
 
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+(function () {
+
+    'use strict';
+
+    var reloadButton = __webpack_require__(2);
+    var logbox = __webpack_require__(3);
+
+    function MobileDevEnvironment(options) {
+        // Default options
+        options = {
+            group: typeof options.group !== 'undefined' ? options.group : 'global',
+            reload: typeof options.reload !== 'undefined' ? options.reload : true,
+            hardReload: typeof options.hardReload !== 'undefined' ? options.hardReload : true,
+            logbox: typeof options.logbox !== 'undefined' ? options.logbox : true,
+            logErrors: typeof options.logErrors !== 'undefined' ? options.logErrors : true
+        };
+
+        if (options.reload === true) {
+            this.reload = new reloadButton({ hardReload: options.hardReload });
+        }
+
+        if (options.logbox === true) {
+            this.logbox = new logbox({ reload: options.reload, logErrors: options.logErrors, group: options.group });
+        }
+    }
+
+    window.MobileDevEnvironment = MobileDevEnvironment;
+})();
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86,35 +122,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var MobileDevEnvironment = function MobileDevEnvironment() {
-    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-        _ref$reload = _ref.reload,
-        reload = _ref$reload === undefined ? true : _ref$reload,
-        _ref$hardReload = _ref.hardReload,
-        hardReload = _ref$hardReload === undefined ? true : _ref$hardReload,
-        _ref$logbox = _ref.logbox,
-        logbox = _ref$logbox === undefined ? true : _ref$logbox,
-        _ref$logErrors = _ref.logErrors,
-        logErrors = _ref$logErrors === undefined ? true : _ref$logErrors,
-        _ref$group = _ref.group,
-        group = _ref$group === undefined ? 'global' : _ref$group;
-
-    _classCallCheck(this, MobileDevEnvironment);
-
-    if (reload === true) {
-        this.reload = new MDEReload({ hardReload: hardReload });
-    }
-    if (logbox === true) {
-        this.logbox = new MDELogbox({ reload: reload, logErrors: logErrors, group: group });
-    }
-};
-
-var MDEHelpers = function () {
-    function MDEHelpers() {
-        _classCallCheck(this, MDEHelpers);
+var helpers = function () {
+    function helpers() {
+        _classCallCheck(this, helpers);
     }
 
-    _createClass(MDEHelpers, [{
+    _createClass(helpers, [{
         key: 'getDB',
         value: function getDB(key, group) {
             var DBkey = 'mde-' + group + '-' + key;
@@ -236,16 +249,16 @@ var MDEHelpers = function () {
         }
     }]);
 
-    return MDEHelpers;
+    return helpers;
 }();
 
-var MDEReload = function (_MDEHelpers) {
-    _inherits(MDEReload, _MDEHelpers);
+var reload = function (_helpers) {
+    _inherits(reload, _helpers);
 
-    function MDEReload(options) {
-        _classCallCheck(this, MDEReload);
+    function reload(options) {
+        _classCallCheck(this, reload);
 
-        var _this = _possibleConstructorReturn(this, (MDEReload.__proto__ || Object.getPrototypeOf(MDEReload)).call(this));
+        var _this = _possibleConstructorReturn(this, (reload.__proto__ || Object.getPrototypeOf(reload)).call(this));
 
         var insert = _this.insert,
             fetch = _this.fetch;
@@ -259,21 +272,168 @@ var MDEReload = function (_MDEHelpers) {
         return _this;
     }
 
-    return MDEReload;
-}(MDEHelpers);
+    return reload;
+}(helpers);
 
-var MDELogbox = function (_MDEHelpers2) {
-    _inherits(MDELogbox, _MDEHelpers2);
+module.exports = reload;
 
-    function MDELogbox(options) {
-        _classCallCheck(this, MDELogbox);
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
 
-        var _this2 = _possibleConstructorReturn(this, (MDELogbox.__proto__ || Object.getPrototypeOf(MDELogbox)).call(this));
+"use strict";
 
-        _this2.options = options;
 
-        var setupDB = _this2.setupDB,
-            getDB = _this2.getDB;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var helpers = function () {
+    function helpers() {
+        _classCallCheck(this, helpers);
+    }
+
+    _createClass(helpers, [{
+        key: 'getDB',
+        value: function getDB(key, group) {
+            var DBkey = 'mde-' + group + '-' + key;
+            return localStorage[DBkey] ? JSON.parse(localStorage[DBkey]) : null;
+        }
+    }, {
+        key: 'setDB',
+        value: function setDB(key, val, group) {
+            var DBkey = 'mde-' + group + '-' + key;
+            return localStorage[DBkey] = JSON.stringify(val);
+        }
+    }, {
+        key: 'setupDB',
+        value: function setupDB(keyVals, group) {
+            for (var key in keyVals) {
+                var DBkey = 'mde-' + group + '-' + key;
+                localStorage[DBkey] = JSON.stringify(keyVals[key]);
+            }
+        }
+    }, {
+        key: 'fetch',
+        value: function fetch(query) {
+            return document.querySelector('#mde-' + query);
+        }
+    }, {
+        key: 'query',
+        value: function query(elem, _query) {
+            return elem.querySelector(_query);
+        }
+    }, {
+        key: 'insert',
+        value: function insert(html, elem) {
+            var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'beforeend';
+
+            return elem.insertAdjacentHTML(position, html);
+        }
+    }, {
+        key: 'containsClass',
+        value: function containsClass(elem, cls) {
+            return elem.classList.contains(cls);
+        }
+    }, {
+        key: 'toggleClass',
+        value: function toggleClass(elem, cls, assert) {
+            return elem.classList.toggle(cls, assert);
+        }
+    }, {
+        key: 'getType',
+        value: function getType(obj) {
+            var type = {}.toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+            return Number.isNaN(obj) ? 'NaN' : type;
+        }
+    }, {
+        key: 'toString',
+        value: function toString(obj, type) {
+            switch (type) {
+                case 'string':
+                    return obj;
+                case 'undefined':
+                    return 'undefined';
+                case 'NaN':
+                    return 'NaN';
+                default:
+                    return JSON.stringify(obj);
+            }
+        }
+    }, {
+        key: 'touches',
+        value: function touches(e) {
+            return e.changedTouches;
+        }
+    }, {
+        key: 'getDragDistance',
+        value: function getDragDistance(dragStart, dragEnd) {
+            return {
+                x: dragStart.pageX - dragEnd.pageX,
+                y: dragStart.pageY - dragEnd.pageY
+            };
+        }
+    }, {
+        key: 'returnInRange',
+        value: function returnInRange(num, min, max) {
+            num = num > max ? max : num;
+            return num < min ? min : num;
+        }
+    }, {
+        key: 'scrollInfo',
+        value: function scrollInfo(elem) {
+            var scrollTop = elem.scrollTop,
+                scrollHeight = elem.scrollHeight,
+                clientHeight = elem.clientHeight;
+
+            return {
+                top: scrollTop,
+                bottom: scrollTop + clientHeight,
+                height: clientHeight,
+                atTop: scrollTop === 0,
+                atBottom: scrollHeight - scrollTop <= clientHeight + 1,
+                fullHeight: scrollHeight
+            };
+        }
+    }, {
+        key: 'returnTraceFromError',
+        value: function returnTraceFromError(error) {
+            // get relevant trace parts
+            var bits = error.stack.split(":").slice(4, 9);
+            // clear redundant chars at start and end
+            var first = bits[0];
+            bits[0] = first.substring(first.indexOf('(') + 1, first.length);
+            var last = bits[bits.length - 1];
+            bits[bits.length - 1] = last.substring(0, last.indexOf(')'));
+            // compile
+            var fileName = bits[2].replace(/^.*[\\\/]/, '');
+            return {
+                fileName: fileName.length > 0 ? fileName : 'N/A',
+                filePath: fileName.length > 0 ? bits[0] + ':' + bits[1] + ':' + bits[2] : '',
+                lineNumber: bits[3]
+            };
+        }
+    }]);
+
+    return helpers;
+}();
+
+var logbox = function (_helpers) {
+    _inherits(logbox, _helpers);
+
+    function logbox(options) {
+        _classCallCheck(this, logbox);
+
+        var _this = _possibleConstructorReturn(this, (logbox.__proto__ || Object.getPrototypeOf(logbox)).call(this));
+
+        _this.options = options;
+
+        var setupDB = _this.setupDB,
+            getDB = _this.getDB;
 
 
         setupDB({
@@ -281,27 +441,27 @@ var MDELogbox = function (_MDEHelpers2) {
             logboxHeight: getDB('logboxHeight', options.group) || 40
         }, options.group);
 
-        _this2.buildLogboxButton();
-        _this2.buildLogbox();
+        _this.buildLogboxButton();
+        _this.buildLogbox();
 
         window.console.log = function (message) {
-            var trace = _this2.returnTraceFromError(new Error());
-            _this2.log(message, trace);
+            var trace = _this.returnTraceFromError(new Error());
+            _this.log(message, trace);
         };
 
         if (options.logErrors === true) {
             window.onerror = function (message, filePath, lineNumber) {
                 var fileName = filePath.replace(/^.*[\\\/]/, '');
-                _this2.log(message, { fileName: fileName, filePath: filePath, lineNumber: lineNumber, isError: true });
+                _this.log(message, { fileName: fileName, filePath: filePath, lineNumber: lineNumber, isError: true });
             };
         }
-        return _this2;
+        return _this;
     }
 
-    _createClass(MDELogbox, [{
+    _createClass(logbox, [{
         key: 'buildLogboxButton',
         value: function buildLogboxButton() {
-            var _this3 = this;
+            var _this2 = this;
 
             var state = this.state,
                 insert = this.insert,
@@ -309,13 +469,13 @@ var MDELogbox = function (_MDEHelpers2) {
 
             insert('<button id="mde-open-logbox" class="mde ' + state + '"></button>', document.body);
             fetch('open-logbox').addEventListener('click', function (e) {
-                _this3.open();
+                _this2.open();
             }, false);
         }
     }, {
         key: 'buildLogbox',
         value: function buildLogbox() {
-            var _this4 = this;
+            var _this3 = this;
 
             var state = this.state,
                 height = this.height,
@@ -332,14 +492,14 @@ var MDELogbox = function (_MDEHelpers2) {
             var resizeButton = fetch('resize-logbox');
 
             window.addEventListener('resize', function (e) {
-                _this4.setHeight(_this4.height);
+                _this3.setHeight(_this3.height);
             }, false);
             closeButton.addEventListener('click', function (e) {
-                _this4.close();
+                _this3.close();
             }, false);
             resizeButton.addEventListener('touchstart', function (e) {
                 resizeButton.classList.add('pressed');
-                _this4.resize(e);
+                _this3.resize(e);
                 e.preventDefault();
             }, false);
             resizeButton.addEventListener('touchend', function (e) {
@@ -395,7 +555,7 @@ var MDELogbox = function (_MDEHelpers2) {
     }, {
         key: 'resize',
         value: function resize(e) {
-            var _this5 = this;
+            var _this4 = this;
 
             var height = this.height,
                 fetch = this.fetch,
@@ -411,7 +571,7 @@ var MDELogbox = function (_MDEHelpers2) {
             var onMove = function onMove(e) {
                 var distance = getDragDistance(startTouch, touches(e)[0]);
                 var newHeight = startHeight + distance.y;
-                _this5.setHeight(newHeight);
+                _this4.setHeight(newHeight);
 
                 if (startScroll.atBottom && distance.y < startScroll.top) {
                     fetch('logs').scrollTop = fetch('logs').scrollHeight;
@@ -506,13 +666,13 @@ var MDELogbox = function (_MDEHelpers2) {
         }
     }]);
 
-    return MDELogbox;
-}(MDEHelpers);
+    return logbox;
+}(helpers);
 
-window.MobileDevEnvironment = MobileDevEnvironment;
+module.exports = logbox;
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

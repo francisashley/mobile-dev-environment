@@ -234,7 +234,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(2);
-module.exports = __webpack_require__(7);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
@@ -266,7 +266,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     // Import modules and tools
     var reloadButton = __webpack_require__(4);
     var logtray = __webpack_require__(5);
-    var DB = __webpack_require__(6);
+    var DB = __webpack_require__(7);
     DB = new DB(options.group);
 
     // Run modules
@@ -448,7 +448,8 @@ function logtray(options, DB) {
   var self = this;
 
   // Libraries
-  var crel = __webpack_require__(0);
+  var tracer = __webpack_require__(6),
+      crel = __webpack_require__(0);
 
   // Global variables
   self.elements = {
@@ -468,7 +469,9 @@ function logtray(options, DB) {
   buildlogtray();
 
   window.console.log = function (message) {
-    var trace = returnTraceFromError(new Error());
+    // Gather message trace information
+    var trace = tracer(new Error());
+
     log(message, trace);
   };
 
@@ -657,6 +660,35 @@ module.exports = logtray;
 "use strict";
 
 
+// Provide an error and retrieve trace information
+module.exports = function tracer(error, type) {
+    // Get stack as string
+    var stack = error.stack;
+    // Get last line of stack
+    stack = stack.split("\n")[stack.split("\n").length - 1];
+    // Break stack into pieces of information
+    var pieces = stack.split(":");
+    // Get line number
+    var lineNumber = pieces[3];
+    // Get file path
+    var filePath = (pieces[0].split('at ').join('') + ':' + pieces[1]).replace(/ /g, '');
+    // Get file name
+    var fileName = filePath.replace(/^.*[\\\/]/, '');
+
+    return {
+        fileName: fileName.length > 0 ? fileName : 'N/A',
+        filePath: filePath,
+        lineNumber: lineNumber
+    };
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 module.exports = function DB() {
     var _this = this;
 
@@ -684,7 +716,7 @@ module.exports = function DB() {
 };
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

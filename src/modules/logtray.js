@@ -1,7 +1,3 @@
-  function toggleClass(elem, cls, assert) {
-    return elem.classList.toggle(cls, assert);
-  }
-
   function getType(obj) {
     const type = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
     return Number.isNaN(obj) ? 'NaN': type;
@@ -241,7 +237,7 @@ function logtray(options, DB) {
       submitted.querySelector('.preview').addEventListener('click', (e) => {
         if (!e.target.classList.contains('trace')) {
           const clickedLog = e.target.closest('.log');
-          toggleClass(clickedLog, 'expand');
+          clickedLog.classList.toggle('expand');
         }
       });
     } else {

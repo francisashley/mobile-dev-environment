@@ -319,10 +319,6 @@ module.exports = function(module) {
 "use strict";
 
 
-function containsClass(elem, cls) {
-  return elem.classList.contains(cls);
-}
-
 function toggleClass(elem, cls, assert) {
   return elem.classList.toggle(cls, assert);
 }
@@ -416,14 +412,6 @@ module.exports = reload;
 
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function containsClass(elem, cls) {
-  return elem.classList.contains(cls);
-}
-
-function toggleClass(elem, cls, assert) {
-  return elem.classList.toggle(cls, assert);
-}
 
 function getType(obj) {
   var type = {}.toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
@@ -656,7 +644,7 @@ function logtray(options, DB) {
       submitted.querySelector('.preview').addEventListener('click', function (e) {
         if (!e.target.classList.contains('trace')) {
           var clickedLog = e.target.closest('.log');
-          toggleClass(clickedLog, 'expand');
+          clickedLog.classList.toggle('expand');
         }
       });
     } else {

@@ -1,8 +1,8 @@
-function logtray(options, DB) {
+module.exports = function logtray(options, DB) {
 
   'use strict';
 
-// initiate
+  // initiate
   let self = this;
 
   // Libraries
@@ -143,7 +143,7 @@ function logtray(options, DB) {
     document.addEventListener('mousemove', onMove, false);
     document.addEventListener('mouseup', onEnd, false);
   }
-//
+
   function displayLog({message, filePath, fileName, lineNumber, type = 'log'}) {
     const lastLogElement = self.elements.logs.lastChild || false;
 
@@ -210,5 +210,3 @@ function logtray(options, DB) {
     }
   }
 }
-
-module.exports = logtray;

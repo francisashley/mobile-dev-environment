@@ -392,17 +392,38 @@ module.exports = function logtray(options, DB) {
     logs: {}
   };
 
-  // Setup variables if not setup already
-  DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
-  DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
+  // If logtray variables are not in DB, ensure they are
+  DB.set('logtrayOpen', self.isOpen());
+  DB.set('logtrayHeight', self.height());
 
-  buildlogtrayButton(DB.get('logtrayOpen'));
-  buildlogtray(DB.get('logtrayOpen'));
+  // Create 'open log tray' button and add SVG icon
+  self.elements.toggleTray = crel('button', { 'id': 'mde-toggle-logtray', 'class': status });
+  self.elements.toggleTray.innerHTML = self.icon.toggleTray;
 
-  // Bind toggle tray after all elements created in DOM
+  // Create log tray element and html escaped characters (icon)
+  self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': self.status }, self.elements.resizeTray = crel('button', { 'id': 'mde-logtray-resize-bar' }), self.elements.logs = crel('div', { 'id': 'mde-logs' }));
+  self.elements.tray.querySelector('#mde-logtray-resize-bar').innerHTML = '&bull; &bull; &bull;';
+
+  // Add elements to DOM
+  crel(self.elements.controlbar, self.elements.toggleTray);
+  crel(document.body, self.elements.tray);
+
+  // Set tray height
+  setTrayHeight(DB.get('logtrayHeight'));
+
+  // Set listeners
   self.elements.toggleTray.addEventListener('click', function (e) {
     return toggleLogTray(DB.get('logtrayOpen'));
-  }, false);
+  });
+  self.elements.resizeTray.addEventListener('touchstart', function (e) {
+    return resizeLogTray(e);
+  });
+  self.elements.resizeTray.addEventListener('mousedown', function (e) {
+    return resizeLogTray(e);
+  });
+  window.addEventListener('resize', function (e) {
+    return setTrayHeight(DB.get('logtrayHeight'));
+  });
 
   window.console.log = function (message) {
     // Gather message trace information
@@ -416,30 +437,6 @@ module.exports = function logtray(options, DB) {
       var fileName = filePath.replace(/^.*[\\\/]/, '');
       displayLog({ message: message, fileName: fileName, filePath: filePath, lineNumber: lineNumber, isError: true });
     };
-  }
-
-  function buildlogtrayButton(state) {
-    state = state ? 'active' : '';
-    crel(self.elements.controlbar, self.elements.toggleTray = crel('button', { 'id': 'mde-toggle-logtray', 'class': 'mde ' + state }));
-    self.elements.toggleTray.innerHTML = self.icon.toggleTray;
-  }
-
-  function buildlogtray() {
-    var state = self.isOpen() ? 'active' : '';
-    crel(document.body, self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': 'mde ' + state }, self.elements.resizeTray = crel('button', { 'id': 'mde-logtray-resize-bar', 'class': 'mde' }), self.elements.logs = crel('div', { 'id': 'mde-logs' })));
-    self.elements.resizeTray.innerHTML = '&bull; &bull; &bull;';
-
-    setTrayHeight(DB.get('logtrayHeight'));
-
-    window.addEventListener('resize', function (e) {
-      return setTrayHeight(DB.get('logtrayHeight'));
-    }, false);
-    self.elements.resizeTray.addEventListener('touchstart', function (e) {
-      return resizeLogTray(e);
-    }, false);
-    self.elements.resizeTray.addEventListener('mousedown', function (e) {
-      return resizeLogTray(e);
-    }, false);
   }
 
   // modify global

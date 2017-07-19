@@ -53,10 +53,18 @@ module.exports = function logtray(options, DB) {
   window.addEventListener('resize', (e) => setTrayHeight(DB.get('logtrayHeight')));
 
   // Display logs
-  window.console.log = (message) => {
-    const { filePath, fileName, lineNumber } = tracer(new Error());
-    displayLog({ message, filePath, fileName, lineNumber });
-  };
+console.log(options.useConsoleLog)
+  if (options.useConsoleLog) {
+    window.console.log = (message) => {
+      const { filePath, fileName, lineNumber } = tracer(new Error());
+      displayLog({ message, filePath, fileName, lineNumber });
+    };
+  } else {
+    window.log = (message) => {
+      const { filePath, fileName, lineNumber } = tracer(new Error());
+      displayLog({ message, filePath, fileName, lineNumber });
+    };
+  }
 
   // Display error messages
   if (options.displayErrors === true) {

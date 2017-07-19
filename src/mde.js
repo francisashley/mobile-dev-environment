@@ -11,6 +11,7 @@
       hardReload      :  typeof options.hardReload      !== 'undefined'   ?   options.hardReload      :   true,
       logtray         :  typeof options.logtray         !== 'undefined'   ?   options.logtray         :   true,
       displayErrors   :  typeof options.displayErrors   !== 'undefined'   ?   options.displayErrors   :   true,
+      useConsoleLog   :  typeof options.useConsoleLog   !== 'undefined'   ?   options.useConsoleLog   :   false,
       controlbar      : {
         position    :  typeof options.controlbar.position   !== 'undefined'   ?   options.controlbar.position   :   'tr',
         order       :  typeof options.controlbar.order      !== 'undefined'   ?   options.controlbar.order      :   ['reload', 'logtray']

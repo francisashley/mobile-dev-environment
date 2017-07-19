@@ -53,7 +53,7 @@ module.exports = function logtray(options, DB) {
   window.addEventListener('resize', (e) => setTrayHeight(DB.get('logtrayHeight')));
 
   // Display logs
-console.log(options.useConsoleLog)
+
   if (options.useConsoleLog) {
     window.console.log = (message) => {
       const { filePath, fileName, lineNumber } = tracer(new Error());

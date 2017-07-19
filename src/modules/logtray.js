@@ -97,7 +97,7 @@ function logtray(options, DB) {
     const min = self.elements.controlbar.offsetHeight;
 
     // Set max height based on if reload button is displayed
-    const max = window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
+    const max = window.innerHeight - (self.elements.controlbar.offsetHeight + 20);
 
     // Ensure height is within range, if not get closest value
     height = height > max ? max : height;

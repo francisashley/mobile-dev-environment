@@ -260,7 +260,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       reload: typeof options.reload !== 'undefined' ? options.reload : true,
       hardReload: typeof options.hardReload !== 'undefined' ? options.hardReload : true,
       logtray: typeof options.logtray !== 'undefined' ? options.logtray : true,
-      displayErrors: typeof options.displayErrors !== 'undefined' ? options.displayErrors : true
+      displayErrors: typeof options.displayErrors !== 'undefined' ? options.displayErrors : true,
+      controlbar: {
+        order: typeof options.controlbar.order !== 'undefined' ? options.controlbar.order : ['reload', 'logtray']
+      }
     };
 
     // Import modules and tools
@@ -274,8 +277,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     crel(document.body, crel('div', { 'id': 'mde-controlbar' }));
 
     // Run modules
-    if (options.reload === true) new reloadButton(options);
-    if (options.logtray === true) new logtray(options, DB);
+    options.controlbar.order.forEach(function (module) {
+      if (module === 'reload' && options.reload === true) new reloadButton(options);else if (module === 'logtray' && options.logtray === true) new logtray(options, DB);
+    });
   }
 
   // Attach MDE to window
@@ -456,7 +460,7 @@ function logtray(options, DB) {
     var min = self.elements.controlbar.offsetHeight;
 
     // Set max height based on if reload button is displayed
-    var max = window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
+    var max = window.innerHeight - (self.elements.controlbar.offsetHeight + 20);
 
     // Ensure height is within range, if not get closest value
     height = height > max ? max : height;

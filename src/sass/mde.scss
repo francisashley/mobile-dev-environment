@@ -36,111 +36,131 @@
     }
   }
 
-/* logtray wrapper */
+// Log tray
+  #mde-logtray {
+    display: none;
 
-#mde-logtray {
-  display:       none; }
+    &.active {
+      background:    rgb(255,227,159);
+      bottom:        0;
+      display:       inline-block;
+      font-size:     12px;
+      left:          0;
+      position:      fixed;
+      right:         0;
+    }
 
-#mde-logtray.active {
-  background:    rgb(255,227,159);
-  bottom:        0;
-  display:       inline-block;
-  font-family:   "Lucida Grande", sans-serif;
-  font-size:     12px;
-  left:          0;
-  position:      fixed;
-  right:         0; }
+    /* Resize logtray with this button */
+    &-resize-bar {
+      position: absolute;
+      background: #ffffff;
+      padding: 0;
+      cursor: ns-resize;
+      border: 1px solid #6c6c6c;
+      border-left: none;
+      border-right: none;
+      font-size: 8px;
+      width: 100%;
+      line-height: 9px;
+      outline: 0;
+      letter-spacing: 10px;
+      // Necessary to add an indent half of letter-spacing to properly center text
+      text-indent: 5px;
+    }
 
-/* resize logtray button */
+    // logs
+    #mde-logs {
+      bottom:        0;
+      font-family:   monospace;
+      left:          0;
+      overflow-y:    scroll;
+      position:      absolute;
+      right:         0;
+      top:           10px;
 
-#mde-logtray.active #mde-resize-logtray {
-  position: absolute;
-  background: #ffffff;
-  padding: 0;
-  cursor: ns-resize;
-  border: 1px solid #6c6c6c;
-  border-left: none;
-  border-right: none;
-  font-size: 8px;
-  width: 100%;
-  line-height: 9px;
-  outline: 0;
-  letter-spacing: 10px;
-  // Necessary to add an indent half of letter-spacing to properly center text
-  text-indent: 5px;
-}
+      // log
+      .mde-log {
+        border-bottom: thin solid rgba(0, 0, 0, 0.2);
+        line-height: 17px;
+        display: flex;
+        flex-wrap: wrap;
+        // Stop resizing height
+        align-items: flex-start;
 
-/* logs wrapper */
+        &:not(.open):hover {
+          background: rgba(0,0,0,0.01)
+        }
 
-#mde-logtray.active #mde-logs {
-  bottom:        0;
-  font-family:   monospace;
-  height:        calc(100%-10px);
-  left:          0;
-  overflow-y:    scroll;
-  position:      absolute;
-  right:         0;
-  top:           10px; }
+        &:before {
+          content: ">";
+          padding: 8px 0;
+          margin-left: 8px;
+          font-weight: bold;
+        }
 
-/* logtray logs log */
+        // Colours
+        &-type-error .mde-log-message-single           { color: red; }
+        &-type-null .mde-log-message-single,
+        &-type-undefined .mde-log-message-single       { color: rgb(120,120,120); }
+        &-type-number .mde-log-message-single,
+        &-type-boolean .mde-log-message-single         { color: blue; }
+        &-type-htmlcollection .mde-log-message-single,
+        &-type-object .mde-log-message-single          { font-style: italic; }
 
-#mde-logtray.active #mde-logs .log {
-  border-bottom: thin solid rgba(0,0,0,0.2);
-  box-sizing:    border-box;
-  clear:         both;
-  overflow:      hidden;
-  padding:       5px;
-  position:      relative;
-  text-overflow: ellipsis;
-  white-space:   nowrap;
-  width:         100%;
-  word-break:    break-all; }
+        // Amount
+        .mde-log-amount {
+          background-color: rgba(139, 69, 19, 0.25);
+          border: thin solid rgba(45, 45, 45, 0.8);
+          font-size: 80%;
+          font-weight: bold;
+          line-height: 14px;
+          padding: 1px 3px 0 3px;
+          border-radius: 4px;
+          margin: 8px 0 8px 8px;
 
-  #mde-logtray.active #mde-logs .log .preview .stack:not(:empty) {
-  background-color: rgba(139,69,19,0.25);
-  border:        thin solid rgba(45,45,45,0.8);
-  border-radius: 2px;
-  color:         rgb(45,45,45);
-  float:         left;
-  font-size:     80%;
-  font-weight:   bold;
-  line-height:   14px;
-  margin-right:  5px;
-  height:        14px;
-  padding:       1px 3px 0 3px;
-  border-radius: 4px;
-  text-align:    center;
-  vertical-align: middle; }
+          &:empty {
+            display: none;
+          }
+        }
 
-#mde-logtray.active #mde-logs .log .preview .message {
-  overflow:      hidden;
-  text-overflow: ellipsis;
-  white-space:   nowrap; }
+        // Message (single line)
+        .mde-log-message-single {
+          overflow:      hidden;
+          text-overflow: ellipsis;
+          white-space:   nowrap;
+          flex: 1;
+          padding: 8px 0;
+          margin-left: 8px;
+        }
 
-#mde-logtray.active #mde-logs .log .preview .trace,
-#mde-logtray.active #mde-logs .log .preview .trace:visited {
-  color:         rgb(45,45,45);
-  float:         right;
-  padding-left:  5px;
-  text-decoration: underline; }
+       // trace
+        .mde-log-trace,
+        .mde-log-trace:visited {
+          margin-left:    8px;
+          color:         rgb(45,45,45);
+          text-decoration: underline;
+          padding: 8px 8px 8px 0;
+        }
 
-#mde-logtray.active #mde-logs .log.error { color: red; }
-#mde-logtray.active #mde-logs .log.null,
-#mde-logtray.active #mde-logs .log.undefined { color: rgb(120,120,120); }
-#mde-logtray.active #mde-logs .log.number,
-#mde-logtray.active #mde-logs .log.boolean,
-#mde-logtray.active #mde-logs .log.NaN { color: blue; }
-#mde-logtray.active #mde-logs .log.htmlcollection .message,
-#mde-logtray.active #mde-logs .log.object .message { font-style: italic;}
+        // message (full line)
+        .mde-log-message-full {
+          display: none;
+          background:    rgba(139,69,19,0.25);
+          box-shadow:    inset 1px 1px 1px rgba(0,0,0,0.2);
+          flex: 100%;
+          margin: 0 -8px;
+          padding: 4px 16px;
+        }
 
-#mde-logtray.active #mde-logs .log .full {
-  display:       none; }
-#mde-logtray.active #mde-logs .log.expand .preview .message {
-  font-weight:   bold; }
-#mde-logtray.active #mde-logs .log.expand .full {
-  background:    rgba(139,69,19,0.25);
-  box-shadow:    inset 1px 1px 1px rgba(0,0,0,0.2);
-  display:       block;
-  margin:        5px -5px -5px -5px;
-  padding:       5px;
-  white-space:   normal; }
+        // Open styles
+        &-open {
+          .mde-log-message-single {
+            font-weight: bold;
+          }
+          .mde-log-message-full {
+            display: block;
+          }
+        }
+      }
+    }
+  }

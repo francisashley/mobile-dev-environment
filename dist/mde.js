@@ -432,7 +432,7 @@ function logtray(options, DB) {
 
   function buildlogtray() {
     state = state() ? 'active' : '';
-    crel(document.body, self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': 'mde ' + state }, self.elements.resizeTray = crel('button', { 'id': 'mde-resize-logtray', 'class': 'mde' }), self.elements.logs = crel('div', { 'id': 'mde-logs' })));
+    crel(document.body, self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': 'mde ' + state }, self.elements.resizeTray = crel('button', { 'id': 'mde-logtray-resize-bar', 'class': 'mde' }), self.elements.logs = crel('div', { 'id': 'mde-logs' })));
     self.elements.resizeTray.innerHTML = '&bull; &bull; &bull;';
 
     setTrayHeight(DB.get('logtrayHeight'));
@@ -532,7 +532,7 @@ function logtray(options, DB) {
 
     var logs = self.elements.logs;
     var lastLog = logs.lastChild || false;
-    var lastMessage = (typeof lastLog === 'undefined' ? 'undefined' : _typeof(lastLog)) === 'object' ? lastLog.querySelector('.message').innerHTML : null;
+    var lastMessage = (typeof lastLog === 'undefined' ? 'undefined' : _typeof(lastLog)) === 'object' ? lastLog.querySelector('.mde-log-message-full').innerHTML : null;
 
     var id = 'log-' + logs.children.length;
     var type = void 0;
@@ -570,20 +570,20 @@ function logtray(options, DB) {
     var submitted = void 0;
 
     if (message !== lastMessage) {
-      crel(logs, submitted = crel('div', { 'id': 'mde-' + id, 'class': 'log ' + type }, crel('div', { 'class': 'preview' }, crel('div', { 'class': 'stack' }), crel('a', { 'class': 'trace', 'href': filePath, 'target': '_blank' }, fileName + ':' + lineNumber), crel('div', { 'class': 'message' })), crel('div', { 'class': 'full' })));
+      var _submitted = crel('div', { 'class': 'mde-log mde-log-type-' + type }, crel('div', { 'class': 'mde-log-amount' }), crel('div', { 'class': 'mde-log-message-single' }, message), crel('a', { 'class': 'mde-log-trace', 'href': filePath, 'target': '_blank' }, fileName + ':' + lineNumber), crel('pre', { 'class': 'mde-log-message-full' }));
 
-      submitted.querySelector('.preview .message').innerText = message;
-      submitted.querySelector('.full').innerText = message;
+      _submitted.querySelector('.mde-log-message-full').innerHTML = message;
 
-      submitted.querySelector('.preview').addEventListener('click', function (e) {
-        if (!e.target.classList.contains('trace')) {
-          var clickedLog = e.target.closest('.log');
-          clickedLog.classList.toggle('expand');
-        }
+      // Listen for toggling full message
+      _submitted.querySelector('.mde-log-message-single').addEventListener('click', function (e) {
+        _submitted.classList.toggle('mde-log-open');
       });
+
+      // Append log to DOM
+      crel(self.elements.logs, _submitted);
     } else {
-      var stackSize = parseInt(lastLog.querySelector('.stack').innerText) || 1;
-      lastLog.querySelector('.stack').innerText = stackSize + 1;
+      var stackSize = parseInt(lastLog.querySelector('.mde-log-amount').innerText) || 1;
+      lastLog.querySelector('.mde-log-amount').innerText = stackSize + 1;
     }
 
     if (initialScroll.atBottom) {

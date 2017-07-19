@@ -71,7 +71,7 @@ function logtray(options, DB) {
     crel(document.body,
       self.elements.tray = crel('div',
          { 'id': 'mde-logtray', 'class': `mde ${state}`},
-        self.elements.resizeTray = crel('button', {'id': 'mde-resize-logtray', 'class': 'mde'}),
+        self.elements.resizeTray = crel('button', {'id': 'mde-logtray-resize-bar', 'class': 'mde'}),
         self.elements.logs = crel('div', {'id': 'mde-logs'})
       )
     );
@@ -164,7 +164,7 @@ function logtray(options, DB) {
 
     const logs = self.elements.logs;
     const lastLog = logs.lastChild || false;
-    const lastMessage = typeof lastLog === 'object' ? lastLog.querySelector('.message').innerHTML : null;
+    const lastMessage = typeof lastLog === 'object' ? lastLog.querySelector('.mde-log-message-full').innerHTML : null;
 
     const id = 'log-'+logs.children.length;
     let type;
@@ -202,31 +202,26 @@ function logtray(options, DB) {
     let submitted ;
 
     if (message !== lastMessage) {
-      crel(logs,
-      submitted =  crel('div',
-          { 'id': 'mde-' + id, 'class': 'log ' + type },
-          crel('div',
-            {'class': 'preview'},
-            crel('div', { 'class': 'stack' } ),
-            crel('a', { 'class': 'trace', 'href': filePath, 'target': '_blank' }, fileName+':'+lineNumber),
-            crel('div', { 'class': 'message' } )
-          ),
-          crel('div', {'class': 'full'})
-        )
+      const submitted = crel('div', { 'class': 'mde-log mde-log-type-' + type },
+        crel('div', { 'class': 'mde-log-amount' }),
+        crel('div', { 'class': 'mde-log-message-single' }, message),
+        crel('a', { 'class': 'mde-log-trace', 'href': filePath, 'target': '_blank'}, fileName + ':' + lineNumber),
+        crel('pre', { 'class': 'mde-log-message-full' })
       );
 
-      submitted.querySelector('.preview .message').innerText = message;
-      submitted.querySelector('.full').innerText = message;
+      submitted.querySelector('.mde-log-message-full').innerHTML = message;
 
-      submitted.querySelector('.preview').addEventListener('click', (e) => {
-        if (!e.target.classList.contains('trace')) {
-          const clickedLog = e.target.closest('.log');
-          clickedLog.classList.toggle('expand');
-        }
+      // Listen for toggling full message
+      submitted.querySelector('.mde-log-message-single').addEventListener('click', (e) => {
+        submitted.classList.toggle('mde-log-open');
       });
+
+      // Append log to DOM
+      crel(self.elements.logs, submitted);
+
     } else {
-      const stackSize = parseInt(lastLog.querySelector('.stack').innerText) || 1;
-      lastLog.querySelector('.stack').innerText = stackSize+1;
+      const stackSize = parseInt(lastLog.querySelector('.mde-log-amount').innerText) || 1;
+      lastLog.querySelector('.mde-log-amount').innerText = stackSize+1;
     }
 
     if (initialScroll.atBottom) {

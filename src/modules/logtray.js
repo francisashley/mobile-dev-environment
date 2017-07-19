@@ -22,11 +22,12 @@ function logtray(options, DB) {
   const tracer  = require('../tools/tracer.js'),
         crel    = require('crel');
 
+  self.icon     = { toggleTray: '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3v-3h18v3z"/></svg>' };
   // Global variables
   self.elements = {
+    controlbar: document.querySelector('#mde-controlbar'),
     reload: document.querySelector('#mde-reload'),
-    openTray: {},
-    closeTray: {},
+    toggleTray: {},
     tray: {},
     resizeTray: {},
     logs: {}
@@ -37,8 +38,11 @@ function logtray(options, DB) {
   DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
 
 
-  buildlogtrayButton();
-  buildlogtray();
+  buildlogtrayButton(DB.get('logtrayOpen'));
+  buildlogtray(DB.get('logtrayOpen'));
+
+  // Bind toggle tray after all elements created in DOM
+  self.elements.toggleTray.addEventListener('click', (e) => toggleLogTray(DB.get('logtrayOpen')), false);
 
   window.console.log = (message) => {
     // Gather message trace information
@@ -54,30 +58,28 @@ function logtray(options, DB) {
     }
   }
 
-  function buildlogtrayButton() {
-    crel(document.body,
-      self.elements.openTray = crel('button', { 'id': 'mde-open-logtray', 'class': 'mde ' + status } )
+  function buildlogtrayButton(state) {
+    state = state ? 'active': '';
+    crel(self.elements.controlbar,
+      self.elements.toggleTray = crel('button', { 'id': 'mde-toggle-logtray', 'class': 'mde ' + state } )
     );
-
-    self.elements.openTray.addEventListener('click', (e) => {
-      open();
-    }, false);
+    self.elements.toggleTray.innerHTML = self.icon.toggleTray;
   }
 
   function buildlogtray() {
+    state = state() ? 'active': '';
     crel(document.body,
       self.elements.tray = crel('div',
-         { 'id': 'mde-logtray', 'class': `mde ${state()}`},
+         { 'id': 'mde-logtray', 'class': `mde ${state}`},
         self.elements.resizeTray = crel('button', {'id': 'mde-resize-logtray', 'class': 'mde'}),
-        self.elements.closeTray = crel('button', {'id': 'mde-close-logtray', 'class': 'mde'}),
         self.elements.logs = crel('div', {'id': 'mde-logs'})
       )
     );
+    self.elements.resizeTray.innerHTML = '&bull; &bull; &bull;';
 
     setTrayHeight(DB.get('logtrayHeight'));
 
     window.addEventListener('resize', (e) => setTrayHeight(DB.get('logtrayHeight')), false);
-    self.elements.closeTray.addEventListener('click', (e) => close(), false);
     self.elements.resizeTray.addEventListener('touchstart', (e) => resizeLogTray(e), false);
     self.elements.resizeTray.addEventListener('mousedown', (e) => resizeLogTray(e), false);
   }
@@ -92,7 +94,7 @@ function logtray(options, DB) {
 
   function setTrayHeight(height) {
     // set min height to match resize button height
-    const min = self.elements.resizeTray.offsetHeight;
+    const min = self.elements.controlbar.offsetHeight;
 
     // Set max height based on if reload button is displayed
     const max = window.innerHeight - (options.reload ? self.elements.reload.offsetHeight + 20 : 10);
@@ -108,16 +110,10 @@ function logtray(options, DB) {
 
   // actions
 
-  function open() {
-    DB.set('logtrayOpen', true);
-    self.elements.openTray.classList = true;
-    self.elements.tray.classList = true;
-  }
-
-  function close() {
-    DB.set('logtrayOpen', false);
-    self.elements.openTray.classList = false;
-    self.elements.tray.classList = false;
+  function toggleLogTray(state) {
+    DB.set('logtrayOpen', !state);
+    self.elements.toggleTray.classList.toggle('active', !state);
+    self.elements.tray.classList.toggle('active', !state);
   }
 
   // Resize logtray by dragging up and down on the bar

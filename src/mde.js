@@ -16,8 +16,14 @@
     // Import modules and tools
     const reloadButton = require('./modules/reloadButton.js');
     const logtray      = require('./modules/logtray.js');
+    const crel         = require('crel');
     let DB             = require('./tools/db.js');
-        DB             = new DB(options.group);
+    DB                 = new DB(options.group);
+
+    // inject control bar into page
+    crel(document.body,
+        crel('div', { 'id': 'mde-controlbar' } )
+    );
 
     // Run modules
     if (options.reload === true)  new reloadButton(options);

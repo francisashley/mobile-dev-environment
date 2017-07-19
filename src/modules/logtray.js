@@ -51,7 +51,7 @@ function logtray(options, DB) {
     log(message, trace);
   };
 
-  if (options.logErrors === true) {
+  if (options.displayErrors === true) {
     window.onerror = (message, filePath, lineNumber) => {
       const fileName = filePath.replace(/^.*[\\\/]/, '');
       log(message, {fileName, filePath, lineNumber, isError: true});

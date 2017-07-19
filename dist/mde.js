@@ -260,7 +260,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       reload: typeof options.reload !== 'undefined' ? options.reload : true,
       hardReload: typeof options.hardReload !== 'undefined' ? options.hardReload : true,
       logtray: typeof options.logtray !== 'undefined' ? options.logtray : true,
-      logErrors: typeof options.logErrors !== 'undefined' ? options.logErrors : true
+      displayErrors: typeof options.displayErrors !== 'undefined' ? options.displayErrors : true
     };
 
     // Import modules and tools
@@ -412,7 +412,7 @@ function logtray(options, DB) {
     log(message, trace);
   };
 
-  if (options.logErrors === true) {
+  if (options.displayErrors === true) {
     window.onerror = function (message, filePath, lineNumber) {
       var fileName = filePath.replace(/^.*[\\\/]/, '');
       log(message, { fileName: fileName, filePath: filePath, lineNumber: lineNumber, isError: true });

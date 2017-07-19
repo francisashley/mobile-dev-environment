@@ -53,19 +53,17 @@ module.exports = function logtray(options, DB) {
   self.elements.resizeTray.addEventListener('mousedown', (e) => resizeLogTray(e));
   window.addEventListener('resize', (e) => setTrayHeight(DB.get('logtrayHeight')));
 
-
+  // Display logs
   window.console.log = (message) => {
-    // Gather message trace information
-    const trace = tracer(new Error());
-
-    displayLog({ message, fileName: trace.fileName, filePath: trace.filePath, lineNumber: trace.lineNumber });
+    const { filePath, fileName, lineNumber } = tracer(new Error());
+    displayLog({ message, filePath, fileName, lineNumber });
   };
 
+  // Display error messages
   if (options.displayErrors === true) {
     window.onerror = (message, filePath, lineNumber) => {
-      const fileName = filePath.replace(/^.*[\\\/]/, '');
-      displayLog({message, fileName, filePath, lineNumber, isError: true});
-    }
+      displayLog({ message, filePath, fileName, lineNumber, type: 'error' });
+    };
   }
 
   // modify global

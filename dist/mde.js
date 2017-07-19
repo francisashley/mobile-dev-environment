@@ -425,17 +425,20 @@ module.exports = function logtray(options, DB) {
     return setTrayHeight(DB.get('logtrayHeight'));
   });
 
+  // Initiate log catching
   window.console.log = function (message) {
-    // Gather message trace information
-    var trace = tracer(new Error());
+    var _tracer = tracer(new Error()),
+        filePath = _tracer.filePath,
+        fileName = _tracer.fileName,
+        lineNumber = _tracer.lineNumber;
 
-    displayLog({ message: message, fileName: trace.fileName, filePath: trace.filePath, lineNumber: trace.lineNumber });
+    displayLog({ message: message, filePath: filePath, fileName: fileName, lineNumber: lineNumber });
   };
 
+  // Catch and display error messages
   if (options.displayErrors === true) {
     window.onerror = function (message, filePath, lineNumber) {
-      var fileName = filePath.replace(/^.*[\\\/]/, '');
-      displayLog({ message: message, fileName: fileName, filePath: filePath, lineNumber: lineNumber, isError: true });
+      displayLog({ message: message, filePath: filePath, fileName: fileName, lineNumber: lineNumber, type: 'error' });
     };
   }
 

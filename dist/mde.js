@@ -426,7 +426,7 @@ module.exports = function logtray(options, DB) {
   });
 
   // Display logs
-  console.log(options.useConsoleLog);
+
   if (options.useConsoleLog) {
     window.console.log = function (message) {
       var _tracer = tracer(new Error()),

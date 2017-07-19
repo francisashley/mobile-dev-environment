@@ -76,7 +76,7 @@ module.exports = function logtray(options, DB) {
 
   function setTrayHeight(height) {
     // set min height to match resize button height
-    const min = self.elements.controlbar.offsetHeight;
+    const min = self.elements.resizeTray.offsetHeight;
 
     // Set max height based on if reload button is displayed
     const max = window.innerHeight - (self.elements.controlbar.offsetHeight + 20);

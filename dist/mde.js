@@ -426,7 +426,6 @@ module.exports = function logtray(options, DB) {
   });
 
   // Display logs
-  console.log(options.useConsoleLog);
   if (options.useConsoleLog) {
     window.console.log = function (message) {
       var _tracer = tracer(new Error()),
@@ -454,11 +453,11 @@ module.exports = function logtray(options, DB) {
     };
   }
 
-  // modify global
+  // Actions
 
   function setTrayHeight(height) {
     // set min height to match resize button height
-    var min = self.elements.controlbar.offsetHeight;
+    var min = self.elements.resizeTray.offsetHeight;
 
     // Set max height based on if reload button is displayed
     var max = window.innerHeight - (self.elements.controlbar.offsetHeight + 20);
@@ -472,8 +471,7 @@ module.exports = function logtray(options, DB) {
     DB.set('logtrayHeight', height);
   }
 
-  // actions
-
+  // Toggle logtray
   function toggleLogTray(state) {
     DB.set('logtrayOpen', !state);
     self.elements.toggleTray.classList.toggle('active', !state);
@@ -521,6 +519,7 @@ module.exports = function logtray(options, DB) {
     document.addEventListener('mouseup', onEnd, false);
   }
 
+  // Display log in DOM
   function displayLog(_ref) {
     var message = _ref.message,
         filePath = _ref.filePath,

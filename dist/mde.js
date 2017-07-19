@@ -360,22 +360,7 @@ module.exports = function reloadButton(options) {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-function scrollInfo(elem) {
-  var scrollTop = elem.scrollTop,
-      scrollHeight = elem.scrollHeight,
-      clientHeight = elem.clientHeight;
-
-  return {
-    top: scrollTop,
-    bottom: scrollTop + clientHeight,
-    height: clientHeight,
-    atTop: scrollTop === 0,
-    atBottom: scrollHeight - scrollTop <= clientHeight + 1,
-    fullHeight: scrollHeight
-  };
-}
-
-function logtray(options, DB) {
+module.exports = function logtray(options, DB) {
 
   'use strict';
 
@@ -387,8 +372,17 @@ function logtray(options, DB) {
   var tracer = __webpack_require__(6),
       crel = __webpack_require__(0);
 
-  self.icon = { toggleTray: '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3v-3h18v3z"/></svg>' };
+  // Live functions
+  self.isOpen = function () {
+    return DB.get('logtrayOpen') == true;
+  };
+  self.height = function () {
+    return DB.get('logtrayHeight') || window.innerHeight * 0.25;
+  };
+
   // Global variables
+  self.status = self.isOpen() ? 'active' : '';
+  self.icon = { toggleTray: '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3v-3h18v3z"/></svg>' };
   self.elements = {
     controlbar: document.querySelector('#mde-controlbar'),
     reload: document.querySelector('#mde-reload'),
@@ -431,7 +425,7 @@ function logtray(options, DB) {
   }
 
   function buildlogtray() {
-    state = state() ? 'active' : '';
+    var state = self.isOpen() ? 'active' : '';
     crel(document.body, self.elements.tray = crel('div', { 'id': 'mde-logtray', 'class': 'mde ' + state }, self.elements.resizeTray = crel('button', { 'id': 'mde-logtray-resize-bar', 'class': 'mde' }), self.elements.logs = crel('div', { 'id': 'mde-logs' })));
     self.elements.resizeTray.innerHTML = '&bull; &bull; &bull;';
 
@@ -446,12 +440,6 @@ function logtray(options, DB) {
     self.elements.resizeTray.addEventListener('mousedown', function (e) {
       return resizeLogTray(e);
     }, false);
-  }
-
-  // constants
-
-  function state() {
-    return DB.get('logtrayOpen');
   }
 
   // modify global
@@ -520,7 +508,7 @@ function logtray(options, DB) {
     document.addEventListener('mousemove', onMove, false);
     document.addEventListener('mouseup', onEnd, false);
   }
-  //
+
   function displayLog(_ref) {
     var message = _ref.message,
         filePath = _ref.filePath,
@@ -588,9 +576,7 @@ function logtray(options, DB) {
       crel(self.elements.logs, log);
     }
   }
-}
-
-module.exports = logtray;
+};
 
 /***/ }),
 /* 6 */

@@ -261,6 +261,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       hardReload: typeof options.hardReload !== 'undefined' ? options.hardReload : true,
       logtray: typeof options.logtray !== 'undefined' ? options.logtray : true,
       displayErrors: typeof options.displayErrors !== 'undefined' ? options.displayErrors : true,
+      useConsoleLog: typeof options.useConsoleLog !== 'undefined' ? options.useConsoleLog : false,
       controlbar: {
         position: typeof options.controlbar.position !== 'undefined' ? options.controlbar.position : 'tr',
         order: typeof options.controlbar.order !== 'undefined' ? options.controlbar.order : ['reload', 'logtray']
@@ -385,7 +386,6 @@ module.exports = function logtray(options, DB) {
   self.icon = { toggleTray: '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3v-3h18v3z"/></svg>' };
   self.elements = {
     controlbar: document.querySelector('#mde-controlbar'),
-    reload: document.querySelector('#mde-reload'),
     toggleTray: {},
     tray: {},
     resizeTray: {},
@@ -425,17 +425,29 @@ module.exports = function logtray(options, DB) {
     return setTrayHeight(DB.get('logtrayHeight'));
   });
 
-  // Initiate log catching
-  window.console.log = function (message) {
-    var _tracer = tracer(new Error()),
-        filePath = _tracer.filePath,
-        fileName = _tracer.fileName,
-        lineNumber = _tracer.lineNumber;
+  // Display logs
+  console.log(options.useConsoleLog);
+  if (options.useConsoleLog) {
+    window.console.log = function (message) {
+      var _tracer = tracer(new Error()),
+          filePath = _tracer.filePath,
+          fileName = _tracer.fileName,
+          lineNumber = _tracer.lineNumber;
 
-    displayLog({ message: message, filePath: filePath, fileName: fileName, lineNumber: lineNumber });
-  };
+      displayLog({ message: message, filePath: filePath, fileName: fileName, lineNumber: lineNumber });
+    };
+  } else {
+    window.log = function (message) {
+      var _tracer2 = tracer(new Error()),
+          filePath = _tracer2.filePath,
+          fileName = _tracer2.fileName,
+          lineNumber = _tracer2.lineNumber;
 
-  // Catch and display error messages
+      displayLog({ message: message, filePath: filePath, fileName: fileName, lineNumber: lineNumber });
+    };
+  }
+
+  // Display error messages
   if (options.displayErrors === true) {
     window.onerror = function (message, filePath, lineNumber) {
       displayLog({ message: message, filePath: filePath, fileName: fileName, lineNumber: lineNumber, type: 'error' });

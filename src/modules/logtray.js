@@ -1,21 +1,8 @@
-  function scrollInfo(elem) {
-    const {scrollTop, scrollHeight, clientHeight} = elem;
-    return {
-      top:        scrollTop,
-      bottom:     scrollTop + clientHeight,
-      height:     clientHeight,
-      atTop:      scrollTop === 0,
-      atBottom:   scrollHeight - scrollTop <= clientHeight + 1,
-      fullHeight: scrollHeight
-    }
-  }
-
-
 function logtray(options, DB) {
 
   'use strict';
 
-  // initiate
+// initiate
   let self = this;
 
   // Libraries
@@ -48,13 +35,13 @@ function logtray(options, DB) {
     // Gather message trace information
     const trace = tracer(new Error());
 
-    log(message, trace);
+    displayLog({ message, fileName: trace.fileName, filePath: trace.filePath, lineNumber: trace.lineNumber });
   };
 
   if (options.displayErrors === true) {
     window.onerror = (message, filePath, lineNumber) => {
       const fileName = filePath.replace(/^.*[\\\/]/, '');
-      log(message, {fileName, filePath, lineNumber, isError: true});
+      displayLog({message, fileName, filePath, lineNumber, isError: true});
     }
   }
 
@@ -156,18 +143,9 @@ function logtray(options, DB) {
     document.addEventListener('mousemove', onMove, false);
     document.addEventListener('mouseup', onEnd, false);
   }
-
-  function log(message, trace) {
-    const { filePath, fileName, lineNumber, isError } = trace;
-
-    const initialScroll = scrollInfo(self.elements.logs);
-
-    const logs = self.elements.logs;
-    const lastLog = logs.lastChild || false;
-    const lastMessage = typeof lastLog === 'object' ? lastLog.querySelector('.mde-log-message-full').innerHTML : null;
-
-    const id = 'log-'+logs.children.length;
-    let type;
+//
+  function displayLog({message, filePath, fileName, lineNumber, type = 'log'}) {
+    const lastLogElement = self.elements.logs.lastChild || false;
 
     // Get and handle var types
     if (type === 'error') {
@@ -199,33 +177,36 @@ function logtray(options, DB) {
       message = message.toString();
     }
 
-    let submitted ;
+    // Check whether to scroll tray to the bottom after displaying message
+    // Scroll only if logtray is initially at the bottom
+    const scrollToBottom = self.elements.logs.scrollHeight - self.elements.logs.scrollTop <= self.elements.logs.clientHeight + 1;
 
-    if (message !== lastMessage) {
-      const submitted = crel('div', { 'class': 'mde-log mde-log-type-' + type },
+    // Check whether to increment last message amount or create a new message
+    const lastLogMessage = typeof lastLogElement === 'object' ? lastLogElement.querySelector('.mde-log-message-full').innerHTML : null;
+    const incrementLastMessage = self.elements.logs.children.length > 0 && lastLogMessage === message;
+
+    // If this message matches the previous one, increment it.
+    if (incrementLastMessage) {
+      const lastLogAmount = lastLogElement.querySelector('.mde-log-amount').innerHTML || 1;
+      lastLogElement.querySelector('.mde-log-amount').innerHTML = lastLogAmount + 1;
+    // Otherwise create a new log message
+    } else {
+      const log = crel('div', { 'class': 'mde-log mde-log-type-' + type },
         crel('div', { 'class': 'mde-log-amount' }),
         crel('div', { 'class': 'mde-log-message-single' }, message),
         crel('a', { 'class': 'mde-log-trace', 'href': filePath, 'target': '_blank'}, fileName + ':' + lineNumber),
         crel('pre', { 'class': 'mde-log-message-full' })
       );
 
-      submitted.querySelector('.mde-log-message-full').innerHTML = message;
+      log.querySelector('.mde-log-message-full').innerHTML = message;
 
       // Listen for toggling full message
-      submitted.querySelector('.mde-log-message-single').addEventListener('click', (e) => {
-        submitted.classList.toggle('mde-log-open');
+      log.querySelector('.mde-log-message-single').addEventListener('click', (e) => {
+        log.classList.toggle('mde-log-open');
       });
 
       // Append log to DOM
-      crel(self.elements.logs, submitted);
-
-    } else {
-      const stackSize = parseInt(lastLog.querySelector('.mde-log-amount').innerText) || 1;
-      lastLog.querySelector('.mde-log-amount').innerText = stackSize+1;
-    }
-
-    if (initialScroll.atBottom) {
-      logs.scrollTop = logs.scrollHeight;
+      crel(self.elements.logs, log);
     }
   }
 }

@@ -25,9 +25,9 @@ module.exports = function logtray(options, DB) {
     logs: {}
   };
 
-  // Setup variables if not setup already
-  DB.set('logtrayOpen', DB.get('logtrayOpen') || false);
-  DB.set('logtrayHeight', DB.get('logtrayHeight') || window.innerHeight * 0.25);
+  // If logtray variables are not in DB, ensure they are
+  DB.set('logtrayOpen', self.isOpen());
+  DB.set('logtrayHeight', self.height());
 
 
   buildlogtrayButton(DB.get('logtrayOpen'));

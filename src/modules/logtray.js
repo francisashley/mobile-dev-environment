@@ -53,7 +53,6 @@ module.exports = function logtray(options, DB) {
   window.addEventListener('resize', (e) => setTrayHeight(DB.get('logtrayHeight')));
 
   // Display logs
-
   if (options.useConsoleLog) {
     window.console.log = (message) => {
       const { filePath, fileName, lineNumber } = tracer(new Error());
@@ -73,7 +72,7 @@ module.exports = function logtray(options, DB) {
     };
   }
 
-  // modify global
+  // Actions
 
   function setTrayHeight(height) {
     // set min height to match resize button height
@@ -91,8 +90,7 @@ module.exports = function logtray(options, DB) {
     DB.set('logtrayHeight', height);
   }
 
-  // actions
-
+  // Toggle logtray
   function toggleLogTray(state) {
     DB.set('logtrayOpen', !state);
     self.elements.toggleTray.classList.toggle('active', !state);
@@ -140,6 +138,7 @@ module.exports = function logtray(options, DB) {
     document.addEventListener('mouseup', onEnd, false);
   }
 
+  // Display log in DOM
   function displayLog({message, filePath, fileName, lineNumber, type = 'log'}) {
     const lastLogElement = self.elements.logs.lastChild || false;
 

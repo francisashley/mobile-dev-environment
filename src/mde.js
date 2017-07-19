@@ -12,6 +12,7 @@
       logtray         :  typeof options.logtray         !== 'undefined'   ?   options.logtray         :   true,
       displayErrors   :  typeof options.displayErrors   !== 'undefined'   ?   options.displayErrors   :   true,
       controlbar      : {
+        position    :  typeof options.controlbar.position   !== 'undefined'   ?   options.controlbar.position   :   'tr',
         order       :  typeof options.controlbar.order      !== 'undefined'   ?   options.controlbar.order      :   ['reload', 'logtray']
       }
     };
@@ -25,7 +26,7 @@
 
     // inject control bar into page
     crel(document.body,
-      crel('div', { 'id': 'mde-controlbar' } )
+      crel('div', { 'id': 'mde-controlbar', 'class': 'mde-controlbar-' + options.controlbar.position } )
     );
 
     // Run modules

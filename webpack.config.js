@@ -1,7 +1,6 @@
 "use strict";
 
 const debugging = process.env.NODE_ENV === "development";
-const minimizing = process.argv.indexOf('-p') !== -1;
 
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -11,7 +10,7 @@ module.exports = {
   entry: [ "./src/mde.js", "./src/sass/mde.scss" ],
   output: {
     path: __dirname,
-    filename: minimizing ? "./dist/mde.min.js" : "./dist/mde.js"
+    filename: "./dist/mde.min.js"
   },
   module: {
     rules: [
@@ -31,6 +30,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin(minimizing ? "dist/mde.min.css" : "dist/mde.css"),
+    new ExtractTextPlugin("dist/mde.min.css")
   ]
 };

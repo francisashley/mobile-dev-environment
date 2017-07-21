@@ -1,7 +1,7 @@
 {
   "name": "mobile-dev-environment",
-  "version": "0.0.1",
-  "description": "MobileDevEnvironment inserts a simple toolset into browsers lacking basic dev features.",
+  "version": "1.0.0",
+  "description": "Stuck in a browser with primitive dev features? Include this in your web app for a basic set of useful features.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,5 +1,5 @@
 {
-  "name": "MobileDevEnvironment",
+  "name": "mobile-dev-environment",
   "version": "1.0.0",
   "description": "Stuck in a browser with primitive dev features? Include this in your web app for a basic set of useful features.",
   "main": "./src/mde.js",
@@ -20,12 +20,14 @@
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",
-    "crel": "^3.0.1",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.2.0"
+  },
+  "dependencies": {
+    "crel": "^3.0.1"
   }
 }

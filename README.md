@@ -104,7 +104,7 @@ npm install MobileDevEnvironment
 
 Clone from Github
 
-```
+```bash
 git clone https://github.com/prjctnxt/MobileDevEnvironment.git
 ```
 
@@ -116,7 +116,7 @@ https://cdn.rawgit.com/prjctnxt/MobileDevEnvironment/bc8bb79f/dist/mde.min.js
 
 Setup index.html
 
-```
+```html
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="path/to/mde.min.css">
@@ -132,7 +132,7 @@ Setup index.html
 ```
 Or include the NPM package 
 ```
-  const MobileDevEnvironement = require('MobileDevEnvironment');
+const MobileDevEnvironement = require('MobileDevEnvironment');
 ```
 ## Heads up
 Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 

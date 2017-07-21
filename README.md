@@ -99,7 +99,7 @@ new MobileDevEnvironment({
 Install from NPM
 
 ```bash
-npm install MobileDevEnvironment
+npm install mobile-dev-environment
 ```
 
 Clone from Github
@@ -132,7 +132,7 @@ Setup index.html
 ```
 Or include the NPM package 
 ```
-const MobileDevEnvironement = require('MobileDevEnvironment');
+const MobileDevEnvironement = require('mobile-dev-environment');
 ```
 ## Heads up
 Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 

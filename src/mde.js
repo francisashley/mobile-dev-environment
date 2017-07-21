@@ -6,16 +6,13 @@
 
     // Default options
     options = {
-      group           :  typeof options.group           !== 'undefined'   ?   options.group           :   'global',
-      reload          :  typeof options.reload          !== 'undefined'   ?   options.reload          :   true,
-      hardReload      :  typeof options.hardReload      !== 'undefined'   ?   options.hardReload      :   true,
-      logtray         :  typeof options.logtray         !== 'undefined'   ?   options.logtray         :   true,
-      displayErrors   :  typeof options.displayErrors   !== 'undefined'   ?   options.displayErrors   :   true,
-      useConsoleLog   :  typeof options.useConsoleLog   !== 'undefined'   ?   options.useConsoleLog   :   false,
-      controlbar      : {
-        position    :  typeof options.controlbar.position   !== 'undefined'   ?   options.controlbar.position   :   'tr',
-        order       :  typeof options.controlbar.order      !== 'undefined'   ?   options.controlbar.order      :   ['reload', 'logtray']
-      }
+      group               :  typeof options.group               !== 'undefined'   ?   options.group                 :   'global',
+      modules             :  typeof options.modules             !== 'undefined'   ?   options.modules               :   ['reload', 'logtray'],
+      controlbarOrder     :  typeof options.controlbarOrder     !== 'undefined'   ?   options.controlbarOrder       :   ['reload', 'logtray'],
+      controlbarPosition  :  typeof options.controlbarPosition  !== 'undefined'   ?   options.controlbarPosition    :   'tr',
+      hardReload          :  typeof options.hardReload          !== 'undefined'   ?   options.hardReload            :   true,
+      displayErrors       :  typeof options.displayErrors       !== 'undefined'   ?   options.displayErrors         :   true,
+      useConsoleLog       :  typeof options.useConsoleLog       !== 'undefined'   ?   options.useConsoleLog         :   false
     };
 
     // Import modules and tools
@@ -27,13 +24,13 @@
 
     // inject control bar into page
     crel(document.body,
-      crel('div', { 'id': 'mde-controlbar', 'class': 'mde-controlbar-' + options.controlbar.position } )
+      crel('div', { 'id': 'mde-controlbar', 'class': 'mde-controlbar-' + options.controlbarPosition } )
     );
 
     // Run modules
-    options.controlbar.order.forEach((module) => {
-      if (module === 'reload' && options.reload === true) new reloadButton(options);
-      else if (module === 'logtray' && options.logtray === true) new logtray(options, DB);
+    options.controlbarOrder.forEach((module) => {
+      if (module === 'reload' && options.modules.includes('reload')) new reloadButton(options);
+      else if (module === 'logtray' && options.modules.includes('logtray')) new logtray(options, DB);
     });
   }
 

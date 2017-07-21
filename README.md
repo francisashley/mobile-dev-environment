@@ -1,78 +1,143 @@
-MobileDevEnvironment inserts a simple toolset into browsers lacking basic dev features.
+# MobileDevEnvironment
+
+**MobileDevEnvironment**  is a basic set of tools injected into the DOM of browsers lacking basic dev features.
 
 ![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
 
 ## Features
-
-A refresh button that will clear the cache.
-
-A tray that displays console.log() messages.
-
-That is also resizable, toggleable, colour coded, catches errors and displays trace info. Great!
-
-## Install
-
-At present MDE is only available on GitHub.
+- A hard reload button for clearing browser cache.
+- An output display for `console.log()` messages with trace info.
+- An error Interceptor that displays error messages along with trace info
+- A nice crispy, configurable, resizable, toggleable, colour coded interface. Great!
 
 
 ## Usage
-```html
-<link href="mde/styles.css" rel="stylesheet">
-<script src="mde/mde.js"></script>
 
-<script>
-    new MobileDevEnvironment();
-</script>
+```javascript
+new MobileDevEnvironment({
+  modules             : ['reload', 'logtray'],
+  controlBarOrder     : ['reload', 'logtray'],
+  controlbarPosition  : 'tr',
+  hardReload          : true,
+  displayErrors       : true,
+  useConsoleLog       : true,
+  group               : 'global'
+});
 ```
 
-## API
+## Options
 
-### new MobileDevEnvironment([options])
+<table>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+<tr>
+<td>modules</td>
+<td>array</td>
+<td>Choose list of modules to load</td>
+<td>['reload', 'logtray']</td>
+</tr>
+<tr>
+<td>controlBarOrder</td>
+<td>array</td>
+<td>Customise order of modules in control bar</td>
+<td>['reload', 'logtray']</td>
+</tr>
+<tr>
+<td>controlBarPosition</td>
+<td>string</td>
+<td>Position the control bar either top left (tl) or top right (tr)</td>
+<td>'tr'</td>
+</tr>
+<tr>
+<td>displayErrors</td>
+<td>boolean</td>
+<td>Display javascript errors</td>
+<td>true</td>
+</tr>
+<tr>
+<td>useConsoleLog</td>
+<td>boolean</td>
+<td>Toggle between console.log() or log() to display messages</td>
+<td>true</td>
+</tr>
+<tr>
+<td>hardReload</td>
+<td>string</td>
+<td>Refresh browser cache</td>
+<td>'tr'</td>
+</tr>
+<tr>
+<td>group</td>
+<td>string</td>
+<td>Share state information like open/close, height etc with instances of MDE on other pages</td>
+<td>'global'</td>
+</tr>
+</table>
 
-#### options
+## Modules
+<table>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>reload</td>
+<td>An easily accessible button for reloading the page</td>
+</tr>
+<tr>
+<td>logtray</td>
+<td>A toggleable, color coded, resizable tray for displaying log messages</td>
+</tr>
+</table>
 
-##### reload
+## Installation
 
-Type: `boolean`
-Default: `true`
+Install from NPM
 
-Choose to display reload button in the browser.
+```bash
+npm install MobileDevEnvironment
+```
 
-##### hardReload
+Clone from Github
 
-Type: `boolean`
-Default: `true`
+```
+git clone https://github.com/prjctnxt/MobileDevEnvironment.git
+```
 
-Enable to clear the cache.
+Link CDN
+```html
+https://rawgit.com/prjctnxt/MobileDevEnvironment/master/mde.min.css
+https://rawgit.com/prjctnxt/MobileDevEnvironment/master/mde.min.js
+```
 
-##### logbox
+Setup index.html
 
-Type: `boolean`
-Default: `true`
-
-Choose to display logbox (log tray) in the browser.
-
-##### logErrors
-
-Type: `boolean`
-Default: `true`
-
-Enable to catch javascript errors. Great for debugging.
-
-##### group
-
-Type: `string`
-Default: `'global'`
-
-Share state information with other instances of MDE in the group. Information like logbox toggle and height will be shared.
-
-This is useful if you want to use MDE in multiple files across the same project.
-
-
+```
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="path/to/mde.min.css">
+  </head>
+  <body>
+    ....
+    <script src="path/to/mde.min.js"></script>
+    <script>
+      new MobileDevEnvironment(options);
+    </script>
+  </body>
+</html>
+```
+Or include the NPM package 
+```
+  const MobileDevEnvironement = require('MobileDevEnvironment');
+```
 ## Heads up
-Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this.
+Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 
 
-For example:
+**For example:**
 
 `http://localhost:8080/project/index.html`
 will work
@@ -81,24 +146,4 @@ will work
 
 ## License
 
-MIT License
-
-Copyright (c) 2016 Francis Ashley
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+MIT

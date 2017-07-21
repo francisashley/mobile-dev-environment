@@ -1,6 +1,6 @@
 {
   "name": "mobile-dev-environment",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Stuck in a browser with primitive dev features? Include this in your web app for a basic set of useful features.",
   "main": "./src/mde.js",
   "scripts": {

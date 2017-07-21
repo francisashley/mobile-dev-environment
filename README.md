@@ -110,8 +110,8 @@ git clone https://github.com/prjctnxt/MobileDevEnvironment.git
 
 Link CDN
 ```html
-https://rawgit.com/prjctnxt/MobileDevEnvironment/master/mde.min.css
-https://rawgit.com/prjctnxt/MobileDevEnvironment/master/mde.min.js
+https://cdn.rawgit.com/prjctnxt/MobileDevEnvironment/bc8bb79f/dist/mde.min.css
+https://cdn.rawgit.com/prjctnxt/MobileDevEnvironment/bc8bb79f/dist/mde.min.js
 ```
 
 Setup index.html

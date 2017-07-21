@@ -1,8 +1,8 @@
 {
-  "name": "mobile-dev-environment",
+  "name": "MobileDevEnvironment",
   "version": "1.0.0",
   "description": "Stuck in a browser with primitive dev features? Include this in your web app for a basic set of useful features.",
-  "main": "index.js",
+  "main": "./src/mde.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -108,7 +108,7 @@ Clone from Github
 git clone https://github.com/prjctnxt/MobileDevEnvironment.git
 ```
 
-You can access the most up to date version via a CDN by passing these links into [RawGit](https://rawgit.com).
+Or you can access the most up to date version via a CDN by passing these links into [RawGit](https://rawgit.com).
 ```html
 https://github.com/prjctnxt/MobileDevEnvironment/blob/master/dist/mde.min.css
 https://github.com/prjctnxt/MobileDevEnvironment/blob/master/dist/mde.min.js

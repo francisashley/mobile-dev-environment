@@ -68,7 +68,7 @@ new MobileDevEnvironment({
 <td>hardReload</td>
 <td>string</td>
 <td>Refresh browser cache</td>
-<td>'tr'</td>
+<td>true</td>
 </tr>
 <tr>
 <td>group</td>

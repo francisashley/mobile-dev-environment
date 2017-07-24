@@ -7,7 +7,7 @@
 ## Features
 - A hard reload button for clearing browser cache.
 - An output display for `console.log()` messages with trace info.
-- An error Interceptor that displays error messages along with trace info
+- An error Interceptor that displays error messages along with trace info.
 - A nice crispy, configurable, resizable, toggleable, colour coded interface. Great!
 
 

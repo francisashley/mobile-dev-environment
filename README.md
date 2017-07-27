@@ -1,149 +1,114 @@
-# MobileDevEnvironment
+## MobileDevEnvironment
 
-**MobileDevEnvironment**  is a basic set of tools injected into the DOM of browsers lacking basic dev features.
+**Mobile Dev Environment** (or **MDE**) is a simple set of tools injected into the DOM of minimalistic browsers lacking basic dev features. Developed during a period confined to a mobile device, the limitations of the platform became all to familiar and so to maintain a good balance of yang in the universe the library arose. So in that light, if you discover any bugs or have any feature ideas feel free to get in contact by submitting an issue on Github or sending an email to prjctnxt@gmail.com.
 
 ![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
 
-## Features
-- A hard reload button for clearing browser cache.
-- An output display for `console.log()` messages with trace info.
-- An error Interceptor that displays error messages along with trace info.
-- A nice crispy, configurable, resizable, toggleable, colour coded interface. Great!
+### Features
 
+- **Reload button** <br> An easily accessible button that can be configured to refresh browser cache.
+- **Log tray**  <br> A toggleable, resizable, colour coded output area bound to console.log().
+- **Error messages** <br/> Catch and display errors that occur after the script has been initialised.
+- **Trace information** <br/> View filenames and line numbers of all log messages.
 
-## Usage
+### Installation
+
+If you are using npm, `npm install mobile-dev-environment`. Otherwise, grab the [latest release](https://github.com/prjctnxt/MobileDevEnvironment/releases) or link via a [CDN](https://unpkg.com/mobile-dev-environment/dist/).
+
+**Include in the browser**
+```html
+// head
+<link rel="stylesheet" type="text/css" href="path/to/mde.min.css">
+
+// body
+<script src="path/to/mde.min.js"></script>
+```
+
+**or in Node**
 
 ```javascript
-new MobileDevEnvironment({
-  modules             : ['reload', 'logtray'],
-  controlBarOrder     : ['reload', 'logtray'],
-  controlbarPosition  : 'tr',
-  hardReload          : true,
-  displayErrors       : true,
-  useConsoleLog       : true,
-  group               : 'global'
-});
-```
-
-## Options
-
-<table>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-<tr>
-<td>modules</td>
-<td>array</td>
-<td>Choose list of modules to load</td>
-<td>['reload', 'logtray']</td>
-</tr>
-<tr>
-<td>controlBarOrder</td>
-<td>array</td>
-<td>Customise order of modules in control bar</td>
-<td>['reload', 'logtray']</td>
-</tr>
-<tr>
-<td>controlBarPosition</td>
-<td>string</td>
-<td>Position the control bar either top left (tl) or top right (tr)</td>
-<td>'tr'</td>
-</tr>
-<tr>
-<td>displayErrors</td>
-<td>boolean</td>
-<td>Display javascript errors</td>
-<td>true</td>
-</tr>
-<tr>
-<td>useConsoleLog</td>
-<td>boolean</td>
-<td>Toggle between console.log() or log() to display messages</td>
-<td>true</td>
-</tr>
-<tr>
-<td>hardReload</td>
-<td>string</td>
-<td>Refresh browser cache</td>
-<td>true</td>
-</tr>
-<tr>
-<td>group</td>
-<td>string</td>
-<td>Share state information like open/close, height etc with instances of MDE on other pages</td>
-<td>'global'</td>
-</tr>
-</table>
-
-## Modules
-<table>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>reload</td>
-<td>An easily accessible button for reloading the page</td>
-</tr>
-<tr>
-<td>logtray</td>
-<td>A toggleable, color coded, resizable tray for displaying log messages</td>
-</tr>
-</table>
-
-## Installation
-
-Install from NPM
-
-```bash
-npm install mobile-dev-environment
-```
-
-Clone from Github
-
-```bash
-git clone https://github.com/prjctnxt/MobileDevEnvironment.git
-```
-
-Or access the most up to date version via a CDN by passing these links into [RawGit](https://rawgit.com).
-```html
-https://github.com/prjctnxt/MobileDevEnvironment/blob/master/dist/mde.min.css
-https://github.com/prjctnxt/MobileDevEnvironment/blob/master/dist/mde.min.js
-```
-
-Setup index.html
-
-```html
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="path/to/mde.min.css">
-  </head>
-  <body>
-    ....
-    <script src="path/to/mde.min.js"></script>
-    <script>
-      new MobileDevEnvironment(options);
-    </script>
-  </body>
-</html>
-```
-Or include the NPM package 
-```
 const MobileDevEnvironement = require('mobile-dev-environment');
 ```
-## Heads up
-Retrieving trace info only works when the caller is in a file that is directly accessable to the client. URL rewriting will break this. 
 
-**For example:**
+### Usage
 
-`http://localhost:8080/project/index.html`
-will work
+```javascript
+let options =  {
+  controlbarPosition  : 'tl',
+  group               : 'myMultiPageApp',
+  ...
+};
 
-`http://localhost:8080/project` won't
+new MobileDevEnvironment(options);
+```
 
-## License
+### Configuration
 
-MIT
+<table>
+  <tr>
+    <th colspan="4" align="left" valign="top"><a href="#options" name="options">Options</a></th>
+  </tr>
+  <tr>
+    <th align="left" valign="top">Option</th>
+    <th align="left" valign="top">Description</th>
+    <th align="left" valign="top">Type</th>
+    <th align="left" valign="top">Default</th>
+  </tr>
+  <tr>
+    <td valign="top"><code>modules</code></td>
+    <td valign="top">An array of <a href="#modules" name="modules">modules</a> to load</td>
+    <td valign="top"><code>array</code></td>
+    <td valign="top"><code>['reload','logtray']</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>controlBarOrder</code></td>
+    <td valign="top">The module order in control bar</td>
+    <td valign="top"><code>array</code></td>
+    <td valign="top"><code>['reload','logtray']</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>controlBarPosition</code></td>
+    <td valign="top">The controlbar position, top left <code>'tl'</code> or right <code>'tr'</code></td>
+    <td valign="top"><code>string</code></td>
+    <td valign="top"><code>'tr'</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>displayErrors</code></td>
+    <td valign="top">Catch and output javascript errors</td>
+    <td valign="top"><code>boolean</code></td>
+    <td valign="top"><code>true</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>useConsoleLog</code></td>
+    <td valign="top">Use console.log() or else log() to display messages</td>
+    <td valign="top"><code>boolean</code></td>
+    <td valign="top"><code>true</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>hardReload</code></td>
+    <td valign="top">Refresh browser cache</td>
+    <td valign="top"><code>string</code></td>
+    <td valign="top"><code>true</code></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>group</code></td>
+    <td valign="top">Share state information like open/close, height etc across instances of MDE on other pages</td>
+    <td valign="top"><code>string</code></td>
+    <td valign="top"><code>'global'</code></td>
+  </tr>
+  <tr>
+    <th colspan="4" align="left" valign="top"><a href="#modules" name="modules">Modules</a></th>
+  </tr>
+  <tr>
+    <th colspan="1" align="left" valign="top">Module</th>
+    <th colspan="3" align="left" valign="top">Description</th>
+  </tr>
+  <tr>
+    <td colspan="1" valign="top"><code>reload</code></td>
+    <td colspan="3" valign="top">An easily accessible button for reloading the page</td>
+  </tr>
+  <tr>
+    <td colspan="1" valign="top"><code>logtray</code></td>
+    <td colspan="3" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
+  </tr>
+</table>

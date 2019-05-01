@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MobileDevEnvironment example</title>
+    <link rel="stylesheet" type="text/css" href="../dist/mde.min.css" />
+    <script src="../dist/mde.min.js"></script>
+    <style>
+      body img {
+        display: block;
+        margin: 30px auto;
+        max-width: calc(100% - 60px);
+        width: 700px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="http://placekitten.com/g/740/420" alt="cute cat placeholder">
+    <script>
+      let options = {
+        controlbarPosition: "tr"
+      };
+      new MobileDevEnvironment(options);
+    </script>
+  </body>
+</html>

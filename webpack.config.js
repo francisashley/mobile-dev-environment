@@ -2,16 +2,21 @@
 
 const debugging = process.env.NODE_ENV === "development";
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   context: __dirname,
   devtool: debugging ? "inline-sourcemap" : "sourcemap",
-  entry: [ "./src/mde.js", "./src/sass/mde.scss" ],
+  entry: ["./src/mde.js", "./src/sass/mde.scss"],
   output: {
     path: __dirname,
     filename: "./dist/mde.min.js"
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "dist/mde.min.css"
+    })
+  ],
   module: {
     rules: [
       {
@@ -20,16 +25,16 @@ module.exports = {
         use: "babel-loader"
       },
       {
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract({
-          "fallback": "style-loader",
-          "use": "css-loader!sass-loader"
-        })
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          "css-loader",
+          "sass-loader"
+        ]
       }
     ]
-  },
-  plugins: [
-    new ExtractTextPlugin("dist/mde.min.css")
-  ]
+  }
 };

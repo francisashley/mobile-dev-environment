@@ -1,0 +1,12 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "extends": ["eslint:recommended"],
+  "env": {
+    "browser": true,
+    "amd": true,
+    "node": true
+  }
+}

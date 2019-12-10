@@ -31,7 +31,7 @@ module.exports = function logtray(options, DB) {
   DB.set("logtrayHeight", self.height());
 
   // Create 'open log tray' button and add SVG icon
-  self.elements.toggleTray = crel("button", { id: "mde-toggle-logtray", class: status });
+  self.elements.toggleTray = crel("button", { id: "mde-toggle-logtray", class: self.status });
   self.elements.toggleTray.innerHTML = self.icon.toggleTray;
 
   // Create log tray element and html escaped characters (icon)

@@ -16,20 +16,17 @@
       displayErrors: typeof options.displayErrors !== "undefined" ? options.displayErrors : true,
       useConsoleLog: typeof options.useConsoleLog !== "undefined" ? options.useConsoleLog : false
     };
-
     // Import modules and tools
     const reloadButton = require("./modules/reloadButton.js");
     const logtray = require("./modules/logtray.js");
     const crel = require("crel");
     let DB = require("./tools/db.js");
     DB = new DB(options.group);
-
     // inject control bar into page
     crel(
       document.body,
       crel("div", { id: "mde-controlbar", class: "mde-controlbar-" + options.controlbarPosition })
     );
-
     // Run modules
     options.controlbarOrder.forEach(module => {
       if (module === "reload" && options.modules.includes("reload")) new reloadButton(options);

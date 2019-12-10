@@ -1,5 +1,5 @@
 // Provide an error and retrieve trace information
-module.exports = function tracer(error) {
+export default function tracer(error) {
   // Get stack as string
   let stack = error.stack;
   // Get last line of stack
@@ -18,4 +18,4 @@ module.exports = function tracer(error) {
     filePath,
     lineNumber
   };
-};
+}

@@ -8,7 +8,7 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "build": "webpack --mode=production",
-    "watch": "webpack --mode=production --watch",
+    "watch": "webpack --mode=development --watch",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "repository": {
@@ -25,6 +25,7 @@
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "babel-loader": "^8.0.5",
+    "classnames": "^2.2.6",
     "css-loader": "^2.1.1",
     "eslint": "^6.7.2",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -37,6 +38,8 @@
     "webpack-cli": "^3.3.1"
   },
   "dependencies": {
-    "crel": "^4.0.1"
+    "crel": "^4.0.1",
+    "crelns": "^1.0.1",
+    "lodash": "^4.17.15"
   }
 }

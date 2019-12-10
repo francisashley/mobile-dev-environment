@@ -51,10 +51,10 @@ module.exports = function logtray(options, DB) {
   setTrayHeight(DB.get("logtrayHeight"));
 
   // Set listeners
-  self.elements.toggleTray.addEventListener("click", e => toggleLogTray(DB.get("logtrayOpen")));
+  self.elements.toggleTray.addEventListener("click", () => toggleLogTray(DB.get("logtrayOpen")));
   self.elements.resizeTray.addEventListener("touchstart", e => resizeLogTray(e));
   self.elements.resizeTray.addEventListener("mousedown", e => resizeLogTray(e));
-  window.addEventListener("resize", e => setTrayHeight(DB.get("logtrayHeight")));
+  window.addEventListener("resize", () => setTrayHeight(DB.get("logtrayHeight")));
 
   // Display logs
   if (options.useConsoleLog) {
@@ -111,8 +111,6 @@ module.exports = function logtray(options, DB) {
     const startScrolledBottom =
       self.elements.logs.scrollHeight - self.elements.logs.scrollTop <=
       self.elements.logs.clientHeight + 1;
-    // check if log tray is scrolled to top
-    const startScrolledTop = self.elements.logs.scrollTop === 0;
 
     const onMove = e => {
       // Get current y position on screen
@@ -178,12 +176,6 @@ module.exports = function logtray(options, DB) {
       message = message.toString();
     }
 
-    // Check whether to scroll tray to the bottom after displaying message
-    // Scroll only if logtray is initially at the bottom
-    const scrollToBottom =
-      self.elements.logs.scrollHeight - self.elements.logs.scrollTop <=
-      self.elements.logs.clientHeight + 1;
-
     // Check whether to increment last message amount or create a new message
     const lastLogMessage =
       typeof lastLogElement === "object"
@@ -214,7 +206,7 @@ module.exports = function logtray(options, DB) {
       log.querySelector(".mde-log-message-full").innerHTML = message;
 
       // Listen for toggling full message
-      log.querySelector(".mde-log-message-single").addEventListener("click", e => {
+      log.querySelector(".mde-log-message-single").addEventListener("click", () => {
         log.classList.toggle("mde-log-open");
       });
 

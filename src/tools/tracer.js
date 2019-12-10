@@ -1,5 +1,5 @@
 // Provide an error and retrieve trace information
-module.exports = function tracer(error, type) {
+module.exports = function tracer(error) {
   // Get stack as string
   let stack = error.stack;
   // Get last line of stack
@@ -11,7 +11,7 @@ module.exports = function tracer(error, type) {
   // Get file path
   const filePath = (pieces[0].split("at ").join("") + ":" + pieces[1]).replace(/ /g, "");
   // Get file name
-  const fileName = filePath.replace(/^.*[\\\/]/, "");
+  const fileName = filePath.replace(/^.*[\\/]/, "");
 
   return {
     fileName: fileName.length > 0 ? fileName : "N/A",

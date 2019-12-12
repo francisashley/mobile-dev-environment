@@ -12,7 +12,7 @@ export default function Tray({ state, onResizeTray } = {}) {
 
   return crel(
     "div",
-    { id: "mde-logtray", style, class: className },
+    { id: "mde-log-tray", style, class: className },
     TrayResizerButton({ onDrag: onDragResizer }),
     LogList({ log })
   );

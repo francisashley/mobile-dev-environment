@@ -9,11 +9,11 @@ export default function ControlBar({ state, onToggleTray } = {}) {
   const showTray = state.get("features").includes("tray");
   const shouldRefreshCache = state.get("reload.refreshCache");
   const trayIsOpen = state.get("tray.open");
-  const className = classnames(corner && "mde-controlbar-" + corner);
+  const className = classnames(corner && "mde-control-bar-" + corner);
 
   return crel(
     "div",
-    { id: "mde-controlbar", class: className },
+    { id: "mde-control-bar", class: className },
     showReload ? ReloadButton({ onClick: () => location.reload(shouldRefreshCache) }) : null,
     showTray ? TrayButton({ isOpen: trayIsOpen, onClick: onToggleTray }) : null
   );

@@ -17,9 +17,9 @@ import tracer from "./utils/tracer.js";
     defaults(options, {
       group: "global",
       modules: ["reload", "tray"],
-      controlbarOrder: ["reload", "logtray"],
+      controlBarOrder: ["reload", "logtray"],
       hardReload: true,
-      controlbarPosition: "tsr",
+      controlBarPosition: "tsr",
       displayErrors: true,
       useConsoleLog: false
     });
@@ -30,14 +30,14 @@ import tracer from "./utils/tracer.js";
      */
     if (isArray(options.modules))
       options.modules = options.modules.map(m => (m === "logtray" ? "tray" : m));
-    if (isArray(options.controlbarOrder))
-      options.controlbarOrder = options.controlbarOrder.map(m => (m === "logtray" ? "tray" : m));
-    options.features = options.controlbarOrder.filter(module => options.modules.includes(module));
+    if (isArray(options.controlBarOrder))
+      options.controlBarOrder = options.controlBarOrder.map(m => (m === "logtray" ? "tray" : m));
+    options.features = options.controlBarOrder.filter(module => options.modules.includes(module));
     options = {
       stateId: options.group,
       features: options.features,
       "features.reload.refreshCache": options.hardReload,
-      "features.actions.corner": options.controlbarPosition,
+      "features.actions.corner": options.controlBarPosition,
       "features.tray.showErrors": options.displayErrors,
       "features.tray.useConsoleLog": options.useConsoleLog
     };

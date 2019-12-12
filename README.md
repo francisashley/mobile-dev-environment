@@ -34,7 +34,7 @@ const MobileDevEnvironement = require('mobile-dev-environment');
 
 ```javascript
 let options =  {
-  controlbarPosition  : 'tl',
+  controlBarPosition  : 'tl',
   group               : 'myMultiPageApp',
   ...
 };

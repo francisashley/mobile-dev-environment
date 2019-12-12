@@ -1,19 +1,21 @@
 import LogList from "./log-list";
-import TrayResizerButton from "./tray-resizer-button";
+import ResizeHandle from "./resize-handle";
 import crel from "crel";
 
-export default function Tray({ state, onResizeTray } = {}) {
-  const className = state.getCache("tray.open") ? "active" : "";
-  const height = state.getCache("tray.height");
-  const style = `height:${height}px`;
-  const log = state.get("log");
-
-  const onDragResizer = offset => onResizeTray(state.getCache("tray.height") + offset);
+export default function Tray({
+  trayIsOpen = true,
+  trayHeight = 100,
+  log = [],
+  onResizeTray = () => {}
+} = {}) {
+  const className = trayIsOpen ? "active" : "";
+  const style = `height:${trayHeight}px`;
+  const onDragResizer = offset => onResizeTray(offset);
 
   return crel(
     "div",
     { id: "mde-log-tray", style, class: className },
-    TrayResizerButton({ onDrag: onDragResizer }),
+    ResizeHandle({ onDrag: onDragResizer }),
     LogList({ log })
   );
 }

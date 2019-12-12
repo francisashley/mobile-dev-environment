@@ -1,8 +1,8 @@
 import ReloadIcon from "../icons/reload";
 import crel from "crel";
 
-export default function ReloadButton({ children = [], onClick, ...props } = {}) {
-  const Button = crel("button", { id: "mde-reload", ...props }, ReloadIcon(), ...children);
+export default function ReloadButton({ onClick = () => {} } = {}) {
+  const Button = crel("button", { id: "mde-reload" }, ReloadIcon());
 
   if (onClick) Button.addEventListener("click", onClick);
 

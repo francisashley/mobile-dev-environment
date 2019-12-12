@@ -1,6 +1,6 @@
 import crel from "crel";
 
-export default function LogItem({ message, filePath, fileName, lineNumber, type = "log" }) {
+export default function LogItem({ message, filePath, fileName, lineNumber, type = "log" } = {}) {
   // figure out type
   if (type === "error") type = "error";
   else if (typeof message === "string") type = "string";
@@ -9,7 +9,7 @@ export default function LogItem({ message, filePath, fileName, lineNumber, type 
   else if (typeof message === "object") type = "object";
   else if (Array.isArray(message)) type = "array";
   else if (message === null) type = "null";
-  else if (message == null) type = "undefined";
+  else if (typeof message === "undefined") type = "undefined";
 
   // prepare message
   if (type === "null" || type === "undefined") message = type;

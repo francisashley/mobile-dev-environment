@@ -53,7 +53,7 @@ import tracer from "./utils/tracer.js";
     state.set("reload.refreshCache", options["features.reload.refreshCache"]);
     state.set("tray.showErrors", options["features.tray.showErrors"]);
     state.set("tray.useConsoleLog", options["features.tray.useConsoleLog"]);
-    state.setCache("tray.open", state.get("tray.open") !== false);
+    state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(
       "tray.height",
       limitTrayHeight(state.getCache("tray.height", window.innerHeight * 0.25))
@@ -69,8 +69,8 @@ import tracer from "./utils/tracer.js";
       render();
     }
 
-    function onResizeTray(height) {
-      height = limitTrayHeight(height);
+    function onResizeTray(offset) {
+      const height = limitTrayHeight(state.getCache("tray.height") + offset);
 
       if (height !== state.getCache("tray.height")) {
         state.setCache("tray.height", height);
@@ -127,11 +127,30 @@ import tracer from "./utils/tracer.js";
       root.innerHTML = "";
 
       // render task bar
-      crel(root, TaskBar({ state, onToggleTray: toggleTray }));
+      crel(
+        root,
+        TaskBar({
+          corner: state.get("task-bar.corner"),
+          showReload: state.get("features").includes("reload"),
+          showTray: state.get("features").includes("tray"),
+          shouldRefreshCache: state.get("reload.refreshCache"),
+          trayIsOpen: state.getCache("tray.open"),
+          onToggleTray: toggleTray
+        })
+      );
 
       // render tray
       if (state.get("features").includes("tray")) {
-        crel(root, Tray({ state, onResizeTray }));
+        crel(
+          root,
+          Tray({
+            state,
+            trayIsOpen: state.getCache("tray.open"),
+            trayHeight: state.getCache("tray.height"),
+            log: state.get("log"),
+            onResizeTray
+          })
+        );
       }
     }
     render();

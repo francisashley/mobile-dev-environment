@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test:watch": "jest --watchAll",
     "build": "webpack --mode=production",
     "watch": "webpack --mode=development --watch",
     "lint": "eslint --ignore-path .gitignore ."

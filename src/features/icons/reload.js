@@ -1,6 +1,6 @@
 import crelns from "crelns";
 
-export default () => {
+export default function ReloadIcon() {
   return crelns(
     "http://www.w3.org/2000/svg",
     "svg",
@@ -14,4 +14,4 @@ export default () => {
       fill: "none"
     })
   );
-};
+}

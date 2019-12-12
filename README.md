@@ -1,6 +1,6 @@
-## MobileDevEnvironment
+## Mobile Dev Environment
 
-**Mobile Dev Environment** (or **MDE**) is a simple set of tools injected into the DOM of minimalistic browsers lacking basic dev features. Developed during a period confined to a mobile device, the limitations of the platform became all to familiar and so to maintain a good balance of yang in the universe the library arose. So in that light, if you discover any bugs or have any feature ideas feel free to get in contact by submitting an issue on Github or sending an email to prjctnxt@gmail.com.
+**Mobile Dev Environment** (or **MDE**) is a simple set of tools injected into the DOM of minimalistic browsers lacking basic dev features. Developed during a period confined to a mobile device, the limitations of the platform became all to familiar and so to maintain a good balance of yang in the universe the library arose. So in that light, if you discover any bugs or have any feature ideas feel free to get in contact by submitting an issue on Github or sending an email to fa.repo.dev@gmail.com.
 
 ![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
 
@@ -13,7 +13,7 @@
 
 ### Installation
 
-If you are using npm, `npm install mobile-dev-environment`. Otherwise, grab the [latest release](https://github.com/prjctnxt/MobileDevEnvironment/releases) or link via a [CDN](https://unpkg.com/mobile-dev-environment/dist/).
+If you are using npm, `npm install mobile-dev-environment`. Otherwise, grab the [latest release](https://github.com/fa-repo/mobile-dev-environment/releases) or link via a [CDN](https://unpkg.com/mobile-dev-environment/dist/).
 
 **Include in the browser**
 ```html
@@ -39,7 +39,7 @@ let options =  {
   ...
 };
 
-new MobileDevEnvironment(options);
+new mobileDevEnvironment(options);
 ```
 
 ### Configuration

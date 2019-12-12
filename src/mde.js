@@ -9,7 +9,7 @@ import tracer from "./utils/tracer.js";
 (function() {
   "use strict";
 
-  function MobileDevEnvironment(options = {}) {
+  function mobileDevEnvironment(options = {}) {
     //#region
     /**
      * Set defaults
@@ -138,10 +138,10 @@ import tracer from "./utils/tracer.js";
   }
 
   // Enable usage in the browser
-  window.MobileDevEnvironment = MobileDevEnvironment;
+  window.mobileDevEnvironment = mobileDevEnvironment;
 
   // Enable usage in Node
   if (typeof module === "object" && typeof module.exports === "object") {
-    module.exports = MobileDevEnvironment;
+    module.exports = mobileDevEnvironment;
   }
 })();

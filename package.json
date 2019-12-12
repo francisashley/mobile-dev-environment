@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/prjctnxt/MobileDevEnvironment.git"
+    "url": "git+https://github.com/fa-repo/mobile-dev-environment.git"
   },
-  "author": "prjctnxt",
+  "author": "fa-repo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/prjctnxt/MobileDevEnvironment/issues"
+    "url": "https://github.com/fa-repo/mobile-dev-environment/issues"
   },
-  "homepage": "https://github.com/prjctnxt/MobileDevEnvironment#readme",
+  "homepage": "https://github.com/fa-repo/mobile-dev-environment#readme",
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",

@@ -1,4 +1,4 @@
-import MobileDevEnvironment from "./mde";
+import mobileDevEnvironment from "./mde";
 
 beforeEach(() => {
   const container = document.createElement("div", { id: "mde" });
@@ -11,8 +11,8 @@ afterEach(() => {
 });
 
 test("MDE renders to dom without crashing", () => {
-  new MobileDevEnvironment();
+  mobileDevEnvironment();
 
-  expect(!!document.getElementById("mde-controlbar")).toBe(true);
-  expect(!!document.getElementById("mde-logtray")).toBe(true);
+  expect(!!document.getElementById("mde-control-bar")).toBe(true);
+  expect(!!document.getElementById("mde-log-tray")).toBe(true);
 });

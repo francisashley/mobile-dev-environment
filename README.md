@@ -27,7 +27,7 @@ If you are using npm, `npm install mobile-dev-environment`. Otherwise, grab the 
 **or in Node**
 
 ```javascript
-const MobileDevEnvironement = require('mobile-dev-environment');
+const mobileDevEnvironement = require('mobile-dev-environment');
 ```
 
 ### Usage

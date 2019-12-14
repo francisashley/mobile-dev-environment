@@ -106,6 +106,17 @@ import tracer from "./utils/tracer.js";
       const { filePath, fileName, lineNumber } = tracer(new Error());
       onAddLog({ message, filePath, fileName, lineNumber, type: "error" });
     };
+    const assert = console.assert;
+    console.assert = (assertion, message) => {
+      assert(assertion, message);
+
+      if (!assertion) {
+        message =
+          "Assertion failed: " + (typeof message !== "undefined" ? message : "console.assert");
+        const { filePath, fileName, lineNumber } = tracer(new Error());
+        onAddLog({ message, filePath, fileName, lineNumber, type: "error" });
+      }
+    };
 
     // Display error messages
     window.onerror = (message, filePath, lineNumber) => {

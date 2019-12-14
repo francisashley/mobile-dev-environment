@@ -1,4 +1,4 @@
-import TaskBar from "./features/task-bar/task-bar";
+import ActionBar from "./features/action-bar/action-bar";
 import Tray from "./features/tray/tray";
 import crel from "crel";
 import { defaults } from "lodash";
@@ -22,7 +22,7 @@ import tracer from "./utils/tracer.js";
 
     const state = stately(options.stateId);
     state.set("action-bar", options.actionBar);
-    state.set("task-bar.corner", options.actionBarPosition);
+    state.set("action-bar.corner", options.actionBarPosition);
     state.set("reload.refreshCache", options.hardReload);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(
@@ -107,11 +107,11 @@ import tracer from "./utils/tracer.js";
       const root = document.getElementById("mde");
       root.innerHTML = "";
 
-      // render task bar
+      // render action bar
       crel(
         root,
-        TaskBar({
-          corner: state.get("task-bar.corner"),
+        ActionBar({
+          corner: state.get("action-bar.corner"),
           showReload: state.get("action-bar").includes("reload"),
           showTray: state.get("action-bar").includes("tray"),
           shouldRefreshCache: state.get("reload.refreshCache"),

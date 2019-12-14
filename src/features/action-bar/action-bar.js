@@ -1,9 +1,9 @@
-import ReloadButton from "../task-bar/reload-button";
-import TrayButton from "../task-bar/tray-button";
+import ReloadButton from "../action-bar/reload-button";
+import TrayButton from "../action-bar/tray-button";
 import classnames from "classnames";
 import crel from "crel";
 
-export default function TaskBar({
+export default function ActionBar({
   corner,
   showReload,
   showTray,

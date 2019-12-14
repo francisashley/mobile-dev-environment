@@ -11,6 +11,9 @@
     "watch": "webpack --mode=development --watch",
     "lint": "eslint --ignore-path .gitignore ."
   },
+  "files": [
+    "/dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fa-repo/mobile-dev-environment.git"

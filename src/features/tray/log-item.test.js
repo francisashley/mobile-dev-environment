@@ -4,9 +4,9 @@ test("LogItem renders properly", () => {
   const logItem = LogItem();
 
   expect(logItem.classList).toContain("mde-log");
-  expect(logItem.classList).toContain("mde-log-type-undefined");
+  expect(logItem.dataset.type).toBe("undefined");
   expect(logItem.querySelector("div.mde-log-amount")).toBeTruthy();
-  expect(logItem.querySelector("div.mde-log-message-single")).toBeTruthy();
+  expect(logItem.querySelector("div.mde-log-message")).toBeTruthy();
   expect(logItem.querySelector("a.mde-log-trace")).toBeTruthy();
   expect(logItem.querySelector("pre.mde-log-message-full")).toBeTruthy();
 });
@@ -20,8 +20,8 @@ test("LogItem renders an error properly", () => {
     type: "error"
   });
 
-  expect(logItem.classList).toContain("mde-log-type-error");
-  expect(logItem.querySelector(".mde-log-message-single").innerHTML).toBe(
+  expect(logItem.dataset.type).toBe("error");
+  expect(logItem.querySelector(".mde-log-message").innerHTML).toBe(
     "Uncaught ReferenceError: intentional_error is not defined"
   );
   expect(logItem.querySelector(".mde-log-trace").innerHTML).toBe("index.html:25");
@@ -41,7 +41,7 @@ test("LogItem toggles body when clicked", () => {
 
   expect(logItem.classList).not.toContain("mde-log-open");
 
-  logItem.querySelector(".mde-log-message-single").click();
+  logItem.querySelector(".mde-log-message").click();
 
   expect(logItem.classList).toContain("mde-log-open");
 });

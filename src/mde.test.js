@@ -22,6 +22,15 @@ test("MDE console.log()'s to tray", () => {
 
   console.log("works");
 
-  expect(document.querySelectorAll(".mde-log").length).toBe(1);
+  expect(document.querySelectorAll(".mde-log.mde-log-type-string").length).toBe(1);
+  expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe("works");
+});
+
+test("MDE console.error()'s to tray", () => {
+  mobileDevEnvironment();
+
+  console.error("works");
+
+  expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(1);
   expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe("works");
 });

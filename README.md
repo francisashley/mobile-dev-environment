@@ -49,7 +49,7 @@ import mobileDevEnvironment from '@fa-repo/mobile-dev-environment';
 import '@fa-repo/mobile-dev-environment/mobile-dev-environment.css';
 
 new mobileDevEnvironment({
-  group : 'my-multi-page-app',
+  stateId : 'my-multi-page-app',
   controlBarPosition : 'tl'
 });
 
@@ -76,7 +76,7 @@ new mobileDevEnvironment({
   <script src="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.js" defer></script>
   <script defer>  
     new mobileDevEnvironment({
-      group : 'my-multi-page-app',
+      stateId : 'my-multi-page-app',
       controlBarPosition : 'tl'
     });
   </script>
@@ -124,7 +124,7 @@ new mobileDevEnvironment({
     <td valign="top"><code>true</code></td>
   </tr>
   <tr>
-    <td valign="top"><code>group</code></td>
+    <td valign="top"><code>stateId</code></td>
     <td valign="top">Share state information like open/close, height etc across instances of MDE on other pages</td>
     <td valign="top"><code>string</code></td>
     <td valign="top"><code>'global'</code></td>

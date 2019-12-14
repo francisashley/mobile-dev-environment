@@ -14,7 +14,7 @@ export default function Tray({
 
   return crel(
     "div",
-    { id: "mde-log-tray", style, class: className },
+    { id: "mde-tray", style, class: className },
     ResizeHandle({ onDrag: onDragResizer }),
     LogList({ log })
   );

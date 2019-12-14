@@ -13,8 +13,8 @@ afterEach(() => {
 test("MDE renders to dom without crashing", () => {
   mobileDevEnvironment();
 
-  expect(!!document.getElementById("mde-control-bar")).toBe(true);
-  expect(!!document.getElementById("mde-log-tray")).toBe(true);
+  expect(!!document.getElementById("mde-action-bar")).toBe(true);
+  expect(!!document.getElementById("mde-tray")).toBe(true);
 });
 
 test("MDE console.log()'s to tray", () => {

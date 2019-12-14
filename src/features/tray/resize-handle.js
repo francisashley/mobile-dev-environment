@@ -1,7 +1,7 @@
 import crel from "crel";
 
 export default function ResizeHandle({ onDrag = () => {}, ...props } = {}) {
-  const Button = crel("button", { id: "mde-log-tray-resize-bar", ...props }, "• • •");
+  const Button = crel("button", { id: "mde-tray-resize-bar", ...props }, "• • •");
 
   Button.addEventListener("touchstart", e => handleDrag(e));
   Button.addEventListener("mousedown", e => handleDrag(e));

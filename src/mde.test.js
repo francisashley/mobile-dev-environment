@@ -34,3 +34,21 @@ test("MDE console.error()'s to tray", () => {
   expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(1);
   expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe("works");
 });
+
+test("MDE console.assert()'s to tray", () => {
+  mobileDevEnvironment();
+
+  console.assert(false, "works");
+
+  expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(1);
+  expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe(
+    "Assertion failed: works"
+  );
+
+  console.assert(false);
+
+  expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(2);
+  expect(document.querySelectorAll(".mde-log .mde-log-message-single")[1].innerHTML).toBe(
+    "Assertion failed: console.assert"
+  );
+});

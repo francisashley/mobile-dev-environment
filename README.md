@@ -124,12 +124,6 @@ new mobileDevEnvironment({
     <td valign="top"><code>true</code></td>
   </tr>
   <tr>
-    <td valign="top"><code>useConsoleLog</code></td>
-    <td valign="top">Use console.log() or else log() to display messages</td>
-    <td valign="top"><code>boolean</code></td>
-    <td valign="top"><code>true</code></td>
-  </tr>
-  <tr>
     <td valign="top"><code>hardReload</code></td>
     <td valign="top">Refresh browser cache</td>
     <td valign="top"><code>string</code></td>

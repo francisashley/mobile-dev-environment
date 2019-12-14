@@ -20,8 +20,7 @@ import tracer from "./utils/tracer.js";
       controlBarOrder: ["reload", "logtray"],
       hardReload: true,
       controlBarPosition: "tsr",
-      displayErrors: true,
-      useConsoleLog: false
+      displayErrors: true
     });
 
     /**
@@ -38,8 +37,7 @@ import tracer from "./utils/tracer.js";
       features: options.features,
       "features.reload.refreshCache": options.hardReload,
       "features.actions.corner": options.controlBarPosition,
-      "features.tray.showErrors": options.displayErrors,
-      "features.tray.useConsoleLog": options.useConsoleLog
+      "features.tray.showErrors": options.displayErrors
     };
     //#endregion
 
@@ -52,7 +50,6 @@ import tracer from "./utils/tracer.js";
     state.set("task-bar.corner", options["features.actions.corner"]);
     state.set("reload.refreshCache", options["features.reload.refreshCache"]);
     state.set("tray.showErrors", options["features.tray.showErrors"]);
-    state.set("tray.useConsoleLog", options["features.tray.useConsoleLog"]);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(
       "tray.height",
@@ -101,17 +98,12 @@ import tracer from "./utils/tracer.js";
     });
 
     // Display logs
-    if (state.get("tray.useConsoleLog")) {
-      window.console.log = message => {
-        const { filePath, fileName, lineNumber } = tracer(new Error());
-        onAddLog({ message, filePath, fileName, lineNumber });
-      };
-    } else {
-      window.log = message => {
-        const { filePath, fileName, lineNumber } = tracer(new Error());
-        onAddLog({ message, filePath, fileName, lineNumber });
-      };
-    }
+    const log = console.log;
+    console.log = message => {
+      log(message);
+      const { filePath, fileName, lineNumber } = tracer(new Error());
+      onAddLog({ message, filePath, fileName, lineNumber });
+    };
 
     // Display error messages
     if (state.get("tray.showErrors") === true) {

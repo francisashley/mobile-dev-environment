@@ -16,3 +16,12 @@ test("MDE renders to dom without crashing", () => {
   expect(!!document.getElementById("mde-control-bar")).toBe(true);
   expect(!!document.getElementById("mde-log-tray")).toBe(true);
 });
+
+test("MDE console.log()'s to tray", () => {
+  mobileDevEnvironment();
+
+  console.log("works");
+
+  expect(document.querySelectorAll(".mde-log").length).toBe(1);
+  expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe("works");
+});

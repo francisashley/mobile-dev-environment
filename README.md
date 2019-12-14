@@ -118,12 +118,6 @@ new mobileDevEnvironment({
     <td valign="top"><code>'tr'</code></td>
   </tr>
   <tr>
-    <td valign="top"><code>displayErrors</code></td>
-    <td valign="top">Catch and output javascript errors</td>
-    <td valign="top"><code>boolean</code></td>
-    <td valign="top"><code>true</code></td>
-  </tr>
-  <tr>
     <td valign="top"><code>hardReload</code></td>
     <td valign="top">Refresh browser cache</td>
     <td valign="top"><code>string</code></td>

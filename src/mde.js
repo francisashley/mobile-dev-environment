@@ -19,8 +19,7 @@ import tracer from "./utils/tracer.js";
       modules: ["reload", "tray"],
       controlBarOrder: ["reload", "logtray"],
       hardReload: true,
-      controlBarPosition: "tsr",
-      displayErrors: true
+      controlBarPosition: "tr"
     });
 
     /**
@@ -36,8 +35,7 @@ import tracer from "./utils/tracer.js";
       stateId: options.group,
       features: options.features,
       "features.reload.refreshCache": options.hardReload,
-      "features.actions.corner": options.controlBarPosition,
-      "features.tray.showErrors": options.displayErrors
+      "features.actions.corner": options.controlBarPosition
     };
     //#endregion
 
@@ -49,7 +47,6 @@ import tracer from "./utils/tracer.js";
     state.set("features", options.features);
     state.set("task-bar.corner", options["features.actions.corner"]);
     state.set("reload.refreshCache", options["features.reload.refreshCache"]);
-    state.set("tray.showErrors", options["features.tray.showErrors"]);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(
       "tray.height",
@@ -106,11 +103,9 @@ import tracer from "./utils/tracer.js";
     };
 
     // Display error messages
-    if (state.get("tray.showErrors") === true) {
-      window.onerror = (message, filePath, lineNumber) => {
-        onAddLog({ message, filePath, fileName: "", lineNumber, type: "error" });
-      };
-    }
+    window.onerror = (message, filePath, lineNumber) => {
+      onAddLog({ message, filePath, fileName: "", lineNumber, type: "error" });
+    };
 
     // render
 

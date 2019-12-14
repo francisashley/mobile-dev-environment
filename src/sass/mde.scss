@@ -103,15 +103,15 @@
       &[data-type="error"] .mde-log-message {
         color: red;
       }
-      &[data-type="null"] .mde-log-message-single,
+      &[data-type="null"] .mde-log-messag,
       &[data-type="undefined"] .mde-log-message {
         color: rgb(120, 120, 120);
       }
-      &[data-type="number"] .mde-log-message-single,
+      &[data-type="number"] .mde-log-messag,
       &[data-type="boolean"] .mde-log-message {
         color: blue;
       }
-      &[data-type="htmlcollection"] .mde-log-message-single,
+      &[data-type="htmlcollection"] .mde-log-messag,
       &[data-type="object"] .mde-log-message {
         font-style: italic;
       }

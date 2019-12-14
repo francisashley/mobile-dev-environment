@@ -22,8 +22,8 @@ test("MDE console.log()'s to tray", () => {
 
   console.log("works");
 
-  expect(document.querySelectorAll(".mde-log.mde-log-type-string").length).toBe(1);
-  expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe("works");
+  expect(document.querySelectorAll(".mde-log[data-type=string]").length).toBe(1);
+  expect(document.querySelector(".mde-log .mde-log-message").innerHTML).toBe("works");
 });
 
 test("MDE console.error()'s to tray", () => {
@@ -31,8 +31,8 @@ test("MDE console.error()'s to tray", () => {
 
   console.error("works");
 
-  expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(1);
-  expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe("works");
+  expect(document.querySelectorAll(".mde-log[data-type=error]").length).toBe(1);
+  expect(document.querySelector(".mde-log .mde-log-message").innerHTML).toBe("works");
 });
 
 test("MDE console.assert()'s to tray", () => {
@@ -40,15 +40,15 @@ test("MDE console.assert()'s to tray", () => {
 
   console.assert(false, "works");
 
-  expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(1);
-  expect(document.querySelector(".mde-log .mde-log-message-single").innerHTML).toBe(
+  expect(document.querySelectorAll(".mde-log[data-type=error]").length).toBe(1);
+  expect(document.querySelector(".mde-log .mde-log-message").innerHTML).toBe(
     "Assertion failed: works"
   );
 
   console.assert(false);
 
-  expect(document.querySelectorAll(".mde-log.mde-log-type-error").length).toBe(2);
-  expect(document.querySelectorAll(".mde-log .mde-log-message-single")[1].innerHTML).toBe(
+  expect(document.querySelectorAll(".mde-log[data-type=error]").length).toBe(2);
+  expect(document.querySelectorAll(".mde-log .mde-log-message")[1].innerHTML).toBe(
     "Assertion failed: console.assert"
   );
 });

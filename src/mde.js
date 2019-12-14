@@ -100,6 +100,12 @@ import tracer from "./utils/tracer.js";
       const { filePath, fileName, lineNumber } = tracer(new Error());
       onAddLog({ message, filePath, fileName, lineNumber });
     };
+    const error = console.error;
+    console.error = message => {
+      error(message);
+      const { filePath, fileName, lineNumber } = tracer(new Error());
+      onAddLog({ message, filePath, fileName, lineNumber, type: "error" });
+    };
 
     // Display error messages
     window.onerror = (message, filePath, lineNumber) => {

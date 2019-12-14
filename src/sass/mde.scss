@@ -1,5 +1,5 @@
 // Control bar
-#mde-control-bar {
+#mde-action-bar {
   background: white;
   box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -8,7 +8,7 @@
   z-index: 1;
   border: thin solid #6e6e6e;
 
-  &.mde-control-bar-tr {
+  &.mde-action-bar-tr {
     right: 10px;
     left: auto;
   }
@@ -38,7 +38,7 @@
 }
 
 // Log tray
-#mde-log-tray {
+#mde-tray {
   display: none;
 
   &.active {
@@ -100,19 +100,19 @@
       }
 
       // Colours
-      &-type-error .mde-log-message-single {
+      &[data-type="error"] .mde-log-message-single {
         color: red;
       }
-      &-type-null .mde-log-message-single,
-      &-type-undefined .mde-log-message-single {
+      &[data-type="null"] .mde-log-message-single,
+      &[data-type="undefined"] .mde-log-message-single {
         color: rgb(120, 120, 120);
       }
-      &-type-number .mde-log-message-single,
-      &-type-boolean .mde-log-message-single {
+      &[data-type="number"] .mde-log-message-single,
+      &[data-type="boolean"] .mde-log-message-single {
         color: blue;
       }
-      &-type-htmlcollection .mde-log-message-single,
-      &-type-object .mde-log-message-single {
+      &[data-type="htmlcollection"] .mde-log-message-single,
+      &[data-type="object"] .mde-log-message-single {
         font-style: italic;
       }
 
@@ -133,7 +133,7 @@
       }
 
       // Message (single line)
-      .mde-log-message-single {
+      .mde-log-message {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

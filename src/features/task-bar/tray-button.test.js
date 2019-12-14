@@ -3,7 +3,7 @@ import TrayButton from "./tray-button";
 test("TrayButton renders properly", () => {
   const trayButton = TrayButton();
 
-  expect(trayButton.id).toBe("mde-toggle-log-tray");
+  expect(trayButton.id).toBe("mde-toggle-tray");
   expect(trayButton.classList.contains("active")).toBe(false);
 });
 

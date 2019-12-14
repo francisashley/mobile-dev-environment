@@ -3,9 +3,9 @@ import TaskBar from "./task-bar";
 test("TaskBar renders properly", () => {
   const taskBar = TaskBar();
 
-  expect(taskBar.id).toBe("mde-control-bar");
+  expect(taskBar.id).toBe("mde-action-bar");
   expect(!!taskBar.querySelector("#mde-reload")).toBe(false);
-  expect(!!taskBar.querySelector("#mde-toggle-log-tray")).toBe(false);
+  expect(!!taskBar.querySelector("#mde-toggle-tray")).toBe(false);
 });
 
 test("TaskBar shows reload button", () => {
@@ -17,19 +17,19 @@ test("TaskBar shows reload button", () => {
 test("TaskBar shows tray button", () => {
   const taskBar = TaskBar({ showTray: true });
 
-  expect(!!taskBar.querySelector("#mde-toggle-log-tray")).toBe(true);
+  expect(!!taskBar.querySelector("#mde-toggle-tray")).toBe(true);
 });
 
 test("TaskBar tray button displays with `.active` class", () => {
   const taskBar = TaskBar({ showTray: true, trayIsOpen: true });
 
-  expect(!!taskBar.querySelector("#mde-toggle-log-tray.active")).toBe(true);
+  expect(!!taskBar.querySelector("#mde-toggle-tray.active")).toBe(true);
 });
 
 test("TaskBar tray button displays without `.active` class", () => {
   const taskBar = TaskBar({ showTray: true });
 
-  expect(!!taskBar.querySelector("#mde-toggle-log-tray.active")).toBe(false);
+  expect(!!taskBar.querySelector("#mde-toggle-tray.active")).toBe(false);
 });
 
 test("TaskBar reloads page when ReloadButton clicked", () => {
@@ -60,7 +60,7 @@ test("TaskBar calls onToggleTray", () => {
   const onToggleTray = jest.fn();
   const taskBar = TaskBar({ showTray: true, onToggleTray });
 
-  taskBar.querySelector("#mde-toggle-log-tray").click();
+  taskBar.querySelector("#mde-toggle-tray").click();
 
   expect(onToggleTray).toHaveBeenCalled();
 });

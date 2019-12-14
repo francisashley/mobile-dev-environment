@@ -21,14 +21,14 @@ export default function LogItem({ message, filePath, fileName, lineNumber, type 
 
   // Prepare LogItem parts
   const LogAmount = crel("div", { class: "mde-log-amount" });
-  const LogMessage = crel("div", { class: "mde-log-message-single" }, message);
+  const LogMessage = crel("div", { class: "mde-log-message" }, message);
   const LogTrace = crel("a", { class: "mde-log-trace", href: filePath, target: "_blank" }, lineLoc);
   const LogMessageFull = crel("pre", { class: "mde-log-message-full" }, message);
 
   // Build LogItem
   let LogItem = crel(
     "div",
-    { class: "mde-log mde-log-type-" + type },
+    { class: "mde-log", "data-type": type },
     LogAmount,
     LogMessage,
     LogTrace,

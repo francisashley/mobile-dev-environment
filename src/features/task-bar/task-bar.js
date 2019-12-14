@@ -11,11 +11,11 @@ export default function TaskBar({
   trayIsOpen,
   onToggleTray = () => {}
 } = {}) {
-  const className = classnames(corner && "mde-control-bar-" + corner);
+  const className = classnames(corner && "mde-action-bar-" + corner);
 
   return crel(
     "div",
-    { id: "mde-control-bar", class: className },
+    { id: "mde-action-bar", class: className },
     showReload ? ReloadButton({ onClick: () => location.reload(shouldRefreshCache) }) : null,
     showTray ? TrayButton({ isActive: trayIsOpen, onClick: onToggleTray }) : null
   );

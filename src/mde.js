@@ -17,12 +17,12 @@ import tracer from "./utils/tracer.js";
       stateId: "global",
       actionBar: ["reload", "tray"],
       hardReload: true,
-      controlBarPosition: "tr"
+      actionBarPosition: "tr"
     });
 
     const state = stately(options.stateId);
     state.set("action-bar", options.actionBar);
-    state.set("task-bar.corner", options.controlBarPosition);
+    state.set("task-bar.corner", options.actionBarPosition);
     state.set("reload.refreshCache", options.hardReload);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(

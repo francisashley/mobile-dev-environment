@@ -50,7 +50,7 @@ import '@fa-repo/mobile-dev-environment/mobile-dev-environment.css';
 
 new mobileDevEnvironment({
   stateId : 'my-multi-page-app',
-  controlBarPosition : 'tl'
+  actionBarPosition : 'tl'
 });
 
 // app.html
@@ -77,7 +77,7 @@ new mobileDevEnvironment({
   <script defer>  
     new mobileDevEnvironment({
       stateId : 'my-multi-page-app',
-      controlBarPosition : 'tl'
+      actionBarPosition : 'tl'
     });
   </script>
 </head>
@@ -106,8 +106,8 @@ new mobileDevEnvironment({
     <td valign="top"><code>['reload','tray']</code></td>
   </tr>
   <tr>
-    <td valign="top"><code>controlBarPosition</code></td>
-    <td valign="top">The controlBar position, top left <code>'tl'</code> or right <code>'tr'</code></td>
+    <td valign="top"><code>actionBarPosition</code></td>
+    <td valign="top">The actionBar position, top left <code>'tl'</code> or right <code>'tr'</code></td>
     <td valign="top"><code>string</code></td>
     <td valign="top"><code>'tr'</code></td>
   </tr>

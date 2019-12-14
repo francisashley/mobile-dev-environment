@@ -1,8 +1,7 @@
-import { defaults, isArray } from "lodash";
-
 import TaskBar from "./features/task-bar/task-bar";
 import Tray from "./features/tray/tray";
 import crel from "crel";
+import { defaults } from "lodash";
 import stately from "./utils/state";
 import tracer from "./utils/tracer.js";
 
@@ -10,42 +9,21 @@ import tracer from "./utils/tracer.js";
   "use strict";
 
   function mobileDevEnvironment(options = {}) {
-    //#region
-    /**
-     * Set defaults
-     */
-    defaults(options, {
-      stateId: "global",
-      modules: ["reload", "tray"],
-      controlBarOrder: ["reload", "logtray"],
-      hardReload: true,
-      controlBarPosition: "tr"
-    });
-
-    /**
-     * Rename property names.
-     * Roll this out to user in future breaking commit.
-     */
-    if (isArray(options.modules))
-      options.modules = options.modules.map(m => (m === "logtray" ? "tray" : m));
-    if (isArray(options.controlBarOrder))
-      options.controlBarOrder = options.controlBarOrder.map(m => (m === "logtray" ? "tray" : m));
-    options.features = options.controlBarOrder.filter(module => options.modules.includes(module));
-    options = {
-      "features.reload.refreshCache": options.hardReload,
-      "features.actions.corner": options.controlBarPosition,
-      ...options
-    };
-    //#endregion
-
     /**
      * STATE
      */
 
+    defaults(options, {
+      stateId: "global",
+      actionBar: ["reload", "tray"],
+      hardReload: true,
+      controlBarPosition: "tr"
+    });
+
     const state = stately(options.stateId);
-    state.set("features", options.features);
-    state.set("task-bar.corner", options["features.actions.corner"]);
-    state.set("reload.refreshCache", options["features.reload.refreshCache"]);
+    state.set("action-bar", options.actionBar);
+    state.set("task-bar.corner", options.controlBarPosition);
+    state.set("reload.refreshCache", options.hardReload);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(
       "tray.height",
@@ -82,7 +60,7 @@ import tracer from "./utils/tracer.js";
       const min = 11;
 
       // Set max height based on whether task bar is displayed
-      const max = state.get("features").length > 0 ? window.innerHeight - 45 : window.innerHeight;
+      const max = state.get("action-bar").length > 0 ? window.innerHeight - 45 : window.innerHeight;
 
       // Ensure height is within range, if not get closest value
       return Math.min(Math.max(height, min), max);
@@ -134,8 +112,8 @@ import tracer from "./utils/tracer.js";
         root,
         TaskBar({
           corner: state.get("task-bar.corner"),
-          showReload: state.get("features").includes("reload"),
-          showTray: state.get("features").includes("tray"),
+          showReload: state.get("action-bar").includes("reload"),
+          showTray: state.get("action-bar").includes("tray"),
           shouldRefreshCache: state.get("reload.refreshCache"),
           trayIsOpen: state.getCache("tray.open"),
           onToggleTray: toggleTray
@@ -143,7 +121,7 @@ import tracer from "./utils/tracer.js";
       );
 
       // render tray
-      if (state.get("features").includes("tray")) {
+      if (state.get("action-bar").includes("tray")) {
         crel(
           root,
           Tray({

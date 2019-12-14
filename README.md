@@ -1,48 +1,93 @@
-## Mobile Dev Environment
+<div align="center">
 
-**Mobile Dev Environment** (or **MDE**) is a simple set of tools injected into the DOM of minimalistic browsers lacking basic dev features. Developed during a period confined to a mobile device, the limitations of the platform became all to familiar and so to maintain a good balance of yang in the universe the library arose. So in that light, if you discover any bugs or have any feature ideas feel free to get in contact by submitting an issue on Github or sending an email to fa.repo.dev@gmail.com.
+# Mobile Dev Environment
 
-![g_20161226_2147093](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
+MDE displays a console output tray and extendable action bar inside your browser window.
 
-### Features
+[![version][version-badge]][package] [![MIT License][license-badge]][license]
+
+![Markdown Dev Environment example](https://cloud.githubusercontent.com/assets/12685308/21486950/dc803590-cbb5-11e6-922e-78e4a59ad59c.gif)
+</div>
+
+
+## Table of Contents
+<!-- no toc -->
+- [Table of Contents](#table-of-contents)
+- [Features](#features)
+- [Install](#install)
+- [Node usage](#node-usage)
+- [Browser usage](#browser-usage)
+- [Configuration](#configuration)
+
+## Features
 
 - **Reload button** <br> An easily accessible button that can be configured to refresh browser cache.
 - **Log tray**  <br> A toggleable, resizable, colour coded output area bound to console.log().
 - **Error messages** <br/> Catch and display errors that occur after the script has been initialised.
 - **Trace information** <br/> View filenames and line numbers of all log messages.
 
-### Installation
+## Install
 
-If you are using npm, `npm install mobile-dev-environment`. Otherwise, grab the [latest release](https://github.com/fa-repo/mobile-dev-environment/releases) or link via a [CDN](https://unpkg.com/mobile-dev-environment/dist/).
+With node:
 
-**Include in the browser**
+```shell
+npm install @fa-repo/mobile-dev-environment
+```
+
+With [unpkg.com](https://unpkg.com/browse/mobile-dev-environment@1.0.2/):
+
 ```html
-// head
-<link rel="stylesheet" type="text/css" href="path/to/mde.min.css">
-
-// body
-<script src="path/to/mde.min.js"></script>
+<script src="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.js"></script>
+<link href="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.css" rel="stylesheet" type="text/css">
 ```
 
-**or in Node**
+## Node usage
 
-```javascript
-const mobileDevEnvironement = require('mobile-dev-environment');
+```js
+// app.js
+import mobileDevEnvironment from '@fa-repo/mobile-dev-environment';
+import '@fa-repo/mobile-dev-environment/mobile-dev-environment.css';
+
+new mobileDevEnvironment({
+  group : 'my-multi-page-app',
+  controlBarPosition : 'tl'
+});
+
+// app.html
+<!-- ... -->
+<html>
+  <head>
+    <link href="./link/to/app.min.css" rel="stylesheet" type="text/css" />
+    <script src="./link/to/app.min.js" defer></script>
+  </head>
+  <body>
+    <div id="mde"></div>
+  </body>
+</html>
 ```
 
-### Usage
+## Browser usage
 
-```javascript
-let options =  {
-  controlBarPosition  : 'tl',
-  group               : 'myMultiPageApp',
-  ...
-};
-
-new mobileDevEnvironment(options);
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <link href="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.css" rel="stylesheet" type="text/css">
+  <script src="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.js" defer></script>
+  <script defer>  
+    new mobileDevEnvironment({
+      group : 'my-multi-page-app',
+      controlBarPosition : 'tl'
+    });
+  </script>
+</head>
+<body>
+  <div id="mde"></div>
+</body>
+</html>
 ```
 
-### Configuration
+## Configuration
 
 <table>
   <tr>
@@ -112,3 +157,9 @@ new mobileDevEnvironment(options);
     <td colspan="3" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
   </tr>
 </table>
+
+
+[version-badge]: https://img.shields.io/npm/v/@fa-repo/mobile-dev-environment.svg?style=flat-square
+[license-badge]: https://img.shields.io/npm/l/@testing-library/react.svg?style=flat-square
+[package]: https://www.npmjs.com/package/@fa-repo/mobile-dev-environment
+[license]: https://github.com/fa-repo/mobile-dev-environment/blob/master/LICENSE.md

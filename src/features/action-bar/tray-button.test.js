@@ -19,7 +19,7 @@ test("TrayButton displays without `.active` class", () => {
   expect(trayButton.classList).not.toContain("active");
 });
 
-test("TaskBar calls onClick", () => {
+test("ActionBar calls onClick", () => {
   const onClickMock = jest.fn();
   const trayButton = TrayButton({ onClick: onClickMock });
 

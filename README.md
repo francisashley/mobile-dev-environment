@@ -100,20 +100,14 @@ new mobileDevEnvironment({
     <th align="left" valign="top">Default</th>
   </tr>
   <tr>
-    <td valign="top"><code>modules</code></td>
-    <td valign="top">An array of <a href="#modules" name="modules">modules</a> to load</td>
+    <td valign="top"><code>actionBar</code></td>
+    <td valign="top">An array of <a href="#modules" name="modules">actions</a> to load</td>
     <td valign="top"><code>array</code></td>
-    <td valign="top"><code>['reload','logtray']</code></td>
-  </tr>
-  <tr>
-    <td valign="top"><code>controlBarOrder</code></td>
-    <td valign="top">The module order in control bar</td>
-    <td valign="top"><code>array</code></td>
-    <td valign="top"><code>['reload','logtray']</code></td>
+    <td valign="top"><code>['reload','tray']</code></td>
   </tr>
   <tr>
     <td valign="top"><code>controlBarPosition</code></td>
-    <td valign="top">The controlbar position, top left <code>'tl'</code> or right <code>'tr'</code></td>
+    <td valign="top">The controlBar position, top left <code>'tl'</code> or right <code>'tr'</code></td>
     <td valign="top"><code>string</code></td>
     <td valign="top"><code>'tr'</code></td>
   </tr>
@@ -141,7 +135,7 @@ new mobileDevEnvironment({
     <td colspan="3" valign="top">An easily accessible button for reloading the page</td>
   </tr>
   <tr>
-    <td colspan="1" valign="top"><code>logtray</code></td>
+    <td colspan="1" valign="top"><code>tray</code></td>
     <td colspan="3" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
   </tr>
 </table>

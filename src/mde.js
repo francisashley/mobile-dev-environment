@@ -15,7 +15,7 @@ import tracer from "./utils/tracer.js";
      * Set defaults
      */
     defaults(options, {
-      group: "global",
+      stateId: "global",
       modules: ["reload", "tray"],
       controlBarOrder: ["reload", "logtray"],
       hardReload: true,
@@ -32,10 +32,9 @@ import tracer from "./utils/tracer.js";
       options.controlBarOrder = options.controlBarOrder.map(m => (m === "logtray" ? "tray" : m));
     options.features = options.controlBarOrder.filter(module => options.modules.includes(module));
     options = {
-      stateId: options.group,
-      features: options.features,
       "features.reload.refreshCache": options.hardReload,
-      "features.actions.corner": options.controlBarPosition
+      "features.actions.corner": options.controlBarPosition,
+      ...options
     };
     //#endregion
 

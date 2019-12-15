@@ -10,8 +10,7 @@
     "build": "webpack --mode=production",
     "watch": "webpack --mode=development --watch",
     "lint": "eslint --ignore-path .gitignore .",
-    "publish": "np",
-    "prepublishOnly": "npm run test"
+    "publish": "np"
   },
   "files": [
     "/dist"

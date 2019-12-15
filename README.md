@@ -34,11 +34,11 @@ With node:
 npm install @fa-repo/mobile-dev-environment
 ```
 
-With [unpkg.com](https://unpkg.com/browse/mobile-dev-environment@1.0.2/):
+With [unpkg.com](https://unpkg.com/browse/@fa-repo/mobile-dev-environment@latest/):
 
 ```html
-<script src="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.js"></script>
-<link href="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/@fa-repo/mobile-dev-environment@latest/dist/mde.min.js"></script>
+<link href="https://unpkg.com/@fa-repo/mobile-dev-environment@latest/dist/mde.min.css" rel="stylesheet" type="text/css">
 ```
 
 ## Node usage
@@ -72,8 +72,8 @@ new mobileDevEnvironment({
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <link href="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.css" rel="stylesheet" type="text/css">
-  <script src="https://unpkg.com/browse/mobile-dev-environment@1.0.2/dist/mde.min.js" defer></script>
+  <link href="https://unpkg.com/@fa-repo/mobile-dev-environment@latest/dist/mde.min.css" rel="stylesheet" type="text/css">
+  <script src="https://unpkg.com/@fa-repo/mobile-dev-environment@latest/dist/mde.min.js" defer></script>
   <script defer>  
     new mobileDevEnvironment({
       stateId : 'my-multi-page-app',

@@ -67,3 +67,15 @@ test("MDE console.assert()'s to tray", () => {
       .innerHTML
   ).toBe("2");
 });
+
+test("MDE shows correct actions", () => {
+  mobileDevEnvironment({
+    actions: ["reload", "toggle-tray"]
+  });
+
+  expect(document.querySelector("#mde-action-bar #mde-reload")).toBeTruthy();
+  expect(document.querySelector("#mde-action-bar #mde-toggle-tray")).toBeTruthy();
+});
+
+test.todo("MDE shows actions tray on top left");
+test.todo("MDE shows actions tray on top right");

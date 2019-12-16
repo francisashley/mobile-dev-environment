@@ -15,7 +15,7 @@ import tracer from "./utils/tracer.js";
 
     defaults(options, {
       stateId: "global",
-      actions: ["reload", "tray"],
+      actions: ["reload", "toggle-tray"],
       hardReload: true,
       actionsCorner: "tr"
     });
@@ -121,7 +121,7 @@ import tracer from "./utils/tracer.js";
         ActionBar({
           corner: state.get("action-bar.corner"),
           showReload: state.get("action-bar").includes("reload"),
-          showTray: state.get("action-bar").includes("tray"),
+          showTray: state.get("action-bar").includes("toggle-tray"),
           shouldRefreshCache: state.get("reload.refreshCache"),
           trayIsOpen: state.getCache("tray.open"),
           onToggleTray: toggleTray
@@ -129,7 +129,7 @@ import tracer from "./utils/tracer.js";
       );
 
       // render tray
-      if (state.get("action-bar").includes("tray")) {
+      if (state.get("action-bar").includes("toggle-tray")) {
         crel(
           root,
           Tray({

@@ -1,6 +1,5 @@
 import ReloadButton from "../action-bar/reload-button";
 import TrayButton from "../action-bar/tray-button";
-import classnames from "classnames";
 import crel from "crel";
 
 export default function ActionBar({
@@ -11,11 +10,11 @@ export default function ActionBar({
   trayIsOpen,
   onToggleTray = () => {}
 } = {}) {
-  const className = classnames(corner && "mde-action-bar-" + corner);
+  corner = ["tl", "tr"].includes(corner) ? corner : "tl";
 
   return crel(
     "div",
-    { id: "mde-action-bar", class: className },
+    { id: "mde-action-bar", "data-corner": corner },
     showReload ? ReloadButton({ onClick: () => location.reload(shouldRefreshCache) }) : null,
     showTray ? TrayButton({ isActive: trayIsOpen, onClick: onToggleTray }) : null
   );

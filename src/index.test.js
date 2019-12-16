@@ -36,6 +36,32 @@ test("MobileDevEnvironment displays `toggle-tray` and `reload` actions correctly
   expect(document.querySelectorAll("#mde-action-bar button")[1].id).toBe("mde-reload");
 });
 
+test("MobileDevEnvironment displays `toggle-tray` and `reload` actions in object syntax correctly", () => {
+  generateMDE({ actions: [{ action: "toggle-tray" }, { action: "reload" }] });
+
+  expect(document.querySelectorAll("#mde-action-bar button")[0].id).toBe("mde-toggle-tray");
+  expect(document.querySelectorAll("#mde-action-bar button")[1].id).toBe("mde-reload");
+});
+
+test("MobileDevEnvironment displays custom actions correctly", () => {
+  const onClick = jest.fn();
+  generateMDE({
+    actions: [
+      { action: "toggle-tray" },
+      { action: "reload" },
+      { action: "custom", content: "Click me!", onClick }
+    ]
+  });
+
+  expect(document.querySelectorAll("#mde-action-bar button")[0].id).toBe("mde-toggle-tray");
+  expect(document.querySelectorAll("#mde-action-bar button")[1].id).toBe("mde-reload");
+  expect(document.querySelectorAll("#mde-action-bar button")[2].innerHTML).toBe("Click me!");
+
+  document.querySelectorAll("#mde-action-bar button")[2].click();
+
+  expect(onClick).toHaveBeenCalled();
+});
+
 test("MobileDevEnvironment displays empty actions bar correctly", () => {
   generateMDE({ actions: [] });
 

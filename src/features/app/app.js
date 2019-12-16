@@ -5,7 +5,7 @@ import limitTrayHeight from "src/utils/limit-tray-height";
 import stateHandler from "src/utils/state";
 import tracer from "src/utils/tracer.js";
 
-export default function App({ root, stateId, actions, actionsCorner, hardReload }) {
+export default function App({ root, stateId, actions, actionsCorner }) {
   const state = stateHandler(stateId);
 
   // Default tray height
@@ -17,7 +17,6 @@ export default function App({ root, stateId, actions, actionsCorner, hardReload 
   state.set("log", []);
   state.set("actions", actions);
   state.set("actions-corner", actionsCorner);
-  state.set("reload-action-should-refresh-cache", hardReload);
   state.setCache("tray-open", state.getCache("tray-open", true));
   state.setCache("tray-height", trayHeight);
 
@@ -101,14 +100,13 @@ export default function App({ root, stateId, actions, actionsCorner, hardReload 
       ActionBar({
         actions,
         corner: state.get("actions-corner"),
-        shouldRefreshCache: state.get("reload-action-should-refresh-cache"),
         trayIsOpen: state.getCache("tray-open"),
         onToggleTray: toggleTray
       })
     );
 
     // render tray
-    if (state.get("actions").includes("toggle-tray")) {
+    if (actions.some(action => action.action === "toggle-tray")) {
       crel(
         root,
         Tray({

@@ -15,14 +15,14 @@ import tracer from "./utils/tracer.js";
 
     defaults(options, {
       stateId: "global",
-      actionBar: ["reload", "tray"],
+      actions: ["reload", "tray"],
       hardReload: true,
-      actionBarCorner: "tr"
+      actionsCorner: "tr"
     });
 
     const state = stately(options.stateId);
-    state.set("action-bar", options.actionBar);
-    state.set("action-bar.corner", options.actionBarCorner);
+    state.set("action-bar", options.actions);
+    state.set("action-bar.corner", options.actionsCorner);
     state.set("reload.refreshCache", options.hardReload);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(

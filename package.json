@@ -1,6 +1,6 @@
 {
   "name": "@fa-repo/mobile-dev-environment",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "MDE displays a console output tray and extendable action bar inside your browser window.",
   "main": "./src/mde.js",
   "scripts": {

@@ -1,11 +1,10 @@
-import ReloadButton from "../action-bar/reload-button";
-import TrayButton from "../action-bar/tray-button";
+import ReloadButton from "src/features/action-bar/reload-button";
+import TrayButton from "src/features/action-bar/tray-button";
 import crel from "crel";
 
 export default function ActionBar({
+  actions = [],
   corner,
-  showReload,
-  showTray,
   shouldRefreshCache,
   trayIsOpen,
   onToggleTray = () => {}
@@ -15,7 +14,14 @@ export default function ActionBar({
   return crel(
     "div",
     { id: "mde-action-bar", "data-corner": corner },
-    showReload ? ReloadButton({ onClick: () => location.reload(shouldRefreshCache) }) : null,
-    showTray ? TrayButton({ isActive: trayIsOpen, onClick: onToggleTray }) : null
+    ...actions.map(action => {
+      if (action === "reload") {
+        return ReloadButton({ onClick: () => location.reload(shouldRefreshCache) });
+      }
+      if (action === "toggle-tray") {
+        return TrayButton({ isActive: trayIsOpen, onClick: onToggleTray });
+      }
+      return null;
+    })
   );
 }

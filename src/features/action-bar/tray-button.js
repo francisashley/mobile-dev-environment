@@ -1,4 +1,4 @@
-import TrayIcon from "../icons/tray";
+import TrayIcon from "src/features/icons/tray";
 import classnames from "classnames";
 import crel from "crel";
 

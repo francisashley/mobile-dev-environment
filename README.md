@@ -119,13 +119,6 @@ window.addEventListener("DOMContentLoaded", event => {
     <td valign="top"></td>
   </tr>
   <tr>
-    <td valign="top"><code>hardReload</code></td>
-    <td valign="top">Refresh browser cache</td>
-    <td valign="top"><code>string</code></td>
-    <td valign="top"><code>true</code></td>
-    <td valign="top"></td>
-  </tr>
-  <tr>
     <td valign="top"><code>root</code></td>
     <td valign="top">Provide a DOM element for MDE to hook on too.</td>
     <td valign="top"><code>DOM element</code></td>
@@ -155,6 +148,19 @@ window.addEventListener("DOMContentLoaded", event => {
     <td colspan="4" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
   </tr>
 </table>
+
+## Actions
+
+
+
+## Packaged actions
+
+
+
+## Custom actions
+
+
+
 
 
 [version-badge]: https://img.shields.io/npm/v/@fa-repo/mobile-dev-environment.svg?style=flat-square

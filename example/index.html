@@ -22,7 +22,12 @@
     <script>
       mobileDevEnvironment({
         root: document.getElementById("mde"),
-        actionsCorner: "tr"
+        actionsCorner: "tr",
+        actions: [
+          "reload",
+          "toggle-tray",
+          { action: "custom", content: "Click me", onClick: () => alert("Hiya!") }
+        ]
       });
 
       intentional_error;

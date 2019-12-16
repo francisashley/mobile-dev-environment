@@ -8,9 +8,8 @@ const generateApp = options => {
   return App({
     root: document.getElementById("mde"),
     stateId: "global",
-    actions: ["reload", "toggle-tray"],
+    actions: [{ action: "reload" }, { action: "toggle-tray" }],
     actionsCorner: "tr",
-    hardReload: true,
     ...options
   });
 };

@@ -24,6 +24,10 @@ test("MDE console.log()'s to tray", () => {
 
   expect(document.querySelectorAll(".mde-log[data-type=string]").length).toBe(1);
   expect(document.querySelector(".mde-log .mde-log-message").innerHTML).toBe("works");
+
+  console.log("works");
+
+  expect(document.querySelector(".mde-log[data-type=string] .mde-log-amount").innerHTML).toBe("2");
 });
 
 test("MDE console.error()'s to tray", () => {
@@ -33,6 +37,10 @@ test("MDE console.error()'s to tray", () => {
 
   expect(document.querySelectorAll(".mde-log[data-type=error]").length).toBe(1);
   expect(document.querySelector(".mde-log .mde-log-message").innerHTML).toBe("works");
+
+  console.error("works");
+
+  expect(document.querySelector(".mde-log[data-type=error] .mde-log-amount").innerHTML).toBe("2");
 });
 
 test("MDE console.assert()'s to tray", () => {
@@ -51,4 +59,11 @@ test("MDE console.assert()'s to tray", () => {
   expect(document.querySelectorAll(".mde-log .mde-log-message")[1].innerHTML).toBe(
     "Assertion failed: console.assert"
   );
+
+  console.assert(false);
+
+  expect(
+    document.querySelectorAll(".mde-log[data-type=error]")[1].querySelector(".mde-log-amount")
+      .innerHTML
+  ).toBe("2");
 });

@@ -1,6 +1,14 @@
 import crel from "crel";
+import { isUndefined } from "lodash";
 
-export default function LogItem({ message, filePath, fileName, lineNumber, type = "log" } = {}) {
+export default function LogItem({
+  message,
+  filePath,
+  fileName,
+  lineNumber,
+  amount,
+  type = "log"
+} = {}) {
   // figure out type
   if (type === "error") type = "error";
   else if (typeof message === "string") type = "string";
@@ -19,8 +27,11 @@ export default function LogItem({ message, filePath, fileName, lineNumber, type 
   // line location
   const lineLoc = fileName + ":" + lineNumber;
 
+  // prepare amount
+  amount = isUndefined(amount) ? 1 : amount;
+
   // Prepare LogItem parts
-  const LogAmount = crel("div", { class: "mde-log-amount" });
+  const LogAmount = crel("div", { class: "mde-log-amount" }, amount === 1 ? "" : amount);
   const LogMessage = crel("div", { class: "mde-log-message" }, message);
   const LogTrace = crel("a", { class: "mde-log-trace", href: filePath, target: "_blank" }, lineLoc);
   const LogMessageFull = crel("pre", { class: "mde-log-message-full" }, message);

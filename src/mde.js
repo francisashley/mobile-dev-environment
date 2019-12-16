@@ -50,7 +50,15 @@ import tracer from "./utils/tracer.js";
     }
 
     function onAddLog({ message, filePath, fileName, lineNumber, type } = {}) {
-      state.set("log", [...state.get("log"), { message, filePath, fileName, lineNumber, type }]);
+      const log = state.get("log");
+      const lastEntry = log[log.length - 1];
+
+      if (lastEntry && lastEntry.message === message) {
+        log[log.length - 1] = { ...lastEntry, amount: lastEntry.amount + 1 };
+      } else {
+        log.push({ message, filePath, fileName, lineNumber, type, amount: 1 });
+      }
+      state.set("log", log);
       render();
     }
 

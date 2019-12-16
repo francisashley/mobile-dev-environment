@@ -11,14 +11,29 @@ afterEach(() => {
 });
 
 test("MDE renders to dom without crashing", () => {
-  mobileDevEnvironment();
+  mobileDevEnvironment({
+    root: document.getElementById("mde")
+  });
 
   expect(!!document.getElementById("mde-action-bar")).toBe(true);
   expect(!!document.getElementById("mde-tray")).toBe(true);
 });
 
+test("MDE throws an error if `root` option does not contain a DOM element", () => {
+  try {
+    mobileDevEnvironment();
+    expect(false).toBe(true);
+  } catch (error) {
+    expect(error).toBe(
+      "Could not start MDE because MDE requires a `root` element to attach to the DOM."
+    );
+  }
+});
+
 test("MDE console.log()'s to tray", () => {
-  mobileDevEnvironment();
+  mobileDevEnvironment({
+    root: document.getElementById("mde")
+  });
 
   console.log("works");
 
@@ -31,7 +46,9 @@ test("MDE console.log()'s to tray", () => {
 });
 
 test("MDE console.error()'s to tray", () => {
-  mobileDevEnvironment();
+  mobileDevEnvironment({
+    root: document.getElementById("mde")
+  });
 
   console.error("works");
 
@@ -44,7 +61,9 @@ test("MDE console.error()'s to tray", () => {
 });
 
 test("MDE console.assert()'s to tray", () => {
-  mobileDevEnvironment();
+  mobileDevEnvironment({
+    root: document.getElementById("mde")
+  });
 
   console.assert(false, "works");
 
@@ -70,6 +89,7 @@ test("MDE console.assert()'s to tray", () => {
 
 test("MDE shows correct actions", () => {
   mobileDevEnvironment({
+    root: document.getElementById("mde"),
     actions: ["reload", "toggle-tray"]
   });
 
@@ -78,16 +98,25 @@ test("MDE shows correct actions", () => {
 });
 
 test("MDE shows actions tray on top right by default", () => {
-  mobileDevEnvironment();
+  mobileDevEnvironment({
+    root: document.getElementById("mde")
+  });
 
   expect(document.querySelector("#mde-action-bar[data-corner=tr]")).toBeTruthy();
 });
+
 test("MDE shows actions tray on top left", () => {
-  mobileDevEnvironment({ actionsCorner: "tl" });
+  mobileDevEnvironment({
+    root: document.getElementById("mde"),
+    actionsCorner: "tl"
+  });
   expect(document.querySelector("#mde-action-bar[data-corner=tl]")).toBeTruthy();
 });
-test("MDE shows actions tray on top right", () => {
-  mobileDevEnvironment({ actionsCorner: "tr" });
 
+test("MDE shows actions tray on top right", () => {
+  mobileDevEnvironment({
+    root: document.getElementById("mde"),
+    actionsCorner: "tr"
+  });
   expect(document.querySelector("#mde-action-bar[data-corner=tr]")).toBeTruthy();
 });

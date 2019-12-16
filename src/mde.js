@@ -1,7 +1,8 @@
+import { defaults, isElement } from "lodash";
+
 import ActionBar from "./features/action-bar/action-bar";
 import Tray from "./features/tray/tray";
 import crel from "crel";
-import { defaults } from "lodash";
 import stately from "./utils/state";
 import tracer from "./utils/tracer.js";
 
@@ -9,21 +10,25 @@ import tracer from "./utils/tracer.js";
   "use strict";
 
   function mobileDevEnvironment(options = {}) {
+    if (!isElement(options.root)) {
+      throw "Could not start MDE because MDE requires a `root` element to attach to the DOM.";
+    }
+
     /**
      * STATE
      */
 
-    defaults(options, {
+    const { root, stateId, actions, hardReload, actionsCorner } = defaults(options, {
       stateId: "global",
       actions: ["reload", "toggle-tray"],
       hardReload: true,
       actionsCorner: "tr"
     });
 
-    const state = stately(options.stateId);
-    state.set("action-bar", options.actions);
-    state.set("action-bar.corner", options.actionsCorner);
-    state.set("reload.refreshCache", options.hardReload);
+    const state = stately(stateId);
+    state.set("action-bar", actions);
+    state.set("action-bar.corner", actionsCorner);
+    state.set("reload.refreshCache", hardReload);
     state.setCache("tray.open", state.getCache("tray.open", true));
     state.setCache(
       "tray.height",
@@ -112,7 +117,6 @@ import tracer from "./utils/tracer.js";
     // render
 
     function render() {
-      const root = document.getElementById("mde");
       root.innerHTML = "";
 
       // render action bar

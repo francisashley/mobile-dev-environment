@@ -46,5 +46,14 @@
     "crel": "^4.2.0",
     "crelns": "^1.0.1",
     "lodash": "^4.17.15"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>"
+    ]
   }
 }

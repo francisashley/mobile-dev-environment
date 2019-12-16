@@ -9,31 +9,31 @@ test("ActionBar renders properly", () => {
 });
 
 test("ActionBar shows reload button", () => {
-  const actionBar = ActionBar({ showReload: true });
+  const actionBar = ActionBar({ actions: ["reload"] });
 
   expect(!!actionBar.querySelector("#mde-reload")).toBe(true);
 });
 
 test("ActionBar shows tray button", () => {
-  const actionBar = ActionBar({ showTray: true });
+  const actionBar = ActionBar({ actions: ["toggle-tray"] });
 
   expect(!!actionBar.querySelector("#mde-toggle-tray")).toBe(true);
 });
 
 test("ActionBar tray button displays with `.active` class", () => {
-  const actionBar = ActionBar({ showTray: true, trayIsOpen: true });
+  const actionBar = ActionBar({ actions: ["toggle-tray"], trayIsOpen: true });
 
   expect(!!actionBar.querySelector("#mde-toggle-tray.active")).toBe(true);
 });
 
 test("ActionBar tray button displays without `.active` class", () => {
-  const actionBar = ActionBar({ showTray: true });
+  const actionBar = ActionBar({ actions: ["toggle-tray"] });
 
   expect(!!actionBar.querySelector("#mde-toggle-tray.active")).toBe(false);
 });
 
 test("ActionBar reloads page when ReloadButton clicked", () => {
-  const actionBar = ActionBar({ showReload: true });
+  const actionBar = ActionBar({ actions: ["reload"] });
   delete window.location;
   const reloadMock = jest.fn();
   window.location = { reload: reloadMock };
@@ -45,7 +45,7 @@ test("ActionBar reloads page when ReloadButton clicked", () => {
 });
 
 test("ActionBar reloads page and cache when ReloadButton clicked", () => {
-  const actionBar = ActionBar({ showReload: true, shouldRefreshCache: true });
+  const actionBar = ActionBar({ actions: ["reload"], shouldRefreshCache: true });
   delete window.location;
   const reloadMock = jest.fn();
   window.location = { reload: reloadMock };
@@ -58,7 +58,7 @@ test("ActionBar reloads page and cache when ReloadButton clicked", () => {
 
 test("ActionBar calls onToggleTray", () => {
   const onToggleTray = jest.fn();
-  const actionBar = ActionBar({ showTray: true, onToggleTray });
+  const actionBar = ActionBar({ actions: ["toggle-tray"], onToggleTray });
 
   actionBar.querySelector("#mde-toggle-tray").click();
 

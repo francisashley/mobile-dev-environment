@@ -1,13 +1,13 @@
 "use strict";
 
+const path = require("path");
 const debugging = process.env.NODE_ENV === "development";
-
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   context: __dirname,
   devtool: debugging ? "inline-sourcemap" : "sourcemap",
-  entry: ["./src/mde.js", "./src/sass/mde.scss"],
+  entry: ["./src/index.js", "./src/index.scss"],
   output: {
     path: __dirname,
     filename: "./dist/mde.min.js"
@@ -36,5 +36,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    modules: [path.resolve(__dirname), "node_modules"],
+    extensions: [".js", ".jsx", ".json"]
   }
 };

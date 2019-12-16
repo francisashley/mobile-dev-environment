@@ -20,7 +20,10 @@
     <img src="http://placekitten.com/g/740/420" alt="cute cat placeholder" />
     <div id="mde"></div>
     <script>
-      mobileDevEnvironment({ actionsCorner: "tr" });
+      mobileDevEnvironment({
+        root: document.getElementById("mde"),
+        actionsCorner: "tr"
+      });
 
       intentional_error;
     </script>

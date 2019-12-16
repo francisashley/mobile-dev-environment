@@ -48,9 +48,12 @@ With [unpkg.com](https://unpkg.com/browse/@fa-repo/mobile-dev-environment@latest
 import mobileDevEnvironment from '@fa-repo/mobile-dev-environment';
 import '@fa-repo/mobile-dev-environment/mobile-dev-environment.css';
 
-new mobileDevEnvironment({
-  stateId : 'my-multi-page-app',
-  actionsCorner : 'tl'
+window.addEventListener("DOMContentLoaded", event => {
+  new mobileDevEnvironment({
+    root: document.getElementById('mde'),
+    stateId : 'my-multi-page-app',
+    actionsCorner : 'tl'
+  });
 });
 
 // app.html
@@ -74,15 +77,16 @@ new mobileDevEnvironment({
   <head>
   <link href="https://unpkg.com/@fa-repo/mobile-dev-environment@latest/dist/mde.min.css" rel="stylesheet" type="text/css">
   <script src="https://unpkg.com/@fa-repo/mobile-dev-environment@latest/dist/mde.min.js" defer></script>
-  <script defer>  
+</head>
+<body>
+  <div id="mde"></div>
+  <script>
     new mobileDevEnvironment({
+      root: document.getElementById('mde'),
       stateId : 'my-multi-page-app',
       actionsCorner : 'tl'
     });
   </script>
-</head>
-<body>
-  <div id="mde"></div>
 </body>
 </html>
 ```
@@ -91,52 +95,64 @@ new mobileDevEnvironment({
 
 <table>
   <tr>
-    <th colspan="4" align="left" valign="top"><a href="#options" name="options">Options</a></th>
+    <th colspan="5" align="left" valign="top"><a href="#options" name="options">Options</a></th>
   </tr>
   <tr>
     <th align="left" valign="top">Option</th>
     <th align="left" valign="top">Description</th>
     <th align="left" valign="top">Type</th>
     <th align="left" valign="top">Default</th>
+    <th align="left" valign="top">Required</th>
   </tr>
   <tr>
     <td valign="top"><code>actions</code></td>
     <td valign="top">An array of <a href="#modules" name="modules">actions</a> to load</td>
     <td valign="top"><code>array</code></td>
     <td valign="top"><code>['reload','tray']</code></td>
+    <td valign="top"></td>
   </tr>
   <tr>
     <td valign="top"><code>actionsCorner</code></td>
     <td valign="top">The actions bar position, top left <code>'tl'</code> or right <code>'tr'</code></td>
     <td valign="top"><code>string</code></td>
     <td valign="top"><code>'tr'</code></td>
+    <td valign="top"></td>
   </tr>
   <tr>
     <td valign="top"><code>hardReload</code></td>
     <td valign="top">Refresh browser cache</td>
     <td valign="top"><code>string</code></td>
     <td valign="top"><code>true</code></td>
+    <td valign="top"></td>
+  </tr>
+  <tr>
+    <td valign="top"><code>root</code></td>
+    <td valign="top">Provide a DOM element for MDE to hook on too.</td>
+    <td valign="top"><code>DOM element</code></td>
+    <td valign="top"></td>
+    <td valign="top">Required</td>
   </tr>
   <tr>
     <td valign="top"><code>stateId</code></td>
     <td valign="top">Share state information like open/close, height etc across instances of MDE on other pages</td>
     <td valign="top"><code>string</code></td>
     <td valign="top"><code>'global'</code></td>
+    <td valign="top"></td>
   </tr>
   <tr>
-    <th colspan="4" align="left" valign="top"><a href="#modules" name="modules">Modules</a></th>
+    <th colspan="5" align="left" valign="top"><a href="#modules" name="modules">Modules</a></th>
   </tr>
   <tr>
     <th colspan="1" align="left" valign="top">Module</th>
-    <th colspan="3" align="left" valign="top">Description</th>
+    <th colspan="4" align="left" valign="top">Description</th>
   </tr>
   <tr>
     <td colspan="1" valign="top"><code>reload</code></td>
-    <td colspan="3" valign="top">An easily accessible button for reloading the page</td>
+    <td colspan="4" valign="top">An easily accessible button for reloading the page</td>
   </tr>
   <tr>
     <td colspan="1" valign="top"><code>tray</code></td>
-    <td colspan="3" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
+    <td colspan="4" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
   </tr>
 </table>
 

@@ -77,5 +77,17 @@ test("MDE shows correct actions", () => {
   expect(document.querySelector("#mde-action-bar #mde-toggle-tray")).toBeTruthy();
 });
 
-test.todo("MDE shows actions tray on top left");
-test.todo("MDE shows actions tray on top right");
+test("MDE shows actions tray on top right by default", () => {
+  mobileDevEnvironment();
+
+  expect(document.querySelector("#mde-action-bar[data-corner=tr]")).toBeTruthy();
+});
+test("MDE shows actions tray on top left", () => {
+  mobileDevEnvironment({ actionsCorner: "tl" });
+  expect(document.querySelector("#mde-action-bar[data-corner=tl]")).toBeTruthy();
+});
+test("MDE shows actions tray on top right", () => {
+  mobileDevEnvironment({ actionsCorner: "tr" });
+
+  expect(document.querySelector("#mde-action-bar[data-corner=tr]")).toBeTruthy();
+});

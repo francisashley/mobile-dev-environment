@@ -4,13 +4,14 @@
   box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 10px;
-  left: 10px;
   z-index: 1;
   border: thin solid #6e6e6e;
 
-  &.mde-action-bar-tr {
+  &[data-corner="tl"] {
+    left: 10px;
+  }
+  &[data-corner="tr"] {
     right: 10px;
-    left: auto;
   }
 
   > button {

@@ -18,13 +18,16 @@ MDE displays a console output tray and extendable action bar inside your browser
 - [Node usage](#node-usage)
 - [Browser usage](#browser-usage)
 - [Configuration](#configuration)
+- [Actions](#actions)
+- [Packaged actions](#packaged-actions)
+- [Custom actions](#custom-actions)
 
 ## Features
 
-- **Reload button** <br> An easily accessible button that can be configured to refresh browser cache.
-- **Log tray**  <br> A toggleable, resizable, colour coded output area bound to console.log().
-- **Error messages** <br/> Catch and display errors that occur after the script has been initialised.
-- **Trace information** <br/> View filenames and line numbers of all log messages.
+- **Actions bar:** is a configurable menu containing quick access buttons (called actions).
+- **Bundled actions:** include reloading / cache busting the page and toggling the console tray.
+- **Console tray:** catches and displays `console.log()`, `console.error()`, `console.assert()` output.
+- **Runtime errors:** are caught and shown in the console tray.
 
 ## Install
 
@@ -95,9 +98,6 @@ window.addEventListener("DOMContentLoaded", event => {
 
 <table>
   <tr>
-    <th colspan="5" align="left" valign="top"><a href="#options" name="options">Options</a></th>
-  </tr>
-  <tr>
     <th align="left" valign="top">Option</th>
     <th align="left" valign="top">Description</th>
     <th align="left" valign="top">Type</th>
@@ -132,36 +132,78 @@ window.addEventListener("DOMContentLoaded", event => {
     <td valign="top"><code>'global'</code></td>
     <td valign="top"></td>
   </tr>
-  <tr>
-    <th colspan="5" align="left" valign="top"><a href="#modules" name="modules">Modules</a></th>
-  </tr>
-  <tr>
-    <th colspan="1" align="left" valign="top">Module</th>
-    <th colspan="4" align="left" valign="top">Description</th>
-  </tr>
-  <tr>
-    <td colspan="1" valign="top"><code>reload</code></td>
-    <td colspan="4" valign="top">An easily accessible button for reloading the page</td>
-  </tr>
-  <tr>
-    <td colspan="1" valign="top"><code>tray</code></td>
-    <td colspan="4" valign="top">A toggleable, color coded, resizable tray for displaying log messages</td>
-  </tr>
 </table>
 
 ## Actions
 
+Actions are easily accessible buttons that appear in the actions bar. You can either use the buttons that come packaged with MDE or make your own.
 
 
 ## Packaged actions
 
+Packaged actions can be referenced in two ways. Either as strings by name or as objects which enable configuration.
 
+```js
+// Example A
+[ "reload", "toggle-tray" ]
+// Example B
+[ { action: "reload", refreshCache: false }, "toggle-tray" ]
+// Example C
+[ { action: "reload", refreshCache: false }, { action: "toggle-tray"} ]
+```
+
+**Packaged action - `reload`:** this action reloads the page.
+
+
+<table>
+  <tr>
+    <th colspan="1" align="left" valign="top">Option</th>
+    <th colspan="3" align="left" valign="top">Description</th>
+    <th colspan="1" align="left" valign="top">Default</th>
+  </tr>
+  <tr>
+    <td colspan="1" valign="top"><code>refreshCache</code></td>
+    <td colspan="3" valign="top">Refresh the browsers cache on each reload.</td>
+    <td colspan="1" valign="top"><code>true<code></td>
+  </tr>
+</table>
+
+
+**Packaged action - `toggle-tray`:** this action toggles the console tray.
 
 ## Custom actions
 
+Custom actions are a way to extend MDE with your own buttons. The API is quite flexible but at a minimum all custom actions require an `action` key with a value of `"custom"`.
 
+```js
+// Example
+[
+    { action: "custom", content: "Click me", onClick: e => alert("Hi!") }
+]
+```
 
-
+<table>
+  <tr>
+    <th colspan="1" align="left" valign="top">Option</th>
+    <th colspan="3" align="left" valign="top">Description</th>
+    <th colspan="1" align="left" valign="top">type</th>
+  </tr>
+  <tr>
+    <td colspan="1" valign="top"><code>action</code></td>
+    <td colspan="3" valign="top">Is the action type. If we're creating a custom action, this must be `"custom"`.</td>
+    <td colspan="1" valign="top">`string`</td>
+  </tr>
+  <tr>
+    <td colspan="1" valign="top"><code>content</code></td>
+    <td colspan="3" valign="top">This goes inside the button. It could be some text or maybe another element like an icon.</td>
+    <td colspan="1" valign="top">`string|element`</td>
+  </tr>
+    <tr>
+    <td colspan="1" valign="top"><code>onClick</code></td>
+    <td colspan="3" valign="top">This function is called when the button is clicked</td>
+    <td colspan="1" valign="top">`function`</td>
+  </tr>
+</table>
 
 [version-badge]: https://img.shields.io/npm/v/@fa-repo/mobile-dev-environment.svg?style=flat-square
 [license-badge]: https://img.shields.io/npm/l/@testing-library/react.svg?style=flat-square

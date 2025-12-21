@@ -1,4 +1,4 @@
-import { defaultTo, isElement, isObject } from "lodash";
+import { defaultTo, isElement, isObject } from "lodash-es";
 
 import app from "src/features/app/app";
 import "./index.scss";

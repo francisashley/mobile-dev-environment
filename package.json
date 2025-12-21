@@ -37,7 +37,7 @@
   "dependencies": {
     "crel": "^4.2.1",
     "crelns": "^1.1.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "type": "module"
 }

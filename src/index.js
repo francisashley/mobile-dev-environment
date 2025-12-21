@@ -1,6 +1,7 @@
 import { defaultTo, isElement, isObject } from "lodash";
 
 import app from "src/features/app/app";
+import "./index.scss";
 
 (function() {
   "use strict";

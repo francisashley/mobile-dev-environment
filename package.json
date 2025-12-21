@@ -7,8 +7,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watchAll",
-    "build": "webpack --mode=production",
-    "watch": "webpack --mode=development --watch",
+    "build": "vite build",
+    "watch": "vite build --watch",
     "lint": "eslint --ignore-path .gitignore .",
     "release": "np"
   },
@@ -26,21 +26,12 @@
   },
   "homepage": "https://github.com/fa-repo/mobile-dev-environment#readme",
   "devDependencies": {
-    "@babel/core": "^7.7.5",
-    "@babel/preset-env": "^7.7.6",
-    "babel-loader": "^8.0.6",
     "classnames": "^2.2.6",
-    "css-loader": "^3.3.2",
     "eslint": "^6.7.2",
-    "extract-text-webpack-plugin": "^3.0.2",
     "jest": "^24.9.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "sass": "^1.97.1",
     "np": "^5.2.1",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "sass": "^1.97.1",
+    "vite": "^7.3.0"
   },
   "dependencies": {
     "crel": "^4.2.0",

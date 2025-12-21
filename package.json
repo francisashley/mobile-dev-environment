@@ -36,8 +36,7 @@
   },
   "dependencies": {
     "crel": "^4.2.1",
-    "crelns": "^1.1.1",
-    "lodash-es": "^4.17.22"
+    "crelns": "^1.1.1"
   },
   "type": "module"
 }

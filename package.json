@@ -39,7 +39,7 @@
     "crelns": "^1.1.1"
   },
   "type": "module",
-  "np": {
-    "yarn": false
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -4,9 +4,9 @@
   "description": "MDE displays a console output tray and extendable action bar inside your browser window.",
   "main": "./src/mde.js",
   "scripts": {
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watchAll",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "build": "vite build",
     "watch": "vite build --watch",
     "lint": "eslint --ignore-path .gitignore .",
@@ -26,24 +26,18 @@
   },
   "homepage": "https://github.com/fa-repo/mobile-dev-environment#readme",
   "devDependencies": {
+    "@vitest/ui": "^4.0.16",
     "eslint": "^6.7.2",
-    "jest": "^24.9.0",
+    "jsdom": "^27.3.0",
     "np": "^5.2.1",
     "sass": "^1.97.1",
-    "vite": "^7.3.0"
+    "vite": "^7.3.0",
+    "vitest": "^4.0.16"
   },
   "dependencies": {
     "crel": "^4.2.0",
     "crelns": "^1.0.1",
     "lodash": "^4.17.15"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "<rootDir>"
-    ]
-  }
+  "type": "module"
 }

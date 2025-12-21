@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import ActionBar from "./action-bar";
 
 test("ActionBar renders properly", () => {
@@ -35,7 +36,7 @@ test("ActionBar tray button displays without `.active` class", () => {
 test("ActionBar reloads page when ReloadButton clicked", () => {
   const actionBar = ActionBar({ actions: [{ action: "reload" }] });
   delete window.location;
-  const reloadMock = jest.fn();
+  const reloadMock = vi.fn();
   window.location = { reload: reloadMock };
 
   actionBar.querySelector("#mde-reload").click();
@@ -47,7 +48,7 @@ test("ActionBar reloads page when ReloadButton clicked", () => {
 test("ActionBar reloads page and cache when ReloadButton clicked", () => {
   const actionBar = ActionBar({ actions: [{ action: "reload" }], shouldRefreshCache: true });
   delete window.location;
-  const reloadMock = jest.fn();
+  const reloadMock = vi.fn();
   window.location = { reload: reloadMock };
 
   actionBar.querySelector("#mde-reload").click();
@@ -56,7 +57,7 @@ test("ActionBar reloads page and cache when ReloadButton clicked", () => {
 });
 
 test("ActionBar calls onToggleTray", () => {
-  const onToggleTray = jest.fn();
+  const onToggleTray = vi.fn();
   const actionBar = ActionBar({ actions: [{ action: "toggle-tray" }], onToggleTray });
 
   actionBar.querySelector("#mde-toggle-tray").click();

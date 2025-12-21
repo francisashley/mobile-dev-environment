@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import crel from "crel";
 import mobileDevEnvironment from "./index";
 
@@ -44,7 +45,7 @@ test("MobileDevEnvironment displays `toggle-tray` and `reload` actions in object
 });
 
 test("MobileDevEnvironment displays custom actions correctly", () => {
-  const onClick = jest.fn();
+  const onClick = vi.fn();
   generateMDE({
     actions: [
       { action: "toggle-tray" },

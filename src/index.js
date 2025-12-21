@@ -1,19 +1,18 @@
-import { defaultTo, isElement, isObject } from "lodash";
-
 import app from "src/features/app/app";
+import "./index.scss";
 
 (function() {
   "use strict";
 
   function mobileDevEnvironment({ root, stateId, actions, actionsCorner } = {}) {
-    if (!isElement(root)) {
+    if (!(root instanceof Element)) {
       throw "Could not start MDE because MDE requires a `root` element to attach to the DOM.";
     }
 
     // DEFAULT VARIABLES
-    stateId = defaultTo(stateId, "global");
-    actionsCorner = defaultTo(actionsCorner, "tr");
-    actions = defaultTo(actions, ["reload", "toggle-tray"]);
+    stateId = stateId ?? "global";
+    actionsCorner = actionsCorner ?? "tr";
+    actions = actions ?? ["reload", "toggle-tray"];
 
     actions = actions
       .map(action => {
@@ -23,15 +22,15 @@ import app from "src/features/app/app";
           action = { action: "toggle-tray" };
         }
 
-        if (isObject(action) && action.action === "reload") {
-          return { action: "reload", refreshCache: defaultTo(action.refreshCache, true) };
-        } else if (isObject(action) && action.action === "toggle-tray") {
+        if (action && typeof action === "object" && action.action === "reload") {
+          return { action: "reload", refreshCache: action.refreshCache ?? true };
+        } else if (action && typeof action === "object" && action.action === "toggle-tray") {
           return { action: "toggle-tray" };
-        } else if (isObject(action) && action.action === "custom") {
+        } else if (action && typeof action === "object" && action.action === "custom") {
           return {
             action: "custom",
-            content: defaultTo(action.content, ""),
-            onClick: defaultTo(action.onClick, () => {})
+            content: action.content ?? "",
+            onClick: action.onClick ?? (() => {})
           };
         }
 

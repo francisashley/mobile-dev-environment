@@ -1,10 +1,11 @@
+import { vi } from "vitest";
 import CustomButton from "./custom-button";
 
 test("Custom button renders without crashing", () => {
   expect(!!CustomButton()).toBe(true);
 });
 test("Custom button calls onClick", () => {
-  const onClick = jest.fn();
+  const onClick = vi.fn();
   const customButton = CustomButton({ onClick });
 
   customButton.click();

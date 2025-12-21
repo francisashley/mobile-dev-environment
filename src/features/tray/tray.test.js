@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import Tray from "./tray";
 
 test("ResizeHandle renders properly", () => {
@@ -7,7 +8,7 @@ test("ResizeHandle renders properly", () => {
 });
 
 test("Tray calls onResizeTray when resized", () => {
-  const onResizeTray = jest.fn();
+  const onResizeTray = vi.fn();
   const tray = Tray({ onResizeTray });
 
   const resizeHandle = tray.querySelector("#mde-tray-resize-bar");

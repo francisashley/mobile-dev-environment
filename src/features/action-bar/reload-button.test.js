@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import ReloadButton from "./reload-button";
 
 test("ReloadButton renders properly", () => {
@@ -8,7 +9,7 @@ test("ReloadButton renders properly", () => {
 });
 
 test("ReloadButton calls onClick", () => {
-  const onClickMock = jest.fn();
+  const onClickMock = vi.fn();
   const reloadButton = ReloadButton({ onClick: onClickMock });
 
   reloadButton.click();

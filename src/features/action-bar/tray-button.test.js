@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import TrayButton from "./tray-button";
 
 test("TrayButton renders properly", () => {
@@ -20,7 +21,7 @@ test("TrayButton displays without `.active` class", () => {
 });
 
 test("ActionBar calls onClick", () => {
-  const onClickMock = jest.fn();
+  const onClickMock = vi.fn();
   const trayButton = TrayButton({ onClick: onClickMock });
 
   trayButton.click();
